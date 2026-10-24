@@ -1,0 +1,161 @@
+name: Production CI-CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+jobs:
+  # ----------------------------------------
+  # 1️⃣ Determine Next Version (Git Tag Based)
+  # ----------------------------------------
+  version:
+    runs-on: ubuntu-24.04
+    outputs:
+      next_tag: ${{ steps.bump.outputs.next_tag }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+
+      - name: Calculate next version from Git tags
+        id: bump
+        run: |
+          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0")
+          VERSION_NUMBER=${CURRENT_TAG#v}
+          NEXT_VERSION=$((VERSION_NUMBER + 1))
+          NEXT_TAG="v${NEXT_VERSION}"
+
+          echo "Current tag: $CURRENT_TAG"
+          echo "Next tag: $NEXT_TAG"
+          echo "next_tag=${NEXT_TAG}" >> $GITHUB_OUTPUT
+
+  # ----------------------------------------
+  # 2️⃣ Build & Push Docker Image
+  # ----------------------------------------
+  build:
+    needs: version
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Convert repo name to lowercase
+        id: repo
+        run: |
+          LOWER_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=ghcr.io/${LOWER_REPO}" >> $GITHUB_OUTPUT
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_PAT }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: |
+            MONGODB_URI=${{ secrets.MONGODB_URI }}
+          tags: |
+            ${{ steps.repo.outputs.image }}:${{ needs.version.outputs.next_tag }}
+            ${{ steps.repo.outputs.image }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ----------------------------------------
+  # 3️⃣ Update Multiple GitOps Branches
+  # ----------------------------------------
+  update-k8s:
+    needs: [version, build]
+    runs-on: ubuntu-24.04
+
+    strategy:
+      matrix:
+        branch: [k8s-prod]
+
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          repository: Avhad-Enterprises/fmcg-web
+          ref: ${{ matrix.branch }}
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+
+      - name: Convert repo name to lowercase
+        id: repo
+        run: |
+          LOWER_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=ghcr.io/${LOWER_REPO}" >> $GITHUB_OUTPUT
+
+      - name: Install Kustomize
+        run: |
+          set -euo pipefail
+          KUSTOMIZE_VERSION=v5.8.1
+          curl -fsSL -o kustomize.tar.gz \
+            "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          tar -xzf kustomize.tar.gz
+          sudo install -m 0755 kustomize /usr/local/bin/kustomize
+          kustomize version
+
+      - name: Update image tag
+        run: |
+          kustomize edit set image \
+            ${{ steps.repo.outputs.image }}=${{ steps.repo.outputs.image }}:${{ needs.version.outputs.next_tag }}
+
+          git config user.name "ci-bot"
+          git config user.email "ci@github.com"
+
+          git add kustomization.yaml
+          git commit -m "ci: release ${{ needs.version.outputs.next_tag }} (${{ matrix.branch }})" || echo "No changes"
+
+          git push https://${{ secrets.GH_PAT }}@github.com/Avhad-Enterprises/fmcg-web.git \
+            ${{ matrix.branch }}
+
+  # ----------------------------------------
+  # 4️⃣ Create Git Tag
+  # ----------------------------------------
+  release-tag:
+    needs: [version, build]
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+
+      - name: Create and Push Tag
+        run: |
+          git config user.name "ci-bot"
+          git config user.email "ci@github.com"
+
+          git tag -a ${{ needs.version.outputs.next_tag }} \
+            -m "Release ${{ needs.version.outputs.next_tag }}"
+
+          git push https://${{ secrets.GH_PAT }}@github.com/Avhad-Enterprises/fmcg-web.git \
+            ${{ needs.version.outputs.next_tag }}

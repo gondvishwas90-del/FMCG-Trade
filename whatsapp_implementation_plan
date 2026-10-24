@@ -1,0 +1,641 @@
+# WhatsApp Business API — Phase 2 Detailed Implementation Plan
+
+> Phase 1 (Meta Dashboard setup) is assumed **complete**. All environment variables below use placeholder values — replace them with your actual credentials.
+
+## Updated `.env` (Replace with your real values)
+
+```env
+# Mode: 'api' for Cloud API, 'link' for wa.me fallback
+NEXT_PUBLIC_WHATSAPP_MODE='api'
+
+# ── Permanent System User Token (from Meta Business Settings → System Users) ──
+WHATSAPP_ACCESS_TOKEN="EAAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# ── From Meta App Dashboard → WhatsApp → API Setup ──
+WHATSAPP_PHONE_NUMBER_ID="000000000000000"
+WHATSAPP_BUSINESS_ACCOUNT_ID="000000000000000"
+
+# ── Your support team's WhatsApp number (country code, no + sign) ──
+WHATSAPP_RECIPIENT_PHONE="447895840565"
+
+# ── Your approved custom template name (from Meta → Message Templates) ──
+WHATSAPP_TEMPLATE_NAME="website_lead_notification"
+
+# ── Webhook verification string (must match what you entered in Meta Dashboard) ──
+WHATSAPP_WEBHOOK_VERIFY_TOKEN="fmcg_exchange_whatsapp_secure_webhook_2026"
+```
+
+---
+
+## Architecture After Phase 2
+
+```mermaid
+graph TD
+    A["Website Visitor"] -->|"1. Fills lead form"| B["WhatsAppWidget.tsx"]
+    B -->|"2. POST"| C["/api/whatsapp/send"]
+    C -->|"3a. Always save"| D[("MongoDB — leads collection")]
+    C -->|"3b. Send template"| E["Meta Cloud API v23.0"]
+    E -->|"4. WhatsApp notification"| F["Support Team WhatsApp"]
+    
+    B -->|"Fallback: wa.me link"| G["Direct WhatsApp (new tab)"]
+    
+    H["Meta Platform"] -->|"Webhook POST"| I["/api/whatsapp/webhook"]
+    I -->|"Update lead status"| D
+    
+    J["Developer"] -->|"GET"| K["/api/whatsapp/health"]
+    K -->|"Validates config"| L["Status Report"]
+
+    style D fill:#10b981,stroke:#000,color:#000
+    style C fill:#3b82f6,stroke:#000,color:#000
+    style K fill:#f59e0b,stroke:#000,color:#000
+```
+
+---
+
+## Proposed Changes — 6 Files (2 New, 4 Modified)
+
+---
+
+### Component 1: MongoDB Lead Model
+
+#### [NEW] [Lead.ts](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/models/Lead.ts)
+
+A Mongoose model following the exact pattern used in [Brand.ts](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/models/Brand.ts) (`models.X || model<I>('X', Schema)`).
+
+**Purpose:** Persist every lead inquiry regardless of WhatsApp API success/failure. Ensures zero lead loss.
+
+```typescript
+import mongoose, { Schema, model, models } from 'mongoose';
+
+export interface ILead {
+  _id?: string;
+  name: string;
+  phone: string;
+  message: string;
+  source: 'whatsapp_widget';
+  whatsappStatus: 'pending' | 'sent' | 'template_sent' | 'delivered' | 'read' | 'failed';
+  whatsappMessageId?: string;
+  whatsappError?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const LeadSchema = new Schema<ILead>(
+  {
+    name:              { type: String, required: true },
+    phone:             { type: String, required: true },
+    message:           { type: String, required: true },
+    source:            { type: String, default: 'whatsapp_widget' },
+    whatsappStatus:    { type: String, enum: ['pending','sent','template_sent','delivered','read','failed'], default: 'pending' },
+    whatsappMessageId: { type: String, default: '' },
+    whatsappError:     { type: String, default: '' },
+  },
+  { timestamps: true }
+);
+
+const Lead = models.Lead || model<ILead>('Lead', LeadSchema);
+export default Lead;
+```
+
+**Fields explained:**
+
+| Field | Purpose |
+|-------|---------|
+| `name` | Visitor's name from widget lead form |
+| `phone` | Visitor's phone from widget lead form |
+| `message` | The inquiry text |
+| `source` | Always `'whatsapp_widget'` — future-proofs for other lead sources |
+| `whatsappStatus` | Tracks lifecycle: `pending` → `sent`/`template_sent` → `delivered` → `read` / `failed` |
+| `whatsappMessageId` | Meta's message ID (e.g., `wamid.xxx`) — used by webhook to update status |
+| `whatsappError` | Stores error message if API call fails — for debugging |
+
+---
+
+### Component 2: Send API Route (Complete Rewrite)
+
+#### [MODIFY] [route.ts](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/app/api/whatsapp/send/route.ts)
+
+**Current problems:**
+1. Tries free-form text message first → always fails (24-hour window never open)
+2. Falls back to `hello_world` template with zero parameters → support team gets "Hello World" with no context
+3. No lead persistence → leads are lost on failure
+4. No meaningful error responses
+
+**New approach (complete replacement):**
+
+```typescript
+import { NextResponse } from 'next/server';
+import dbConnect from '@/lib/db';
+import Lead from '@/models/Lead';
+
+interface SendRequest {
+  message: string;
+  name?: string;
+  userPhone?: string;
+}
+
+export async function POST(req: Request) {
+  try {
+    const body: SendRequest = await req.json();
+    const { message, name, userPhone } = body;
+
+    // ── 1. Validate input ──
+    if (!message?.trim()) {
+      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+    }
+
+    // ── 2. Save lead to MongoDB FIRST (never lose a lead) ──
+    await dbConnect();
+    const lead = await Lead.create({
+      name: name?.trim() || 'Unknown',
+      phone: userPhone?.trim() || 'Not provided',
+      message: message.trim(),
+      source: 'whatsapp_widget',
+      whatsappStatus: 'pending',
+    });
+    console.log('[WhatsApp] Lead saved to MongoDB:', lead._id);
+
+    // ── 3. Load & validate configuration ──
+    const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID?.trim();
+    const ACCESS_TOKEN    = process.env.WHATSAPP_ACCESS_TOKEN?.trim();
+    const RECIPIENT_PHONE = process.env.WHATSAPP_RECIPIENT_PHONE?.trim();
+    const TEMPLATE_NAME   = process.env.WHATSAPP_TEMPLATE_NAME?.trim() || 'hello_world';
+
+    if (!PHONE_NUMBER_ID || !ACCESS_TOKEN || !RECIPIENT_PHONE) {
+      console.warn('[WhatsApp] Missing API configuration — lead saved but message not sent');
+      return NextResponse.json({
+        success: true,
+        leadId: lead._id,
+        whatsappSent: false,
+        reason: 'WhatsApp API not configured. Lead has been saved.',
+      });
+    }
+
+    // ── 4. Build API request ──
+    const apiUrl = `https://graph.facebook.com/v23.0/${PHONE_NUMBER_ID}/messages`;
+    const headers = {
+      'Authorization': `Bearer ${ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    };
+
+    // ── 5. Build template payload ──
+    // Construct wa.me reply link for support team to click
+    const cleanPhone = (userPhone || '').replace(/[^0-9]/g, '');
+    const replyLink  = cleanPhone ? `https://wa.me/${cleanPhone}` : 'Not provided';
+
+    let payload: Record<string, any>;
+
+    if (TEMPLATE_NAME === 'hello_world') {
+      // hello_world has NO parameters — just sends "Hello World"
+      payload = {
+        messaging_product: 'whatsapp',
+        to: RECIPIENT_PHONE,
+        type: 'template',
+        template: {
+          name: 'hello_world',
+          language: { code: 'en_US' },
+        },
+      };
+    } else {
+      // Custom template with 4 parameters: {{1}}=name, {{2}}=phone, {{3}}=message, {{4}}=replyLink
+      payload = {
+        messaging_product: 'whatsapp',
+        to: RECIPIENT_PHONE,
+        type: 'template',
+        template: {
+          name: TEMPLATE_NAME,
+          language: { code: 'en_US' },
+          components: [
+            {
+              type: 'body',
+              parameters: [
+                { type: 'text', text: name?.trim() || 'Unknown' },
+                { type: 'text', text: userPhone?.trim() || 'Not provided' },
+                { type: 'text', text: message.trim().substring(0, 500) },
+                { type: 'text', text: replyLink },
+              ],
+            },
+          ],
+        },
+      };
+    }
+
+    // ── 6. Send to Meta ──
+    console.log(`[WhatsApp] Sending template "${TEMPLATE_NAME}" to ${RECIPIENT_PHONE}...`);
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+
+    if (response.ok) {
+      // Update lead with success status
+      const messageId = data?.messages?.[0]?.id || '';
+      await Lead.findByIdAndUpdate(lead._id, {
+        whatsappStatus: TEMPLATE_NAME === 'hello_world' ? 'template_sent' : 'sent',
+        whatsappMessageId: messageId,
+      });
+      console.log(`[WhatsApp] ✅ Message sent. ID: ${messageId}`);
+
+      return NextResponse.json({
+        success: true,
+        leadId: lead._id,
+        whatsappSent: true,
+        messageId,
+      });
+    } else {
+      // Update lead with failure
+      const errorMsg = data?.error?.message || 'Unknown Meta API error';
+      await Lead.findByIdAndUpdate(lead._id, {
+        whatsappStatus: 'failed',
+        whatsappError: errorMsg,
+      });
+      console.error(`[WhatsApp] ❌ API Error:`, data?.error);
+
+      return NextResponse.json({
+        success: true,        // Lead is still saved!
+        leadId: lead._id,
+        whatsappSent: false,
+        reason: errorMsg,
+      }, { status: 200 });    // 200 because the lead IS saved, just WhatsApp failed
+    }
+
+  } catch (error) {
+    console.error('[WhatsApp] Internal error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error', whatsappSent: false },
+      { status: 500 }
+    );
+  }
+}
+```
+
+**Key design decisions:**
+- **Lead saved BEFORE API call** — even if Meta is completely down, the lead is in MongoDB
+- **Returns `success: true` even if WhatsApp fails** — because the lead IS captured; frontend shows "message received" either way
+- **Supports both `hello_world` (no params) and custom template (with params)** — so it works during the transition period before your custom template is approved
+- **Message truncated to 500 chars** — Meta template parameters have length limits
+- **Updates lead status after API response** — for tracking in admin panel later
+
+---
+
+### Component 3: Webhook Route (Enhanced)
+
+#### [MODIFY] [route.ts](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/app/api/whatsapp/webhook/route.ts)
+
+**Current state:** Only logs to console — no persistence.
+
+**Changes:**
+- Save incoming messages as new leads (from people who message the business directly)
+- Update lead delivery status (`delivered`, `read`, `failed`) using `whatsappMessageId`
+
+```typescript
+import { NextResponse } from 'next/server';
+import dbConnect from '@/lib/db';
+import Lead from '@/models/Lead';
+
+// ── GET: Webhook verification (unchanged) ──
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const mode      = searchParams.get('hub.mode');
+  const token     = searchParams.get('hub.verify_token');
+  const challenge = searchParams.get('hub.challenge');
+
+  const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN;
+
+  if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    console.log('[Webhook] ✅ Verified');
+    return new NextResponse(challenge, { status: 200 });
+  } else {
+    console.error('[Webhook] ❌ Verification failed');
+    return new NextResponse('Forbidden', { status: 403 });
+  }
+}
+
+// ── POST: Handle incoming events ──
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+
+    if (body.object !== 'whatsapp_business_account') {
+      return new NextResponse('Not Found', { status: 404 });
+    }
+
+    await dbConnect();
+
+    for (const entry of body.entry || []) {
+      for (const change of entry.changes || []) {
+        const value = change.value;
+
+        // ── Incoming messages ──
+        if (value.messages) {
+          for (const msg of value.messages) {
+            const from    = msg.from;            // sender's phone number
+            const msgBody = msg.text?.body || ''; // message text (if text type)
+            const msgType = msg.type;             // text, image, document, etc.
+
+            console.log(`[Webhook] Incoming ${msgType} from ${from}: ${msgBody}`);
+
+            // Save as a new lead (direct WhatsApp message to business)
+            await Lead.create({
+              name: value.contacts?.[0]?.profile?.name || 'WhatsApp User',
+              phone: from,
+              message: msgBody || `[${msgType} message]`,
+              source: 'whatsapp_widget',
+              whatsappStatus: 'sent',
+              whatsappMessageId: msg.id,
+            });
+          }
+        }
+
+        // ── Status updates (delivered, read, failed) ──
+        if (value.statuses) {
+          for (const status of value.statuses) {
+            const messageId  = status.id;
+            const newStatus  = status.status; // sent, delivered, read, failed
+
+            console.log(`[Webhook] Status update: ${messageId} → ${newStatus}`);
+
+            // Map Meta status to our schema
+            const statusMap: Record<string, string> = {
+              'sent': 'sent',
+              'delivered': 'delivered',
+              'read': 'read',
+              'failed': 'failed',
+            };
+
+            const mappedStatus = statusMap[newStatus];
+            if (mappedStatus && messageId) {
+              await Lead.findOneAndUpdate(
+                { whatsappMessageId: messageId },
+                {
+                  whatsappStatus: mappedStatus,
+                  ...(newStatus === 'failed' ? {
+                    whatsappError: status.errors?.[0]?.title || 'Delivery failed'
+                  } : {})
+                }
+              );
+            }
+          }
+        }
+      }
+    }
+
+    // Always return 200 quickly to prevent Meta retries
+    return NextResponse.json({ status: 'ok' }, { status: 200 });
+  } catch (error) {
+    console.error('[Webhook] Error:', error);
+    // Still return 200 — otherwise Meta will keep retrying
+    return NextResponse.json({ status: 'error' }, { status: 200 });
+  }
+}
+```
+
+> [!NOTE]
+> The POST error handler returns `200` intentionally. If we return `500`, Meta retries the same event repeatedly, causing duplicate leads and flooding logs.
+
+---
+
+### Component 4: Health Check Endpoint
+
+#### [NEW] [route.ts](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/app/api/whatsapp/health/route.ts)
+
+**Purpose:** A diagnostic endpoint to verify all WhatsApp configuration is correct. Hit `GET /api/whatsapp/health` to see status.
+
+```typescript
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  const config = {
+    mode:             process.env.NEXT_PUBLIC_WHATSAPP_MODE || 'not set',
+    phoneNumberId:    process.env.WHATSAPP_PHONE_NUMBER_ID ? '✅ Set' : '❌ Missing',
+    accessToken:      process.env.WHATSAPP_ACCESS_TOKEN ? `✅ Set (${process.env.WHATSAPP_ACCESS_TOKEN.length} chars)` : '❌ Missing',
+    businessAccountId:process.env.WHATSAPP_BUSINESS_ACCOUNT_ID ? '✅ Set' : '❌ Missing',
+    recipientPhone:   process.env.WHATSAPP_RECIPIENT_PHONE || '❌ Missing',
+    templateName:     process.env.WHATSAPP_TEMPLATE_NAME || '❌ Missing (will use hello_world)',
+    webhookToken:     process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN ? '✅ Set' : '❌ Missing',
+  };
+
+  // Optionally validate token with Meta's debug endpoint
+  let tokenValid = 'not checked';
+  const token = process.env.WHATSAPP_ACCESS_TOKEN?.trim();
+  if (token) {
+    try {
+      const res = await fetch(
+        `https://graph.facebook.com/debug_token?input_token=${token}&access_token=${token}`
+      );
+      const data = await res.json();
+      if (data?.data?.is_valid) {
+        tokenValid = `✅ Valid (expires: ${data.data.expires_at === 0 ? 'Never' : new Date(data.data.expires_at * 1000).toISOString()})`;
+      } else {
+        tokenValid = `❌ Invalid — ${data?.data?.error?.message || 'Token rejected by Meta'}`;
+      }
+    } catch {
+      tokenValid = '⚠️ Could not reach Meta API';
+    }
+  }
+
+  return NextResponse.json({
+    status: 'WhatsApp Integration Health Check',
+    timestamp: new Date().toISOString(),
+    config,
+    tokenValidation: tokenValid,
+  });
+}
+```
+
+**Example response:**
+```json
+{
+  "status": "WhatsApp Integration Health Check",
+  "timestamp": "2026-05-12T10:30:00.000Z",
+  "config": {
+    "mode": "api",
+    "phoneNumberId": "✅ Set",
+    "accessToken": "✅ Set (180 chars)",
+    "recipientPhone": "447895840565",
+    "templateName": "website_lead_notification",
+    "webhookToken": "✅ Set"
+  },
+  "tokenValidation": "✅ Valid (expires: Never)"
+}
+```
+
+---
+
+### Component 5: WhatsApp Widget (Enhanced)
+
+#### [MODIFY] [WhatsAppWidget.tsx](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/components/ui/WhatsAppWidget.tsx)
+
+**Changes:**
+
+**1. Add `toast` from sonner** (already in project, used in [EnquiryModal.tsx](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/src/components/pages/home/components/EnquiryModal.tsx)):
+```diff
+ import { cn } from "@/lib/utils";
++import { toast } from "sonner";
+```
+
+**2. Add `wa.me` link fallback for `'link'` mode** (currently empty else branch):
+```diff
+ const handleSend = async () => {
+     if (!message.trim()) return;
+     const mode = process.env.NEXT_PUBLIC_WHATSAPP_MODE || 'link';
+
+     if (mode === 'api') {
+         setIsSending(true);
+         try {
+             const response = await fetch('/api/whatsapp/send', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({
+                     message,
+                     name: userName,
+                     userPhone: userPhone
+                 }),
+             });
+
++            const data = await response.json();
++
+-            if (response.ok) {
++            if (response.ok && data.success) {
+                 setIsSent(true);
+                 setMessage("");
++                toast.success("Your inquiry has been received!", {
++                    description: data.whatsappSent
++                        ? "Our team will respond on WhatsApp shortly."
++                        : "We've saved your message and will contact you soon.",
++                });
+                 setTimeout(() => setIsSent(false), 3000);
+             } else {
+-                console.error("Failed to send message via API");
++                // API failed — fallback to wa.me link
++                toast.error("Could not send via API. Opening WhatsApp directly...");
++                openWhatsAppLink();
+             }
+         } catch (error) {
+-            console.error("Error sending message:", error);
++            toast.error("Connection error. Opening WhatsApp directly...");
++            openWhatsAppLink();
+         } finally {
+             setIsSending(false);
+         }
+-    }
++    } else {
++        // Direct link mode — open wa.me in new tab
++        openWhatsAppLink();
++    }
+ };
+
++const openWhatsAppLink = () => {
++    const leadInfo = userName ? `[${userName} | ${userPhone}]\n` : '';
++    const fullMessage = `${leadInfo}${message}`;
++    const encoded = encodeURIComponent(fullMessage);
++    window.open(`https://wa.me/${phoneNumber}?text=${encoded}`, '_blank');
++    setMessage("");
++    setIsSent(true);
++    setTimeout(() => setIsSent(false), 3000);
++};
+```
+
+**3. Update the success feedback message** to be more informative:
+```diff
+-<p className="text-sm font-medium text-white">Strategy request dispatched successfully.</p>
++<p className="text-sm font-medium text-white">Inquiry received — we'll reply shortly! ✓</p>
+```
+
+**4. Extend the success feedback duration** from 2s to 3s to match the toast:
+```diff
+-setTimeout(() => setIsSent(false), 2000);
++setTimeout(() => setIsSent(false), 3000);
+```
+
+---
+
+### Component 6: `.env` Update
+
+#### [MODIFY] [.env](file:///c:/Users/DES%2002/Documents/Aditya/FMCG/fmcg-next-vercel/.env)
+
+Replace the existing WhatsApp block (lines 4–17) with clean, documented values:
+
+```diff
+-# To use the background API (Professional Chat Box)
+-NEXT_PUBLIC_WHATSAPP_MODE='api'
+-# OR to use the direct WhatsApp Link (Maximum Reliability)
+-# NEXT_PUBLIC_WHATSAPP_MODE='link'
+-
+-# WhatsApp Business API Credentials
+-WHATSAPP_ACCESS_TOKEN="EAANYuyfsiEwBRYpH..."
+-# NOTE: These should be numeric IDs.
+-WHATSAPP_PHONE_NUMBER_ID="1151407064703159"
+-WHATSAPP_BUSINESS_ACCOUNT_ID="1551767452963638"
+-WHATSAPP_RECIPIENT_PHONE="447895840565"
+-# WHATSAPP_TEMPLATE_NAME="fmcg_exchange_"
+-WHATSAPP_TEMPLATE_NAME="hello_world"
+-WHATSAPP_WEBHOOK_VERIFY_TOKEN="fmcg_exchange_whatsapp_secure_webhook_2026"
++# ─── WhatsApp Business API ───────────────────────────────────────
++# Mode: 'api' = Cloud API (recommended) | 'link' = wa.me redirect fallback
++NEXT_PUBLIC_WHATSAPP_MODE='api'
++
++# Permanent System User Token (from Meta Business Settings → System Users)
++WHATSAPP_ACCESS_TOKEN="EAAxxxxxxxxxx_REPLACE_WITH_YOUR_PERMANENT_TOKEN"
++
++# From Meta App Dashboard → WhatsApp → API Setup
++WHATSAPP_PHONE_NUMBER_ID="000000000000000_REPLACE"
++WHATSAPP_BUSINESS_ACCOUNT_ID="000000000000000_REPLACE"
++
++# Support team's WhatsApp number (with country code, no + sign)
++WHATSAPP_RECIPIENT_PHONE="447895840565"
++
++# Approved custom template name (or 'hello_world' for testing)
++WHATSAPP_TEMPLATE_NAME="website_lead_notification"
++
++# Must match the Verify Token entered in Meta Dashboard → Webhook config
++WHATSAPP_WEBHOOK_VERIFY_TOKEN="fmcg_exchange_whatsapp_secure_webhook_2026"
+```
+
+> [!IMPORTANT]
+> You must replace the `_REPLACE` placeholder values with your actual credentials from Meta Dashboard. The `WHATSAPP_RECIPIENT_PHONE` already has the correct value — keep it as is.
+
+---
+
+## File Summary Table
+
+| # | Action | File | Purpose |
+|---|--------|------|---------|
+| 1 | **NEW** | `src/models/Lead.ts` | MongoDB model for lead persistence |
+| 2 | **REWRITE** | `src/app/api/whatsapp/send/route.ts` | Save lead → send template → update status |
+| 3 | **REWRITE** | `src/app/api/whatsapp/webhook/route.ts` | Persist incoming messages + delivery status updates |
+| 4 | **NEW** | `src/app/api/whatsapp/health/route.ts` | Config validation + token health check |
+| 5 | **MODIFY** | `src/components/ui/WhatsAppWidget.tsx` | Add toast, wa.me fallback, better error handling |
+| 6 | **MODIFY** | `.env` | Clean up and add placeholder values |
+
+---
+
+## Execution Order
+
+```mermaid
+graph LR
+    A["1. Lead.ts model"] --> B["2. send/route.ts"]
+    A --> C["3. webhook/route.ts"]
+    D["4. health/route.ts"] -.->|"independent"| A
+    B --> E["5. WhatsAppWidget.tsx"]
+    E --> F["6. .env update"]
+    F --> G["7. Test health endpoint"]
+    G --> H["8. Test widget E2E"]
+```
+
+## Verification Plan
+
+### Automated Checks
+1. **Health endpoint:** `GET http://localhost:3000/api/whatsapp/health` → verify all config shows ✅
+2. **Send test:** Submit through widget → check MongoDB `leads` collection for new document
+3. **Webhook verify:** `GET /api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=fmcg_exchange_whatsapp_secure_webhook_2026&hub.challenge=test123` → should return `test123`
+4. **Link fallback:** Set `NEXT_PUBLIC_WHATSAPP_MODE='link'` → widget should open `wa.me` in new tab
+
+### Manual Checks
+1. Open site → click WhatsApp widget → fill lead form → send message
+2. Check browser console for `[WhatsApp] ✅ Message sent` log
+3. Verify toast notification appears (success or fallback)
+4. Check MongoDB Atlas for the lead document with correct `whatsappStatus`
+5. Check support team's WhatsApp for incoming template message

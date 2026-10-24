@@ -1,0 +1,58 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_fmcg
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo_express_fmcg
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://admin:password@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+    depends_on:
+      - mongodb
+
+  mongo-express-prod:
+    image: mongo-express:latest
+    container_name: mongo_express_fmcg_prod
+    restart: always
+    ports:
+      - "8082:8081"
+    environment:
+      # Connection to Production (Tailscale)
+      ME_CONFIG_MONGODB_URL: mongodb://defender:p($%5EB7q1J2O6hLvl@mongo-mongo-fmcg.tailb5282e.ts.net:27017/fmcg_db?authSource=admin
+      # Login for the UI
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio_fmcg
+    restart: always
+    ports:
+      - "9100:9000"
+      - "9101:9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  mongodb_data:
+  minio_data:
