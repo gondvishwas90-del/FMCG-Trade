@@ -17,11 +17,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "FMCG Exchange | Global FMCG Supply. Built for Trade.",
-  description: "FMCG Exchange is a commercial B2B platform for FMCG sourcing, international distribution, and trade supply. Source established brands for bulk and commercial quantities.",
+  title: "FMCG Exchange | Strategic Consultency & Global Trade Platform | FMCG Exchange",
+  description: "FMCG Exchange transforms brands through strategic design, packaging innovation, and digital supply chain solutions. Global distribution excellence for modern brands.",
   openGraph: {
-    title: "FMCG Exchange | Global FMCG Supply. Built for Trade.",
-    description: "Commercial B2B FMCG supply, sourcing, and international distribution partner for verified business buyers.",
+    title: "FMCG Exchange | Strategic Consultency & Global Trade Platform | FMCG Exchange",
+    description: "FMCG Exchange transforms brands through strategic design, packaging innovation, and digital supply chain solutions. Global distribution excellence for modern brands.",
     url: "https://www.fmcg-exchange.com",
     images: [
       {
@@ -56,7 +56,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      <h1 className="sr-only">FMCG Exchange | Global FMCG Supply & Commercial Trade</h1>
+      <h1 className="sr-only">FMCG Exchange | Strategic Consultency & Global Trade Platform</h1>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

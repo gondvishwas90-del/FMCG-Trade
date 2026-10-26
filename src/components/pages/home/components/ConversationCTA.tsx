@@ -32,21 +32,21 @@ export function ConversationCTA() {
             <div className="absolute inset-0 border-4 md:border-[6px] border-muted rounded-[2rem] md:rounded-[3rem] pointer-events-none" />
 
             <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-tighter mb-6 md:mb-8 leading-[0.95]">
-              Looking for an FMCG <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-600 to-teal-600">Trade Partner?</span>
+              Let’s Start a <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-600 to-teal-600">Conversation.</span>
             </h2>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed font-light">
-              Tell us what your business needs. Our trade team will review your commercial specifications, volume requirements, and discuss suitable FMCG supply opportunities.
+              Trade partnerships begin with direct dialogue. Reach out to discuss your requirements, portfolio needs, or market access objectives.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full sm:w-auto">
               <CTAButton href="/contact" primary>
-                Submit a Trade Enquiry
+                Contact Sales
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </CTAButton>
 
               <CTAButton href="/categories">
-                Explore Trade Portfolio
+                View Portfolio
               </CTAButton>
             </div>
 

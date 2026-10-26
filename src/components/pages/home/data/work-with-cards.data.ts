@@ -1,31 +1,31 @@
 import type { WorkWithCard } from '../types/work-with.types';
 
 /**
- * Commercial Buyer Categories Data
+ * Partner Categories Data - Original Live Site
  */
 export const workWithCards: WorkWithCard[] = [
     {
         id: 1,
         icon: 'Globe',
-        title: "Importers & Trade Houses",
-        description: "Cross-border commercial trade partners managing international procurement and bulk container movement across global trade lanes.",
+        title: "Brand Owners",
+        description: "Manufacturers and brand owners seeking distribution partners and market access",
     },
     {
         id: 2,
         icon: 'Warehouse',
-        title: "FMCG Distribution Networks",
-        description: "Regional and national distribution partners sourcing continuous pallet allocations and verified brand inventory.",
+        title: "Distributors & Wholesalers",
+        description: "Established distribution networks looking to expand their product portfolios",
     },
     {
         id: 3,
-        icon: 'Store',
-        title: "Retailers Purchasing for Resale",
-        description: "Supermarkets, independent retail chains, and commercial merchants purchasing bulk FMCG stock for resale—never individual consumers.",
+        icon: 'Package',
+        title: "Importers & Exporters",
+        description: "Cross-border trade specialists managing international product movement",
     },
     {
         id: 4,
-        icon: 'Package',
-        title: "Duty-Free & Hospitality Operators",
-        description: "Airport travel-retailers, hotel groups, and bonded concessionaires requiring duty-free compliant SKUs and certified provenance.",
+        icon: 'Store',
+        title: "Bulk & Pallet-Level Buyers",
+        description: "Volume buyers requiring consistent supply and trade-level coordination",
     },
 ];

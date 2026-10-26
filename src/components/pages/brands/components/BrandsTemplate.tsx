@@ -34,8 +34,8 @@ export default function BrandsTemplate({ brands }: { brands: Brand[] }) {
                             transition={{ delay: 0.1 }}
                             className="text-[clamp(3rem,8vw,6rem)] md:text-8xl font-bold tracking-tighter text-foreground mb-6 md:mb-8 leading-[0.9]"
                         >
-                            Global <br />
-                            <span className="text-muted-foreground">Trade Portfolio.</span>
+                            Global Brands. <br />
+                            <span className="text-muted-foreground">Commercial Opportunities.</span>
                         </motion.h1>
 
                         <motion.p
@@ -44,7 +44,7 @@ export default function BrandsTemplate({ brands }: { brands: Brand[] }) {
                             transition={{ delay: 0.2 }}
                             className="text-lg md:text-2xl text-muted-foreground max-w-2xl font-medium leading-relaxed"
                         >
-                            Access a verified network of 250+ independent brands optimized for export, private label, and market entry.
+                            Explore our FMCG brand portfolio for B2B trade & commercial supply.
                         </motion.p>
                     </div>
 

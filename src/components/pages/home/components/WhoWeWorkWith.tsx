@@ -32,11 +32,11 @@ export function WhoWeWorkWith() {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-4xl md:text-6xl font-bold text-foreground tracking-[-0.02em] leading-[1.1] mb-6 text-balance">
-                            Supporting Businesses <br />
-                            <span className="bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Across the FMCG Supply Chain.</span>
+                            We build the bridges <br />
+                            <span className="bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">between production and consumption.</span>
                         </h2>
                         <p className="text-lg text-muted-foreground leading-relaxed mb-8 text-pretty">
-                            Built exclusively for commercial trade. We supply business buyers purchasing stock for distribution, trade, and retail resale—not individual consumers.
+                            Our platform is engineered for the architects of global trade.
                         </p>
                         <div className="hidden lg:block">
                             <div className="h-1 w-24 bg-linear-to-r from-emerald-600 to-teal-600 rounded-full opacity-80" />
@@ -81,7 +81,7 @@ export function WhoWeWorkWith() {
                                         </p>
 
                                         <div className="flex items-center text-sm font-bold text-foreground/80 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                                            <span>Discuss Trade Supply</span>
+                                            <span>Partner with us</span>
                                             <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                                         </div>
                                     </div>

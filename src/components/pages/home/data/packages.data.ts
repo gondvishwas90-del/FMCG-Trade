@@ -1,15 +1,15 @@
 import type { PackageCard } from '../types/package.types';
 
 /**
- * Showcase packages data - Balanced Commercial Sourcing & Trade Terms
+ * Showcase packages data - Original Live Site Content
  */
 export const packages: PackageCard[] = [
     {
         id: 1,
-        title: 'FMCG Brand Sourcing',
-        tagline: 'Commercial FMCG supply of leading global spirits & FMCG brands.',
-        bodyText: 'We supply high-volume commercial quantities of internationally recognised spirits and FMCG brands for verified business buyers, including distributors, bonded warehouses, and travel‑retail operators.\n\nAll commercial stock is sourced through authorised channels—available in case, pallet, and container volumes. Pricing, allocation, and minimum order terms are confirmed directly through our trade desk.',
-        features: ['Commercial FMCG Supply', 'Case & Pallet Volumes', 'Authorised Trade Channels'],
+        title: 'Global Spirits Portfolios',
+        tagline: 'Supplying leading global spirits portfolios.',
+        bodyText: 'We supply a wide range of internationally recognised spirits from major global portfolios, including lines from Diageo, Pernod Ricard, Bacardi, Beam Suntory, Brown‑Forman, Rémy Cointreau, and LVMH (Hennessy). Our focus is on high‑rotation duty‑free SKUs such as premium whisky, vodka, gin, rum, and cognac. All products are sourced through authorised channels, ensuring authenticity, competitive pricing, and consistent availability for distributors, bonded warehouses, and travel‑retail operators.',
+        features: ['Global Spirits Portfolios', 'Duty-Free High Rotation', 'Authorised Channels'],
         image: '/section-2/supplying-leading-global-spirits-portfolios.png',
         color: 'bg-amber-600',
         showCTA: true,
@@ -18,10 +18,10 @@ export const packages: PackageCard[] = [
     },
     {
         id: 2,
-        title: 'International Trade Lanes',
-        tagline: 'Cross-border FMCG distribution across major commercial corridors.',
-        bodyText: 'We operate across the Middle East, Asia, Europe, South America, and the CIS region, supplying duty‑free zones, bonded warehouses, travel‑retail operators, and regional trade distributors.\n\nOur understanding of local trade compliance, volume demand, and customs routing enables efficient product movement into high‑growth commercial markets with full provenance.',
-        features: ['Global Trade Lanes', 'Duty-Free & Free Zones', 'FMCG Distribution Access'],
+        title: 'Global Trade Lanes',
+        tagline: 'Strong presence across key global trade lanes.',
+        bodyText: 'We operate across the Middle East, Asia, Europe, South America and the CIS region, supplying duty‑free zones, bonded warehouses, travel‑retail operators, and regional wholesalers. Our understanding of local regulations, demand patterns, and logistics routes allows us to move products efficiently into high‑growth markets. Whether supporting established distribution networks or opening new channels, we ensure smooth access to regions with strong demand for premium spirits.',
+        features: ['Middle East & Asia', 'Europe & South America', 'CIS & Duty-Free Zones'],
         image: '/section-2/strong-presence-across-key-global-trade-lanes.png',
         color: 'bg-blue-600',
         showCTA: true,
@@ -29,10 +29,10 @@ export const packages: PackageCard[] = [
     },
     {
         id: 3,
-        title: 'Bonded Warehousing & Logistics',
-        tagline: 'Trusted bonded warehousing, pallet consolidation & export handling.',
-        bodyText: 'We operate through established bonded warehouses and logistics partners—including Loendersloot, Newcorp, PLG, and Reftrans—maintaining active accounts to support secure storage, consolidation, and export preparation.\n\nFrom mixed commercial pallets to full‑container loads, every consignment is managed with strict regulatory compliance, authentic documentation, and coordinated dispatch across international trade routes.',
-        features: ['Under-Bond Storage', 'Pallet & Container Loads', 'Strict Export Compliance'],
+        title: 'Bonded Warehouses',
+        tagline: 'Trusted bonded warehouses and efficient export handling.',
+        bodyText: 'We operate through established bonded warehouses and logistics partners, including Loendersloot, Newcorp, PLG, Reftrans & many more where we maintain active accounts to support secure storage, consolidation, and export preparation. These facilities enable us to handle duty‑free spirits with precision — from mixed pallets to full‑container loads. Every movement is managed with strict compliance, accurate documentation, and coordinated dispatch, ensuring goods flow smoothly and reliably across international trade lanes.',
+        features: ['Loendersloot & Newcorp', 'PLG & Reftrans Accounts', 'Secure Export Preparation'],
         image: '/section-2/trusted-bonded-warehouses-and-efficient-export-handling.png',
         color: 'bg-emerald-600',
         showCTA: true,
@@ -40,10 +40,10 @@ export const packages: PackageCard[] = [
     },
     {
         id: 4,
-        title: 'Trade Assurance & Verification',
-        tagline: 'Verified commercial counterparties, secure transactions, transparent documentation.',
-        bodyText: 'FMCG Exchange operates strictly on a commercial B2B model. We verify every trade counterparty, manage all regulatory documentation, and ensure duty‑free and export requirements are met without compromise.\n\nOur structured approach to trade risk management, proforma invoicing, and document verification gives commercial partners complete confidence in every commercial trade.',
-        features: ['Verified Commercial Counterparties', 'Secure B2B Payment Terms', 'Full Trade Documentation'],
+        title: 'Verified Partners',
+        tagline: 'Verified partners, secure payments, transparent documentation.',
+        bodyText: 'Compliance is central to our trading model. We verify every buyer and supplier, manage all regulatory documentation, and ensure duty‑free and export requirements are met without compromise. Our structured approach to risk management, payment security, and document accuracy gives partners complete confidence in every transaction. With FMCG Exchange Ltd, every trade is protected, transparent, and professionally executed.',
+        features: ['Counterparty Verification', 'Transparent Documentation', 'Strict Compliance'],
         image: '/section-2/verified-partners-secure-payments-transparent-documentation.png',
         color: 'bg-indigo-600',
         showCTA: true,

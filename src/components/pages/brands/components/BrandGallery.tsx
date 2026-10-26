@@ -17,6 +17,9 @@ interface BrandGalleryProps {
 }
 
 export default function BrandGallery({ brands, isCategoryPage = false }: BrandGalleryProps) {
+    // Current requirement: Keep only three cards
+    const displayedBrands = useMemo(() => brands.slice(0, 3), [brands]);
+
     const [queryParams, setQueryParams] = useQueryStates({
         page: parseAsInteger.withDefault(1),
         category: parseAsArrayOf(parseAsString).withDefault([]),
@@ -82,7 +85,7 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
         const categories = new Set<string>();
         const countries = new Set<string>();
         const owners = new Set<string>();
-        brands.forEach(b => {
+        displayedBrands.forEach(b => {
             if (b.category) categories.add(b.category);
             if (b.country) countries.add(b.country);
             if (b.owner?.name) owners.add(b.owner.name);
@@ -96,10 +99,10 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
             countryOptions: Array.from(countries).sort(),
             ownerOptions: Array.from(owners).sort()
         };
-    }, [brands]);
+    }, [displayedBrands]);
 
     const filteredBrands = useMemo(() => {
-        return brands.filter(brand => {
+        return displayedBrands.filter(brand => {
             // Search Query Filter
             if (search) {
                 const query = search.toLowerCase().trim();
@@ -152,7 +155,7 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
 
             return true;
         });
-    }, [filters, search, brands]);
+    }, [filters, search, displayedBrands]);
 
     const totalPages = Math.ceil(filteredBrands.length / PAGE_SIZE);
     const currentBrands = filteredBrands.slice(
@@ -208,7 +211,7 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
 
                 <motion.div
                     layout
-                    className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6 md:gap-x-6 md:gap-y-12"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                 >
                     <AnimatePresence>
                         {currentBrands.map(brand => (
@@ -220,11 +223,13 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
                     </AnimatePresence>
                 </motion.div>
 
-                <PaginationControls
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setCurrentPage}
-                />
+                {totalPages > 1 && (
+                    <PaginationControls
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
+                )}
 
                 {filteredBrands.length === 0 && (
                     <div className="text-center py-24 border-t border-border mt-12">

@@ -57,13 +57,13 @@ export function RelationshipsSection() {
                         className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light mx-auto max-w-4xl space-y-6"
                     >
                         <p>
-                            Our approach to FMCG and spirits commercial trade is grounded in <strong className="text-foreground font-bold">transparency</strong>, <strong className="text-foreground font-bold">verified provenance</strong>, and <strong className="text-foreground font-bold">long-term supply partnerships</strong>.
+                            Our approach to FMCG and spirits trade is grounded in <strong className="text-foreground font-bold">direct engagement</strong>, <strong className="text-foreground font-bold">transparency</strong>, and <strong className="text-foreground font-bold">long-term partnership development</strong>.
                         </p>
                         <p>
-                            We serve qualified commercial buyers—importers, regional distributors, and trade retailers buying for resale—through dedicated trading desks and structured logistics.
+                            We operate through offline conversations, structured introductions, and ongoing relationship support.
                         </p>
                         <p>
-                            Commercial procurement decisions require <strong className="text-foreground font-bold">trust</strong>, <strong className="text-foreground font-bold">regulatory compliance</strong>, and <strong className="text-foreground font-bold">sustained collaboration</strong>—we support trade partners across every international lane.
+                            Trade decisions require <strong className="text-foreground font-bold">trust</strong>, <strong className="text-foreground font-bold">market knowledge</strong>, and <strong className="text-foreground font-bold">sustained collaboration</strong>—we facilitate those connections without shortcuts or empty promises.
                         </p>
                     </m.div>
 

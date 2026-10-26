@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import AnalyticsProvider from "@/components/analytics/AnalyticsProvider";
 import { AnimationProvider } from "@/components/providers/AnimationProvider";
+import { AgentationToolbar } from "@/components/providers/AgentationToolbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -143,6 +144,7 @@ export default function RootLayout({
                 className: "glass-toast font-sans",
               }}
             />
+            <AgentationToolbar />
           </NuqsAdapter>
         </ThemeProvider>
       </body>

@@ -45,32 +45,39 @@ export default function TradeApplicationSection({ brandName }: { brandName?: str
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
-                        <motion.span
+                        <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="inline-block mb-6 text-emerald-400 font-bold tracking-widest uppercase text-sm"
+                            className="flex items-center gap-3 mb-4 md:mb-6"
                         >
-                            Trade Partner Program
-                        </motion.span>
+                            <div className="w-2 h-2 bg-emerald-500 rounded-full" />
+                            <span className="text-xs md:text-sm font-bold tracking-widest uppercase text-muted-foreground">
+                                Trade Partner Program
+                            </span>
+                        </motion.div>
 
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1, duration: 0.6, ease: customEasing }}
-                            className="text-5xl md:text-7xl font-bold mb-8 tracking-tight leading-[0.9]"
+                            className="text-5xl md:text-7xl font-bold mb-4 tracking-tighter text-foreground leading-[0.95]"
                         >
                             Apply for <br />
-                            Trade Access.
+                            <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-600 to-teal-600">
+                                Trade Access.
+                            </span>
                         </motion.h2>
+
+                        <div className="h-1 w-24 bg-emerald-500 mb-6" />
 
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-xl text-muted-foreground mb-12 max-w-lg leading-relaxed"
+                            className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg font-light leading-relaxed"
                         >
                             Essential for retailers, distributors, and hospitality groups. Get exclusive access to pricing, specs, and volume terms.
                         </motion.p>
@@ -83,19 +90,19 @@ export default function TradeApplicationSection({ brandName }: { brandName?: str
                         >
                             <button 
                                 onClick={() => setIsModalOpen(true)}
-                                className="inline-flex items-center gap-3 bg-emerald-500 text-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-emerald-400 transition-all group"
+                                className="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/30 transition-all group"
                             >
                                 Start Application
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </button>
 
-                            <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2">
+                            <p className="mt-4 text-xs md:text-sm text-muted-foreground flex items-center gap-2">
                                 <Check className="w-4 h-4 text-emerald-500" /> No fees. Instant acknowledgement.
                             </p>
                         </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-8">
+                    <div className="grid grid-cols-1 gap-6">
                         {steps.map((step, index) => (
                             <motion.div
                                 key={step.number}
@@ -105,10 +112,10 @@ export default function TradeApplicationSection({ brandName }: { brandName?: str
                                 transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
                                 className="flex items-start gap-6 p-6 border-b border-border"
                             >
-                                <span className="text-4xl font-bold text-muted-foreground/20">{step.number}</span>
+                                <span className="text-4xl md:text-5xl font-mono font-bold text-muted-foreground/30">{step.number}</span>
                                 <div>
-                                    <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
-                                    <p className="text-muted-foreground">{step.description}</p>
+                                    <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-1">{step.title}</h3>
+                                    <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">{step.description}</p>
                                 </div>
                             </motion.div>
                         ))}

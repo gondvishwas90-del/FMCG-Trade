@@ -38,7 +38,7 @@ export function TradeOpportunities() {
                     </m.h2>
                     <div className="h-1 w-24 bg-emerald-500 mb-6" />
                     <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
-                        Explore verified commercial allocations, bonded pallet lots, and FMCG trade opportunities available exclusively for registered business buyers.
+                        Explore our curated selection of verified trade opportunities, hand-picked for maximum growth potential.
                     </p>
                 </div>
 

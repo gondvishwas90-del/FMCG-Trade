@@ -16,6 +16,8 @@ function getNormalizedOwnerId(ownerId?: string): string | undefined {
     return ownerId;
 }
 
+import { fallbackBrands } from "@/components/pages/brands/data/brands.data";
+
 export async function getBrands() {
     try {
         await dbConnect();
@@ -57,10 +59,14 @@ export async function getBrands() {
             };
         });
 
+        if (enhancedBrands.length === 0) {
+            return { success: true, data: serializeList(fallbackBrands) };
+        }
+
         return { success: true, data: serializeList(enhancedBrands) };
     } catch (error: any) {
-        console.error("Error in getBrands:", error);
-        return { success: false, error: error.message };
+        console.error("Error in getBrands, falling back to structured catalogue:", error);
+        return { success: true, data: serializeList(fallbackBrands) };
     }
 }
 
@@ -159,7 +165,13 @@ export async function getBrandById(id: string) {
     try {
         await dbConnect();
         const brand = await Brand.findOne({ id, status: 'active' }).lean();
-        if (!brand) return { success: false, error: 'Brand not found' };
+        if (!brand) {
+            const fallback = fallbackBrands.find(b => b.id === id);
+            if (fallback) {
+                return { success: true, data: serializeDocument(fallback) };
+            }
+            return { success: false, error: 'Brand not found' };
+        }
 
         // Fetch categories to resolve names for display
         const Category = (await import("@/models/Category")).default;
@@ -191,6 +203,10 @@ export async function getBrandById(id: string) {
         return { success: true, data: serializeDocument(enhancedBrand) };
     } catch (error: any) {
         console.error(`Error in getBrandById (${id}):`, error);
+        const fallback = fallbackBrands.find(b => b.id === id);
+        if (fallback) {
+            return { success: true, data: serializeDocument(fallback) };
+        }
         return { success: false, error: error.message };
     }
 }

@@ -63,8 +63,8 @@ export default function BrandFilters({
                                         <SlidersHorizontal className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                     </div>
                                     <div className="hidden lg:flex flex-col">
-                                        <span className="text-[11px] font-black uppercase tracking-[0.3em] text-foreground leading-none">Discovery Hub</span>
-                                        <span className="text-[8px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60 mt-1.5">Elite Portfolio</span>
+                                        <span className="text-[11px] font-bold uppercase tracking-widest text-foreground leading-none">Discovery Hub</span>
+                                        <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground mt-1.5">Elite Portfolio</span>
                                     </div>
                                 </div>
 
@@ -80,10 +80,10 @@ export default function BrandFilters({
                                                 onMouseEnter={() => setActiveTab(tab.type)}
                                                 onClick={() => setActiveTab(activeTab === tab.type ? null : tab.type)}
                                                 className={`
-                                                relative px-4 md:px-6 py-2.5 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-2
+                                                relative px-4 md:px-6 py-2.5 rounded-full text-[10px] md:text-[11px] font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-2
                                                 ${isTabActive
                                                         ? 'text-foreground'
-                                                        : 'text-muted-foreground/60 hover:text-foreground'}
+                                                        : 'text-muted-foreground hover:text-foreground'}
                                             `}
                                             >
                                                 {tab.label}
@@ -127,8 +127,8 @@ export default function BrandFilters({
 
                             <div className="flex items-center gap-4 md:gap-6 shrink-0">
                                 <div className="flex flex-col items-end">
-                                    <span className="text-[14px] md:text-[18px] font-black text-foreground tracking-tighter leading-none">{totalCount}</span>
-                                    <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mt-1">Verified</span>
+                                    <span className="text-[14px] md:text-[18px] font-bold font-mono text-foreground tracking-tight leading-none">{totalCount}</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground mt-1">Verified</span>
                                 </div>
 
                                 {hasActiveFilters && (
@@ -162,7 +162,7 @@ export default function BrandFilters({
                                             <button
                                                 onClick={() => { onFilterChange(activeTab, []); setActiveTab(null); }}
                                                 className={`
-                                                shrink-0 px-8 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all duration-300
+                                                shrink-0 px-8 py-3 rounded-2xl text-[11px] font-bold uppercase tracking-widest transition-all duration-300
                                                 ${activeFilters[activeTab]?.length === 0
                                                         ? 'bg-foreground text-background shadow-2xl'
                                                         : 'bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground'}
@@ -178,7 +178,7 @@ export default function BrandFilters({
                                                         key={opt}
                                                         onClick={() => handleToggleOption(activeTab, opt)}
                                                         className={`
-                                                        shrink-0 px-8 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all duration-300 border
+                                                        shrink-0 px-8 py-3 rounded-2xl text-[11px] font-bold uppercase tracking-widest transition-all duration-300 border
                                                         ${isActive
                                                                 ? 'bg-emerald-600 text-white border-emerald-500 shadow-xl shadow-emerald-500/20'
                                                                 : 'bg-white/5 border-white/5 text-muted-foreground hover:bg-white/10 hover:border-white/20 hover:text-foreground'}
@@ -207,9 +207,9 @@ export default function BrandFilters({
                         className="flex items-center gap-3 px-8 py-4 bg-foreground text-background rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
                     >
                         <SlidersHorizontal className="w-4 h-4" />
-                        <span className="text-[11px] font-black uppercase tracking-[0.2em]">Discovery Controls</span>
+                        <span className="text-[11px] font-bold uppercase tracking-widest">Discovery Controls</span>
                         {hasActiveFilters && (
-                            <div className="flex items-center justify-center min-w-[18px] h-[18px] px-1.5 bg-emerald-500 rounded-full text-[9px] font-black text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] ml-1">
+                            <div className="flex items-center justify-center min-w-[18px] h-[18px] px-1.5 bg-emerald-500 rounded-full text-[9px] font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] ml-1">
                                 {Object.values(activeFilters).reduce((acc, curr) => acc + (curr?.length || 0), 0)}
                             </div>
                         )}
@@ -239,8 +239,8 @@ export default function BrandFilters({
 
                                 <div className="px-8 py-6 flex items-center justify-between border-b border-white/5">
                                     <div>
-                                        <h3 className="text-xl font-black text-foreground tracking-tight">Refine Results</h3>
-                                        <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-muted-foreground/60 mt-1">
+                                        <h3 className="text-xl font-bold text-foreground tracking-tight">Refine Results</h3>
+                                        <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground mt-1">
                                             Viewing {totalCount} verified assets
                                         </p>
                                     </div>
@@ -264,7 +264,7 @@ export default function BrandFilters({
                                             <div className="flex items-center justify-between px-2">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-1 h-3 bg-emerald-500 rounded-full" />
-                                                    <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-foreground/80">{section.label}</h4>
+                                                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-foreground/80">{section.label}</h4>
                                                 </div>
                                                 {activeFilters[section.type]?.length > 0 && (
                                                     <button
@@ -311,7 +311,7 @@ export default function BrandFilters({
                                     <motion.button
                                         whileTap={{ scale: 0.98 }}
                                         onClick={() => setIsMobileFiltersOpen(false)}
-                                        className="w-full h-14 bg-foreground text-background rounded-xl font-black text-[12px] uppercase tracking-[0.25em] shadow-2xl transition-all flex items-center justify-center gap-3"
+                                        className="w-full h-14 bg-foreground text-background rounded-xl font-bold text-xs uppercase tracking-widest shadow-2xl transition-all flex items-center justify-center gap-3"
                                     >
                                         Apply & View Results
                                         <div className="w-px h-4 bg-background/20" />

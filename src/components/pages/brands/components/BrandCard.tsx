@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Package } from "lucide-react";
 import type { Brand } from "../types/brand.types";
 import { springConfig } from "../constants/config";
-
 
 interface BrandCardProps {
     brand: Brand;
@@ -43,26 +42,26 @@ export default function BrandCard({ brand }: BrandCardProps) {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className={`
-                    relative bg-card border border-border group-hover:border-foreground 
-                    transition-colors duration-300 flex flex-col h-full 
-                    rounded-2xl md:rounded-[2rem] overflow-hidden
+                    relative bg-card border border-border group-hover:border-emerald-500/50 
+                    transition-all duration-300 flex flex-col h-full 
+                    rounded-2xl md:rounded-3xl overflow-hidden shadow-xs hover:shadow-lg
                 `}
             >
-                {/* Top Image Section - 4:3 Aspect Ratio */}
+                {/* Top Image Section - 16:10 Aspect Ratio with B2B tags */}
                 <div
                     ref={imageRef}
                     onMouseEnter={() => setIsImageHovered(true)}
                     onMouseLeave={() => setIsImageHovered(false)}
                     onMouseMove={handleMouseMove}
-                    className="relative aspect-[4/3] overflow-hidden bg-muted border-b border-border"
+                    className="relative aspect-[16/10] overflow-hidden bg-muted border-b border-border"
                 >
                     {brand.image ? (
                         <Image
                             src={brand.image}
                             alt={brand.name}
                             fill
-                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center text-muted-foreground font-bold text-2xl">
@@ -70,13 +69,14 @@ export default function BrandCard({ brand }: BrandCardProps) {
                         </div>
                     )}
 
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                    {/* Subtle Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-                    {/* Mobile: Always Visible Discover Button */}
-                    <div className="absolute top-2 right-2 md:hidden z-20">
-                        <div className="w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-foreground flex items-center justify-center shadow-sm">
-                            <ArrowUpRight className="w-4 h-4" />
+                    {/* Mobile: View Specs Button */}
+                    <div className="absolute top-3 right-3 md:hidden z-20">
+                        <div className="px-2.5 py-1 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 text-foreground flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider shadow-xs">
+                            <span>Specs</span>
+                            <ArrowUpRight className="w-3 h-3" />
                         </div>
                     </div>
 
@@ -87,73 +87,89 @@ export default function BrandCard({ brand }: BrandCardProps) {
                     >
                         <motion.button
                             className={`
-                    flex items-center justify-center gap-2 rounded-full px-4 py-2
-                    transition-all duration-300 shadow-sm
-                    ${isImageHovered
-                                    ? "bg-foreground text-background scale-110 opacity-100"
+                                flex items-center justify-center gap-2 rounded-full px-4 py-2
+                                transition-all duration-300 shadow-md
+                                ${isImageHovered
+                                    ? "bg-foreground text-background scale-105 opacity-100"
                                     : "bg-card text-foreground opacity-0 scale-50"}
-                `}
+                            `}
                         >
-                            <span className="text-xs font-bold tracking-wider uppercase">Discover</span>
-                            <ArrowUpRight className="w-4 h-4" />
+                            <span className="text-[11px] font-bold tracking-wider uppercase">Trade Specs</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
                         </motion.button>
                     </motion.div>
                 </div>
 
-                {/* Content Section */}
+                {/* Content Section: Professional B2B Spec Layout */}
                 <div className="p-4 md:p-6 flex flex-col flex-1 relative bg-card">
-                    <motion.div layoutId={`brand-content-${brand.id}`} className="flex-1">
+                    <motion.div layoutId={`brand-content-${brand.id}`} className="flex-1 flex flex-col">
+                        
                         {/* Meta Header */}
-                        <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 md:mb-4 gap-2">
+                        <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
                             <div className="flex items-center gap-2">
-                                <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-muted-foreground truncate">
+                                <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground truncate">
                                     {brand.country}
                                 </span>
                                 {brand.owner && (
                                     <>
-                                        <span className="w-1 h-1 rounded-full bg-border md:block hidden" />
-                                        <div className="flex items-center gap-1.5 bg-muted/50 px-2 py-0.5 rounded-md">
-                                            {brand.owner.logo && (
-                                                <div className="relative w-3 h-3 rounded-sm overflow-hidden border bg-white">
-                                                    <Image src={brand.owner.logo} alt={brand.owner.name} fill sizes="12px" className="object-contain p-0.5" />
-                                                </div>
-                                            )}
-                                            <span className="text-[7px] md:text-[9px] font-bold uppercase tracking-tight text-muted-foreground line-clamp-1">
-                                                {brand.owner.name}
-                                            </span>
+                                        <span className="w-1 h-1 rounded-full bg-border" />
+                                        <div className="flex items-center gap-1 bg-muted/60 px-2 py-0.5 rounded text-[9px] font-semibold text-muted-foreground">
+                                            {brand.owner.name}
                                         </div>
                                     </>
                                 )}
                             </div>
-                            <span className="self-start text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-emerald-600 border border-emerald-100 bg-emerald-50 px-2 py-0.5 rounded-full whitespace-nowrap">
-                                {brand.category || 'General'}
-                            </span>
                         </div>
 
-                        <h3 className="text-sm md:text-2xl font-bold text-foreground mb-1.5 md:mb-3 leading-tight group-hover:text-emerald-700 transition-colors line-clamp-2">
+                        {/* Brand Name */}
+                        <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-2 leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                             {brand.name}
                         </h3>
 
-                        <p className="text-muted-foreground text-[10px] md:text-sm leading-relaxed line-clamp-2 font-medium">
+                        {/* Commercial Positioning */}
+                        <p className="text-muted-foreground text-xs font-light leading-relaxed line-clamp-2 mb-4">
                             {brand.positioning}
                         </p>
+
+                        {/* Pack Format */}
+                        <div className="mt-auto pt-3 border-t border-border/60">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
+                                    <Package className="w-3.5 h-3.5 text-emerald-500" />
+                                    Pack Format
+                                </span>
+                            </div>
+
+                            {brand.products && brand.products.length > 0 ? (
+                                <div className="bg-muted/40 hover:bg-muted/60 p-2.5 rounded-xl text-xs flex items-center justify-between gap-3 border border-border/40 transition-colors">
+                                    <span className="font-medium text-foreground truncate text-xs">
+                                        {brand.products[0].name}
+                                    </span>
+                                    <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 shrink-0">
+                                        {brand.products[0].size}
+                                    </span>
+                                </div>
+                            ) : brand.portfolioRanges?.[0]?.typicalFormats ? (
+                                <div className="flex flex-wrap gap-1.5">
+                                    <span className="text-[11px] bg-muted/50 text-foreground px-2.5 py-1 rounded-md border border-border/40 font-medium">
+                                        {brand.portfolioRanges[0].typicalFormats[0]}
+                                    </span>
+                                </div>
+                            ) : (
+                                <div className="bg-muted/30 p-2.5 rounded-xl text-xs text-muted-foreground flex items-center justify-between">
+                                    <span>Format: Case / Pallet Lots</span>
+                                    <span className="text-emerald-500 font-bold">Inquire MOQ</span>
+                                </div>
+                            )}
+                        </div>
+
                     </motion.div>
 
-                    {/* Footer Capabilities */}
-                    <div className="mt-3 md:mt-6 pt-3 md:pt-4 border-t border-border grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-2">
-                        {brand.tradeCapabilities.exportAvailable && (
-                            <div className="text-[8px] md:text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
-                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></div>
-                                <span className="truncate">Export Ready</span>
-                            </div>
-                        )}
-                        {brand.tradeCapabilities.privateLabel && (
-                            <div className="text-[8px] md:text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
-                                <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground shrink-0"></div>
-                                <span className="truncate">Private Label</span>
-                            </div>
-                        )}
+                    <div className="mt-3 pt-2 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:underline">
+                        <span>View Trade Specs & Order Terms</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
+
                 </div>
             </motion.div>
         </Link>

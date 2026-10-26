@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { PortfolioRange } from "@/components/pages/brands/types/brand.types";
 import TradeApplicationSection from "@/components/pages/brands/components/TradeApplicationSection";
-import { ArrowLeft, Check, AlertCircle, ArrowDown, ChevronRight, ChevronLeft, TrendingUp, Quote, Filter, Package, Box, History, Globe, Shield, Target, Building2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, AlertCircle, ArrowDown, ChevronRight, ChevronLeft, TrendingUp, Quote, Filter, Package, Box, History, Globe, Shield, Target, Building2 } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 
@@ -29,28 +28,6 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
 
         return `Most commonly discussed for ${uses.slice(0, 2).join(', ')}${uses.length > 2 ? ', and complementary portfolio building' : ''}.`;
     };
-
-    // Category Resolution
-    const resolvedCategories = useMemo(() => {
-        const names: string[] = [];
-        
-        // Resolve T1
-        categories.forEach((t1: any) => {
-            if (brand.tier1Ids?.includes(t1.id)) names.push(t1.name);
-            
-            // Resolve T2
-            t1.tier2?.forEach((t2: any) => {
-                if (brand.tier2Ids?.includes(t2.id)) names.push(t2.name);
-                
-                // Resolve T3
-                t2.tier3?.forEach((t3: any) => {
-                    if (brand.tier3Ids?.includes(t3.id)) names.push(t3.name);
-                });
-            });
-        });
-        
-        return Array.from(new Set(names));
-    }, [brand, categories]);
 
     return (
         <div className="min-h-screen bg-background selection:bg-emerald-100 dark:selection:bg-emerald-900/30 selection:text-emerald-900 dark:selection:text-emerald-100 pb-32">
@@ -102,46 +79,24 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                         >
-                            <div className="flex flex-wrap items-center gap-3 mb-6">
-                                {resolvedCategories.map((cat: string, idx: number) => (
-                                    <span key={idx} className={`px-4 py-1.5 ${idx === 0 ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-background/40 backdrop-blur-md border border-border/20 text-foreground/90'} text-xs font-bold uppercase tracking-widest rounded-full`}>
-                                        {cat}
-                                    </span>
-                                ))}
-                                {brand.country && (
-                                    <span className="px-4 py-1.5 bg-background/40 backdrop-blur-md border border-border/20 text-foreground/90 text-xs font-bold uppercase tracking-widest rounded-full">
-                                        {brand.country}
-                                    </span>
-                                )}
-                                {brand.owner && (
-                                    <Link
-                                        href={`/brand-owners/${brand.owner.id || brand.brandOwnerId}`}
-                                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-background/60 hover:bg-background/90 backdrop-blur-md border border-border/30 text-foreground/90 hover:text-foreground text-xs font-bold uppercase tracking-widest rounded-full transition-all group"
-                                    >
-                                        <Building2 className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-500 transition-colors" />
-                                        <span>Owner: {brand.owner.name}</span>
-                                    </Link>
-                                )}
-                            </div>
-
-                            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold text-foreground mb-4 md:mb-6 tracking-tight leading-[0.95] md:leading-[0.9]">
+                            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold text-foreground mb-4 md:mb-6 tracking-tighter leading-[0.95] md:leading-[0.9]">
                                 {brand.name}
                             </h1>
 
                             {brand.tagline && (
-                                <p className="text-xl md:text-3xl text-emerald-400 font-serif italic mb-6 animate-pulse-slow">
+                                <p className="text-xl md:text-3xl text-emerald-600 dark:text-emerald-400 font-medium tracking-tight mb-6">
                                     "{brand.tagline}"
                                 </p>
                             )}
 
-                            <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl font-medium leading-relaxed font-serif italic opacity-90">
+                            <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl font-light leading-relaxed opacity-95">
                                 "{brand.positioning}"
                             </p>
 
                             {brand.tradeIntents && brand.tradeIntents.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mt-8">
                                     {brand.tradeIntents.map((intent: string, i: number) => (
-                                        <span key={intent} className="px-3 py-1 bg-white/10 backdrop-blur-sm border border-white/10 text-white/70 text-[10px] font-bold uppercase tracking-wider rounded-md">
+                                        <span key={intent} className="px-3 py-1 bg-white/10 backdrop-blur-sm border border-white/10 text-white/70 text-[10px] font-bold uppercase tracking-widest rounded-md">
                                             {intent.replace('-', ' ')}
                                         </span>
                                     ))}
@@ -158,11 +113,11 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
                 <section id="overview" className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 scroll-mt-32">
                     <div className="md:col-span-4 relative">
                         <div className="md:sticky md:top-32">
-                            <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 md:mb-6 flex items-center gap-3">
+                            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4 md:mb-6 flex items-center gap-3">
                                 <span className="w-8 h-[1px] bg-border"></span>
                                 The Story
                             </h2>
-                            <h3 className="text-2xl md:text-4xl font-serif text-foreground leading-tight mb-4 md:mb-6">
+                            <h3 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground leading-tight mb-4 md:mb-6">
                                 {brand.storyHeadline || "A legacy of Craftsmanship and Distinction."}
                             </h3>
                             <div className="w-12 h-1 bg-emerald-500 rounded-full" />
@@ -170,21 +125,21 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
                     </div>
                     <div className="md:col-span-8 space-y-12">
                         <div className="relative">
-                            <Quote className="absolute -top-4 -left-6 w-12 h-12 text-muted -z-10 transform -scale-x-100" />
-                            <p className="text-xl md:text-2xl text-foreground/80 font-serif leading-relaxed whitespace-pre-line first-letter:text-5xl first-letter:font-bold first-letter:text-emerald-600 dark:first-letter:text-emerald-400 first-letter:float-left first-letter:mr-3 first-letter:mt-[-4px]">
+                            <Quote className="absolute -top-4 -left-6 w-12 h-12 text-muted -z-10 transform -scale-x-100 opacity-40" />
+                            <p className="text-lg md:text-xl text-foreground/80 font-light leading-relaxed whitespace-pre-line">
                                 {brand.storyDescription || brand.description}
                             </p>
                         </div>
 
-                        <div className="bg-card border border-border p-8 md:p-10 rounded-2xl shadow-2xl relative overflow-hidden group">
+                        <div className="bg-card border border-border p-8 md:p-10 rounded-2xl shadow-xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all duration-700" />
 
                             <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-4 text-emerald-400">
+                                <div className="flex items-center gap-3 mb-4 text-emerald-500">
                                     <TrendingUp className="w-5 h-5" />
-                                    <h3 className="text-xs font-bold uppercase tracking-[0.2em]">Trade Analyst Verdict</h3>
+                                    <h3 className="text-xs font-bold uppercase tracking-widest">Trade Analyst Verdict</h3>
                                 </div>
-                                <p className="text-lg md:text-2xl text-card-foreground leading-relaxed font-serif italic text-balance">
+                                <p className="text-lg md:text-xl text-card-foreground leading-relaxed font-light text-balance">
                                     "{brand.tradeAnalystVerdict || getBestTradeUse()}"
                                 </p>
                             </div>
@@ -194,45 +149,7 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
 
                 {/* 2. Product Showcase */}
                 {brand.products && brand.products.length > 0 && (
-                    <section id="products" className="scroll-mt-32">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                            <div>
-                                <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-3">
-                                    <Package className="w-4 h-4 text-emerald-500" />
-                                    The Portfolio
-                                </h2>
-                                <h3 className="text-4xl md:text-6xl font-bold tracking-tight">Product Showcase</h3>
-                            </div>
-                            <p className="text-muted-foreground max-w-sm text-lg italic">
-                                Exploring the range of expressions and formats available for trade.
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {brand.products.map((product: any, idx: number) => (
-                                <ProductCard key={product.name} product={product} />
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                {/* 3. Portfolio Ranges */}
-                {brand.portfolioRanges && brand.portfolioRanges.length > 0 && (
-                    <section id="ranges" className="scroll-mt-32">
-                        <div className="mb-16">
-                            <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-3">
-                                <Box className="w-4 h-4 text-emerald-500" />
-                                Strategic Tiers
-                            </h2>
-                            <h3 className="text-4xl md:text-6xl font-bold tracking-tight">Portfolio Architectures</h3>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-6">
-                            {brand.portfolioRanges.map((range: PortfolioRange) => (
-                                <RangeCard key={range.id} range={range} />
-                            ))}
-                        </div>
-                    </section>
+                    <ProductShowcaseSection products={brand.products} brandName={brand.name} />
                 )}
 
                 {/* 4. Unified Trade Application Section (Isolated Component) */}
@@ -244,8 +161,8 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
                 <div className="max-w-7xl mx-auto px-6 md:px-12">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 md:mb-6">Trade Specifications</h2>
-                            <p className="text-muted-foreground mb-6 md:mb-8 max-w-sm">
+                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 md:mb-6 tracking-tight">Trade Specifications</h2>
+                            <p className="text-muted-foreground mb-6 md:mb-8 max-w-sm font-light leading-relaxed">
                                 Comprehensive breakdown of distribution, compliance, and access requirements for this brand.
                             </p>
 
@@ -286,109 +203,144 @@ export default function BrandClient({ brand, categories = [] }: { brand: any, ca
     );
 }
 
-function ProductCard({ product }: { product: any }) {
+function ProductShowcaseSection({ products, brandName }: { products: any[]; brandName: string }) {
+    const parseSize = (sizeStr?: string) => {
+        if (!sizeStr) return { pack: "Standard Commercial Case Format", pallet: "Pallet Lots Available" };
+        const parts = sizeStr.split("•");
+        if (parts.length >= 2) {
+            return {
+                pack: parts[0].trim(),
+                pallet: parts[1].trim()
+            };
+        }
+        return {
+            pack: sizeStr,
+            pallet: "Standard Wholesale Pallet"
+        };
+    };
+
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="group bg-card border border-border rounded-3xl overflow-hidden hover:border-emerald-500/50 transition-all duration-500 flex flex-col h-full"
-        >
-            <div className="relative h-72 w-full overflow-hidden">
-                <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                    <span className="px-3 py-1 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
-                        Premium Spec
-                    </span>
+        <section id="products" className="scroll-mt-32">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+                <div>
+                    <h3 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground leading-[0.95]">
+                        Product Portfolio & Specs
+                    </h3>
                 </div>
-            </div>
-            <div className="p-8 flex-grow flex flex-col">
-                <div className="flex items-center justify-between gap-4 mb-4">
-                    <h4 className="text-xl font-bold group-hover:text-emerald-400 transition-colors">{product.name}</h4>
-                    <span className="bg-muted px-2 py-1 rounded text-[10px] font-mono text-muted-foreground whitespace-nowrap">
-                        {product.abv} ABV
-                    </span>
-                </div>
-                <p className="text-muted-foreground text-sm line-clamp-3 mb-6 flex-grow italic font-serif leading-relaxed">
-                    "{product.description}"
+                <p className="text-muted-foreground max-w-md text-base md:text-lg font-light leading-relaxed">
+                    Standardized wholesale case and pallet specifications for commercial procurement.
                 </p>
-                <div className="pt-6 border-t border-border mt-auto flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-medium text-foreground/70">
-                        <Box className="w-3.5 h-3.5 text-emerald-500" />
-                        {product.size}
-                    </div>
-                </div>
-            </div>
-        </motion.div>
-    );
-}
-
-function RangeCard({ range }: { range: PortfolioRange }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 md:p-8 flex flex-col lg:flex-row gap-8 items-start group hover:bg-card transition-colors"
-        >
-            <div className="flex-grow space-y-4">
-                <div className="flex flex-wrap items-center gap-3">
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${range.tradePositioning === 'Super-Premium' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
-                        range.tradePositioning === 'Premium' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                            'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                        }`}>
-                        {range.tradePositioning}
-                    </span>
-                    <h4 className="text-2xl font-bold">{range.rangeName}</h4>
-                </div>
-
-                <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground italic font-serif">
-                    <span className="flex items-center gap-2">
-                        <Target className="w-3.5 h-3.5" />
-                        {range.categoryPath}
-                    </span>
-                    {range.regionalNote && (
-                        <span className="flex items-center gap-2 text-amber-500/70">
-                            <Shield className="w-3.5 h-3.5" />
-                            {range.regionalNote}
-                        </span>
-                    )}
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                    {range.commonTradeUse.map((use) => (
-                        <span key={use} className="px-3 py-1 bg-muted/50 text-muted-foreground text-[10px] rounded-full uppercase tracking-tighter">
-                            {use}
-                        </span>
-                    ))}
-                </div>
             </div>
 
-            <div className="lg:w-64 w-full flex flex-col gap-4 shrink-0 lg:border-l lg:pl-8 border-border">
-                <div>
-                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Formats</p>
-                    <div className="flex flex-wrap gap-2">
-                        {range.typicalFormats.map((f) => (
-                            <span key={f} className="text-sm font-medium text-foreground/80">{f}</span>
-                        ))}
-                    </div>
-                </div>
-                <div>
-                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Strategic Intent</p>
-                    <div className="flex flex-wrap gap-1">
-                        {range.relevantFor.map((intent) => (
-                            <span key={intent} className="w-2 h-2 rounded-full bg-emerald-500/50" title={intent} />
-                        ))}
-                    </div>
-                </div>
+            {/* List of Products: Each with Image on Left & Premium Table on Right */}
+            <div className="space-y-12">
+                {products.map((product) => {
+                    const parsed = parseSize(product.size);
+                    return (
+                        <div
+                            key={product.name}
+                            className="bg-card border border-border rounded-3xl overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-12"
+                        >
+                            {/* Left: Product Image (Clean studio framing, no top overlay bar) */}
+                            <div className="lg:col-span-5 relative bg-muted/30 min-h-[380px] lg:min-h-[460px] flex items-center justify-center p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-border">
+                                <div className="relative w-full h-72 md:h-96">
+                                    <Image
+                                        src={product.image}
+                                        alt={product.name}
+                                        fill
+                                        className="object-contain p-4 drop-shadow-2xl transition-transform duration-500 hover:scale-105"
+                                        sizes="(max-width: 1024px) 100vw, 40vw"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Right: Premium Specification Table */}
+                            <div className="lg:col-span-7 p-6 md:p-10 flex flex-col justify-between bg-card">
+                                <div>
+                                    <div className="mb-6">
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                                            Official Specification Sheet
+                                        </span>
+                                        <h4 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mt-1 mb-3">
+                                            {product.name}
+                                        </h4>
+                                        <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">
+                                            {product.description}
+                                        </p>
+                                    </div>
+
+                                    {/* Premium Table */}
+                                    <div className="border border-border rounded-2xl overflow-hidden divide-y divide-border bg-muted/10 mb-8">
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
+                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                                                <Package className="w-4 h-4 text-emerald-500" />
+                                                Pack Format
+                                            </span>
+                                            <span className="sm:col-span-2 text-sm font-semibold text-foreground font-mono">
+                                                {parsed.pack}
+                                            </span>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
+                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                                                <Box className="w-4 h-4 text-blue-500" />
+                                                Pallet Capacity
+                                            </span>
+                                            <span className="sm:col-span-2 text-sm font-semibold text-foreground font-mono">
+                                                {parsed.pallet}
+                                            </span>
+                                        </div>
+
+                                        {product.abv && (
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
+                                                <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                                                    <Shield className="w-4 h-4 text-purple-500" />
+                                                    Alcohol By Volume
+                                                </span>
+                                                <span className="sm:col-span-2 text-sm font-semibold text-foreground font-mono">
+                                                    {product.abv}
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
+                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                                                <Building2 className="w-4 h-4 text-amber-500" />
+                                                Bond & Logistics
+                                            </span>
+                                            <span className="sm:col-span-2 text-sm font-medium text-foreground">
+                                                Under-Bond (T1) / UK Duty-Paid Available
+                                            </span>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
+                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                                                <Target className="w-4 h-4 text-emerald-500" />
+                                                Order Terms
+                                            </span>
+                                            <span className="sm:col-span-2 text-sm font-medium text-foreground">
+                                                Full Pallets (Mixed lots permitted) & FCL Containers
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Bottom CTA Button */}
+                                <div className="pt-4 flex items-center justify-end border-t border-border/60">
+                                    <Link
+                                        href={`/contact?subject=${encodeURIComponent('Commercial Allocation Request: ' + product.name)}`}
+                                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white py-3 px-6 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-emerald-600/20 transition-all group"
+                                    >
+                                        <span>Request Allocation</span>
+                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
-        </motion.div>
+        </section>
     );
 }
 

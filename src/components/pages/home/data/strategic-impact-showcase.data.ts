@@ -4,78 +4,80 @@ export const impactShowcaseItems: ImpactShowcaseItem[] = [
     {
         id: "spirits-liquors",
         title: "Spirits & Liquors",
-        subtitle: "Commercial FMCG Supply",
+        subtitle: "Whisky, Vodka, Gin & More",
         description: [
-            "Whisky, vodka, gin, rum & tequila in commercial volumes",
-            "Bonded warehouse stock, under-bond transfers & duty-free SKUs",
-            "Full pallet and container loads for international trade"
+            "Whisky, vodka, gin, rum & tequila",
+            "Liqueurs, aperitifs & RTD formats",
+            "Premium, craft & private‑label spirits"
         ],
         image: "/categories/Product Categories/Spirits.jpg",
-        tags: ["FMCG Trade", "Bonded Stock", "Pallet Volumes"],
+        tags: ["Premium", "Craft", "Global"],
         link: "/categories/spirits"
     },
     {
         id: "wines-champagnes",
         title: "Wines & Champagnes",
-        subtitle: "Trade & Duty-Free Allocations",
+        subtitle: "Fine Wine & Sparkling",
         description: [
-            "Red, white & rosé wines sourced from established regions",
-            "Prosecco, Champagne & premium sparkling allocations",
-            "Case minimums and pallet supply for hospitality & retail resale"
+            "Red, white & rosé wines from top regions",
+            "Sparkling wines & Prosecco",
+            "Champagne & premium cuvées",
+            "Private‑label & bespoke bottlings"
         ],
         image: "/categories/Product Categories/Wine and Champagne.jpg",
         stats: [
-            { label: "Origin Regions", value: "40+" },
-            { label: "Grade", value: "Commercial" }
+            { label: "Regions", value: "40+" },
+            { label: "Vintages", value: "Premium" }
         ],
-        tags: ["Case Quantities", "Bonded Wine", "Commercial Trade"],
+        tags: ["Fine Wine", "Sparkling", "Cuvée"],
         link: "/categories/wine"
     },
     {
         id: "beers-craft",
         title: "Beers & Craft",
-        subtitle: "FMCG Distribution & Bulk Procurement",
+        subtitle: "Lagers, Ales & Craft Selection",
         description: [
-            "Leading international lagers, ales & regional brands",
-            "Container-level export and domestic pallet fulfillment",
-            "Direct supplier-to-warehouse trade logistics"
+            "Premium Lagers & Ales",
+            "Craft Beer Selection",
+            "Regional Specialties"
         ],
         image: "/categories/Product Categories/BEER and Cider.jpg",
         stats: [
-            { label: "Export Portfolios", value: "500+" },
-            { label: "Format", value: "Pallet/Bulk" }
+            { label: "Varieties", value: "500+" },
+            { label: "Breweries", value: "150+" }
         ],
-        tags: ["Beverage Distribution", "Container Loads", "Export Ready"],
+        tags: ["Craft", "Lager", "Ale"],
         link: "/categories/beer"
     },
     {
         id: "speciality-beverages",
         title: "Speciality Beverages",
-        subtitle: "High-Rotation FMCG Sourcing",
+        subtitle: "Mixers, Tonics & Non-Alcoholic",
         description: [
-            "Soft drinks, juices & functional beverages in bulk packaging",
-            "Premium mixers, tonics & bar-trade staples for commercial buyers",
-            "Energy drinks & hydration lines for distribution networks"
+            "Soft drinks, juices & functional beverages",
+            "Premium Mixers, tonics & soda waters",
+            "Energy drinks & hydration solutions",
+            "Alcohol‑free spirits alternatives"
         ],
         image: "/categories/Product Categories/Soft drink -Cocktail mixer tonic.jpg",
-        tags: ["Bulk Cases", "Trade Mixers", "High-Rotation"],
+        tags: ["Functional", "Mixers", "Zero-Alc"],
         link: "/categories/cocktails"
     },
     {
         id: "food-grocery",
         title: "Food & Grocery",
-        subtitle: "FMCG Sourcing & Supply",
+        subtitle: "Pantry Staples & Sweeteners",
         description: [
-            "Dry goods, confectionery and pantry staples for commercial resale",
-            "Container and pallet consolidation for international markets",
-            "Duty-free and travel-retail compliant commercial SKUs"
+            "Dry goods and pantry staples sourced globally",
+            "Sweeteners and natural sugar alternatives",
+            "Travel‑retail and duty‑free compliant SKUs"
         ],
         image: "/categories/Product Categories/FOOD AND GROCERY.png",
         stats: [
-            { label: "Commercial SKUs", value: "2000+" },
-            { label: "Distribution", value: "Global B2B" }
+            { label: "SKUs", value: "2000+" },
+            { label: "Reach", value: "Global" }
         ],
-        tags: ["Pantry Staples", "Commercial Supply", "Export Ready"],
+        tags: ["Pantry", "Organic", "Staples"],
         link: "/categories/food-grocery"
     }
 ];

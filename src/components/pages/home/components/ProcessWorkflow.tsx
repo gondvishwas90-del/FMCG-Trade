@@ -59,13 +59,13 @@ export function ProcessWorkflow() {
                         className="flex flex-col justify-center h-full w-full"
                     >
                         <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground tracking-tighter mb-2 lg:mb-8 leading-[0.95]">
-                            Commercial Trade & <span className="hidden lg:inline"><br /></span>
+                            A kinetic framework <span className="hidden lg:inline"><br /></span>
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-600 to-teal-600">
-                                Sourcing Process.
+                                for digital transformation.
                             </span>
                         </h2>
                         <p className="hidden lg:block text-muted-foreground text-lg max-w-xs leading-relaxed mb-12">
-                            A structured, reliable commercial procurement workflow from requirement submission to delivery.
+                            Scroll to explore the journey.
                         </p>
                         <div className="hidden lg:flex items-center gap-4 text-foreground text-sm uppercase tracking-widest animate-pulse">
                             <MoveRight className="w-6 h-6" />
