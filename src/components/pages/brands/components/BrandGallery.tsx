@@ -14,9 +14,16 @@ import type { Brand } from "../types/brand.types";
 interface BrandGalleryProps {
     brands: Brand[];
     isCategoryPage?: boolean;
+    selectedBrand?: string | null;
+    onClearSelectedBrand?: () => void;
 }
 
-export default function BrandGallery({ brands, isCategoryPage = false }: BrandGalleryProps) {
+export default function BrandGallery({
+    brands,
+    isCategoryPage = false,
+    selectedBrand = null,
+    onClearSelectedBrand
+}: BrandGalleryProps) {
     // Full catalog display for categories and trade directory
     const displayedBrands = useMemo(() => brands, [brands]);
 
@@ -103,6 +110,14 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
 
     const filteredBrands = useMemo(() => {
         return displayedBrands.filter(brand => {
+            // Selected Brand Logo Filter (from Top Logo Directory)
+            if (selectedBrand) {
+                const query = selectedBrand.toLowerCase().trim();
+                const matchesOwner = brand.owner?.name?.toLowerCase().includes(query) || (brand.owner as any)?.id?.toLowerCase().includes(query);
+                const matchesName = brand.name?.toLowerCase().includes(query);
+                if (!matchesOwner && !matchesName) return false;
+            }
+
             // Search Query Filter
             if (search) {
                 const query = search.toLowerCase().trim();
@@ -181,7 +196,35 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
                 />
             )}
 
-            <div className="max-w-[1800px] mx-auto px-4 md:px-6 py-8 md:py-16">
+            <div id="brand-products-section" className="max-w-[1800px] mx-auto px-4 md:px-6 py-8 md:py-16">
+                {/* Active Brand Filter Banner */}
+                {selectedBrand && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-8 p-4 md:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <div>
+                                <span className="text-xs uppercase font-bold tracking-wider text-muted-foreground block">
+                                    Direct Brand Portfolio
+                                </span>
+                                <span className="text-base font-bold text-foreground">
+                                    Showing verified trade items from <strong className="text-emerald-600 dark:text-emerald-400 font-extrabold">{selectedBrand}</strong>
+                                </span>
+                            </div>
+                        </div>
+                        {onClearSelectedBrand && (
+                            <button
+                                onClick={onClearSelectedBrand}
+                                className="px-4 py-2 rounded-full bg-background/80 hover:bg-background border border-border text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-all shrink-0 self-start sm:self-auto"
+                            >
+                                View All Brands
+                            </button>
+                        )}
+                    </motion.div>
+                )}
                 {/* Mobile & Tablet Search Bar */}
                 {!isCategoryPage && (
                     <div className="block md:hidden mb-8 relative group">
@@ -235,10 +278,13 @@ export default function BrandGallery({ brands, isCategoryPage = false }: BrandGa
                     <div className="text-center py-24 border-t border-border mt-12">
                         <p className="text-muted-foreground text-lg mb-4">No brands match your selection.</p>
                         <button
-                            onClick={handleClearAll}
-                            className="px-6 py-2 bg-foreground text-background font-bold rounded hover:bg-emerald-600 transition-colors"
+                            onClick={() => {
+                                handleClearAll();
+                                onClearSelectedBrand?.();
+                            }}
+                            className="px-6 py-2 bg-foreground text-background font-bold rounded-full hover:bg-emerald-600 transition-colors uppercase tracking-wider text-xs"
                         >
-                            Clear Filters
+                            Reset All Filters
                         </button>
                     </div>
                 )}
