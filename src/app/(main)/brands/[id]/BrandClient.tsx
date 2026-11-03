@@ -269,56 +269,72 @@ function ProductShowcaseSection({ products, brandName }: { products: any[]; bran
                                         </p>
                                     </div>
 
-                                    {/* Premium Table */}
-                                    <div className="border border-border rounded-2xl overflow-hidden divide-y divide-border bg-muted/10 mb-8">
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
-                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                                                <Package className="w-4 h-4 text-emerald-500" />
+                                    {/* Simplified B2B Specification Grid */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                                        {/* 1. Pack Format */}
+                                        <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-emerald-500/30 transition-all flex flex-col justify-between">
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
+                                                <Package className="w-3.5 h-3.5 text-emerald-500" />
                                                 Pack Format
                                             </span>
-                                            <span className="sm:col-span-2 text-sm font-semibold text-foreground font-mono">
+                                            <span className="text-sm md:text-base font-bold text-foreground font-mono">
                                                 {parsed.pack}
                                             </span>
                                         </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
-                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                                                <Box className="w-4 h-4 text-blue-500" />
-                                                Pallet Capacity
+                                        {/* 2. Pallet Capacity */}
+                                        <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-blue-500/30 transition-all flex flex-col justify-between">
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
+                                                <Box className="w-3.5 h-3.5 text-blue-500" />
+                                                Pallet Load
                                             </span>
-                                            <span className="sm:col-span-2 text-sm font-semibold text-foreground font-mono">
+                                            <span className="text-sm md:text-base font-bold text-foreground font-mono">
                                                 {parsed.pallet}
                                             </span>
                                         </div>
 
-                                        {product.abv && (
-                                            <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
-                                                <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                                                    <Shield className="w-4 h-4 text-purple-500" />
-                                                    Alcohol By Volume
+                                        {/* 3. Strength / Status */}
+                                        {product.abv ? (
+                                            <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-purple-500/30 transition-all flex flex-col justify-between">
+                                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
+                                                    <Shield className="w-3.5 h-3.5 text-purple-500" />
+                                                    Strength (ABV)
                                                 </span>
-                                                <span className="sm:col-span-2 text-sm font-semibold text-foreground font-mono">
+                                                <span className="text-sm md:text-base font-bold text-foreground font-mono">
                                                     {product.abv}
                                                 </span>
                                             </div>
+                                        ) : (
+                                            <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-emerald-500/30 transition-all flex flex-col justify-between">
+                                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
+                                                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                                                    Status
+                                                </span>
+                                                <span className="text-sm md:text-base font-bold text-emerald-600 dark:text-emerald-400">
+                                                    Export Ready
+                                                </span>
+                                            </div>
                                         )}
+                                    </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
-                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                                                <Building2 className="w-4 h-4 text-amber-500" />
-                                                Bond & Logistics
+                                    {/* Simplified Logistics & Order Strip */}
+                                    <div className="p-4 rounded-2xl bg-muted/20 border border-border/50 mb-8 space-y-2.5">
+                                        <div className="flex items-center justify-between text-xs flex-wrap gap-2">
+                                            <span className="font-semibold text-muted-foreground flex items-center gap-1.5">
+                                                <Building2 className="w-3.5 h-3.5 text-amber-500" />
+                                                Bond & Customs
                                             </span>
-                                            <span className="sm:col-span-2 text-sm font-medium text-foreground">
+                                            <span className="font-medium text-foreground">
                                                 Under-Bond (T1) / UK Duty-Paid Available
                                             </span>
                                         </div>
-
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 p-4 gap-2 hover:bg-muted/30 transition-colors">
-                                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                                                <Target className="w-4 h-4 text-emerald-500" />
+                                        <div className="h-px bg-border/40 w-full" />
+                                        <div className="flex items-center justify-between text-xs flex-wrap gap-2">
+                                            <span className="font-semibold text-muted-foreground flex items-center gap-1.5">
+                                                <Target className="w-3.5 h-3.5 text-emerald-500" />
                                                 Order Terms
                                             </span>
-                                            <span className="sm:col-span-2 text-sm font-medium text-foreground">
+                                            <span className="font-medium text-foreground">
                                                 Full Pallets (Mixed lots permitted) & FCL Containers
                                             </span>
                                         </div>

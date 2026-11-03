@@ -5,15 +5,19 @@ import Category from "@/models/Category";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { serializeList, serializeDocument } from "@/lib/utils/serialize";
+import { fallbackCategories } from "@/components/pages/categories/data/categories.data";
 
 export async function getCategories() {
     try {
         await dbConnect();
         const categories = await Category.find({ status: 'active' }).lean();
+        if (!categories || categories.length === 0) {
+            return { success: true, data: serializeList(fallbackCategories) };
+        }
         return { success: true, data: serializeList(categories) };
     } catch (error: any) {
-        console.error("Error in getCategories:", error);
-        return { success: false, error: error.message };
+        console.error("Error in getCategories, using fallback:", error);
+        return { success: true, data: serializeList(fallbackCategories) };
     }
 }
 
@@ -47,11 +51,36 @@ export const getCategoryBySlug = unstable_cache(
     async (slug: string) => {
         try {
             await dbConnect();
-            const category = await Category.findOne({ id: slug, status: 'active' }).lean();
-            if (!category) return { success: false, error: 'Category not found' };
+            const searchSlugs = [slug];
+            if (slug === 'wine') searchSlugs.push('wine-champagne', 'wines');
+            if (slug === 'wine-champagne') searchSlugs.push('wine');
+            if (slug === 'cocktails') searchSlugs.push('cocktails-mixers');
+            if (slug === 'cocktails-mixers') searchSlugs.push('cocktails');
+            if (slug === 'food-grocery') searchSlugs.push('food', 'grocery');
+            if (slug === 'food') searchSlugs.push('food-grocery');
+
+            const category = await Category.findOne({ id: { $in: searchSlugs }, status: 'active' }).lean();
+            if (!category) {
+                const fallback = fallbackCategories.find(c => searchSlugs.includes(c.id));
+                if (fallback) {
+                    return { success: true, data: serializeDocument(fallback) };
+                }
+                return { success: false, error: 'Category not found' };
+            }
             return { success: true, data: serializeDocument(category) };
         } catch (error: any) {
-            console.error(`Error in getCategoryBySlug (${slug}):`, error);
+            console.error(`Error in getCategoryBySlug (${slug}), using fallback:`, error);
+            const searchSlugs = [slug];
+            if (slug === 'wine') searchSlugs.push('wine-champagne');
+            if (slug === 'wine-champagne') searchSlugs.push('wine');
+            if (slug === 'cocktails') searchSlugs.push('cocktails-mixers');
+            if (slug === 'cocktails-mixers') searchSlugs.push('cocktails');
+            if (slug === 'food-grocery') searchSlugs.push('food');
+
+            const fallback = fallbackCategories.find(c => searchSlugs.includes(c.id));
+            if (fallback) {
+                return { success: true, data: serializeDocument(fallback) };
+            }
             return { success: false, error: error.message };
         }
     },

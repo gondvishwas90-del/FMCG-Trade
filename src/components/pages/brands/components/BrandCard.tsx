@@ -105,20 +105,27 @@ export default function BrandCard({ brand }: BrandCardProps) {
                     <motion.div layoutId={`brand-content-${brand.id}`} className="flex-1 flex flex-col">
                         
                         {/* Meta Header */}
-                        <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
-                            <div className="flex items-center gap-2">
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground truncate">
-                                    {brand.country}
+                        <div className="flex items-center justify-between mb-3 gap-2">
+                            <div className="flex items-center gap-1.5 min-w-0">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground truncate">
+                                    {brand.country || 'Global'}
                                 </span>
                                 {brand.owner && (
                                     <>
-                                        <span className="w-1 h-1 rounded-full bg-border" />
-                                        <div className="flex items-center gap-1 bg-muted/60 px-2 py-0.5 rounded text-[9px] font-semibold text-muted-foreground">
+                                        <span className="text-muted-foreground/40 font-mono">•</span>
+                                        <div className="flex items-center gap-1 bg-muted/60 px-2 py-0.5 rounded text-[10px] font-semibold text-muted-foreground truncate">
                                             {brand.owner.name}
                                         </div>
                                     </>
                                 )}
                             </div>
+
+                            {/* Subcategory Pill Badge */}
+                            {(brand.categoryFit?.[0] || brand.category) && (
+                                <span className="shrink-0 text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                                    {brand.categoryFit?.[0] || brand.category}
+                                </span>
+                            )}
                         </div>
 
                         {/* Brand Name */}
@@ -165,9 +172,15 @@ export default function BrandCard({ brand }: BrandCardProps) {
 
                     </motion.div>
 
-                    <div className="mt-3 pt-2 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:underline">
-                        <span>View Trade Specs & Order Terms</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <div className="mt-3 pt-2.5 flex items-center justify-between text-xs font-bold border-t border-border/40">
+                        <span className="flex items-center gap-1.5 text-[10px] tracking-widest uppercase font-semibold text-emerald-600 dark:text-emerald-400">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Export Ready
+                        </span>
+                        <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 group-hover:underline">
+                            <span>View Trade Specs & Order Terms</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </div>
                     </div>
 
                 </div>

@@ -698,5 +698,512 @@ export const fallbackBrands: Brand[] = [
         ],
         marketConsiderations: ["Pallet & Mixed Pallet Dispatch", "UK Domestic & Export Documentation", "No Minimum Consumer Orders"],
         tradeIntents: ["on-trade-cocktail", "export-portfolio"]
+    },
+    {
+        id: "bushmills",
+        name: "Bushmills",
+        country: "Northern Ireland",
+        countryCode: "GB",
+        positioning: "Distilled with heritage dating back to 1608, crafting smooth triple-distilled Irish whiskeys.",
+        description: "One of the oldest licensed whiskey distilleries globally, producing distinctive single malts and smooth blends tailored for premium on-trade and duty-free export.",
+        tagline: "The Old Bushmills Distillery",
+        category: "Spirits",
+        categoryFit: ["Irish Whiskey", "Single Malt", "Blended Whiskey"],
+        tier1Ids: ["spirits"],
+        tier2Ids: ["whisky"],
+        tier3Ids: ["irish-whiskey"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "proximo-spirits",
+            name: "Proximo Spirits",
+            logo: "/brands/proximo.png"
+        },
+        products: [
+            {
+                name: "Bushmills Original Triple Distilled",
+                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                abv: "40%",
+                size: "6 x 70cl • 100 cs / Pallet",
+                description: "Triple distilled grain and malt whiskey known for versatile warmth and light fruit notes."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "bushmills-core",
+                rangeName: "Original & Black Bush Cases",
+                categoryPath: "Spirits → Irish Whiskey",
+                tradePositioning: "Core Premium Irish",
+                commonTradeUse: ["On-trade bars", "Duty-free trade", "Retail export"],
+                typicalFormats: ["6 x 70cl", "Pallet Loads (100 cs)"],
+                relevantFor: ["export-portfolio", "volume-strategic"]
+            }
+        ],
+        marketConsiderations: ["Under-Bond Bonded Dispatch", "EUR1 & Certificate of Origin"],
+        tradeIntents: ["volume-strategic", "export-portfolio"]
+    },
+    {
+        id: "jim-beam",
+        name: "Jim Beam",
+        country: "United States",
+        countryCode: "US",
+        positioning: "The world's #1 Kentucky straight bourbon whiskey with unmatched volume pull across global retail.",
+        description: "Distilled since 1795 with family traditions spanning seven generations. Aged for four years in newly charred American white oak barrels.",
+        tagline: "Made from Bourbon Tradition",
+        category: "Spirits",
+        categoryFit: ["Bourbon", "American Whiskey"],
+        tier1Ids: ["spirits"],
+        tier2Ids: ["whisky"],
+        tier3Ids: ["bourbon"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "suntory-global-spirits",
+            name: "Suntory Global Spirits",
+            logo: "/brands/suntory.png"
+        },
+        products: [
+            {
+                name: "Jim Beam White Label Bourbon",
+                image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+                abv: "40%",
+                size: "6 x 70cl • 100 cs / Pallet",
+                description: "The classic Kentucky straight bourbon with vanilla, toasted oak, and spicy caramel notes."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "jb-white",
+                rangeName: "White & Black Commercial Cases",
+                categoryPath: "Spirits → Bourbon",
+                tradePositioning: "Core High-Volume Bourbon",
+                commonTradeUse: ["Off-trade grocery", "High-volume on-trade", "FCL export"],
+                typicalFormats: ["6 x 70cl", "12 x 1L", "Pallet Loads (100 cs)"],
+                relevantFor: ["volume-strategic", "export-portfolio"]
+            }
+        ],
+        marketConsiderations: ["Bonded Dispatch (Loendersloot)", "Container Loads FCL"],
+        tradeIntents: ["volume-strategic", "export-portfolio"]
+    },
+    {
+        id: "hibiki",
+        name: "Hibiki",
+        country: "Japan",
+        countryCode: "JP",
+        positioning: "Harmonious Japanese blended whisky celebrated globally for nuanced elegance and luxury craft.",
+        description: "A blend of numerous malt and grain whiskies meticulously chosen from Suntory distilleries Yamazaki, Hakushu, and Chita. A global symbol of Japanese craftsmanship.",
+        tagline: "Japanese Harmony",
+        category: "Spirits",
+        categoryFit: ["Japanese Whisky", "Prestige Blended Whisky"],
+        tier1Ids: ["spirits"],
+        tier2Ids: ["whisky"],
+        tier3Ids: ["japanese-whisky"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "suntory-global-spirits",
+            name: "Suntory Global Spirits",
+            logo: "/brands/suntory.png"
+        },
+        products: [
+            {
+                name: "Hibiki Japanese Harmony",
+                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                abv: "43%",
+                size: "6 x 70cl • 80 cs / Pallet",
+                description: "Delicate honey, orange peel, and white chocolate notes with Mizunara oak finish."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "hibiki-harmony",
+                rangeName: "Prestige Allocations",
+                categoryPath: "Spirits → Japanese Whisky",
+                tradePositioning: "Luxury On-Trade / Travel Retail",
+                commonTradeUse: ["Luxury bars", "Bonded collectors", "High-end retail"],
+                typicalFormats: ["6 x 70cl Gift Box", "Export Air & Ocean Freight"],
+                relevantFor: ["export-portfolio"]
+            }
+        ],
+        marketConsiderations: ["Allocated Supply", "Bonded Export Only"],
+        tradeIntents: ["export-portfolio"]
+    },
+    {
+        id: "yellow-tail",
+        name: "Yellow Tail",
+        country: "Australia",
+        countryCode: "AU",
+        positioning: "A globally dominant wine brand with phenomenal volume turnover across worldwide retail markets.",
+        description: "Created in Yenda, Australia by Casella Family Brands. Yellow Tail revolutionized modern wine retail with approachable flavor, iconic kangaroo packaging, and mass-market accessibility.",
+        tagline: "Great Wine for Everyone",
+        category: "Wine & Champagne",
+        categoryFit: ["Shiraz", "Cabernet Sauvignon", "Chardonnay", "Pinot Grigio"],
+        tier1Ids: ["wine"],
+        tier2Ids: ["red-wine", "white-wine"],
+        tier3Ids: ["commercial-wine"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: false,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "casella-family-brands",
+            name: "Casella Family Brands",
+            logo: "/brands/casella.png"
+        },
+        products: [
+            {
+                name: "Yellow Tail Shiraz / Cabernet Sauvignon",
+                image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=600",
+                abv: "13.5%",
+                size: "6 x 750ml • 105 cs / Pallet",
+                description: "Rich Australian Shiraz with ripe red berry flavors, subtle spice, and soft oak finish."
+            },
+            {
+                name: "Yellow Tail Pinot Grigio / Chardonnay",
+                image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=600",
+                abv: "12.0%",
+                size: "6 x 750ml • 105 cs / Pallet",
+                description: "Crisp, lively white wine bursting with passionfruit, citrus, and green apple."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "yt-core",
+                rangeName: "Commercial Case & Container Lots",
+                categoryPath: "Wine & Champagne → Australian Wine",
+                tradePositioning: "High-Volume Core",
+                commonTradeUse: ["Supermarket chains", "Wholesale cash & carry", "Ocean container FCL"],
+                typicalFormats: ["6 x 750ml", "Pallet Loads (105 cs)", "20ft FCL (1,500 cs)"],
+                relevantFor: ["volume-strategic", "export-portfolio"]
+            }
+        ],
+        marketConsiderations: ["Under-Bond Bonded Dispatch", "Temperature Controlled Reefer", "Pallet & Container Ready"],
+        tradeIntents: ["volume-strategic", "export-portfolio"]
+    },
+    {
+        id: "moet-chandon",
+        name: "Moët & Chandon",
+        country: "France",
+        countryCode: "FR",
+        positioning: "The world's leading Champagne house, synonymous with celebration and global luxury recognition.",
+        description: "Founded in 1743 in Épernay, France. Moët & Chandon produces the most celebrated Champagne in the world, combining Pinot Noir, Meunier, and Chardonnay grapes with centuries of cellar mastery.",
+        tagline: "The World's Most Loved Champagne",
+        category: "Wine & Champagne",
+        categoryFit: ["Brut Impérial", "Rosé Impérial", "Vintage Champagne"],
+        tier1Ids: ["wine"],
+        tier2Ids: ["champagne"],
+        tier3Ids: ["prestige-champagne"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "lvmh",
+            name: "Moët Hennessy • LVMH",
+            logo: "/brands/lvmh.png"
+        },
+        products: [
+            {
+                name: "Moët & Chandon Brut Impérial NV",
+                image: "https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?auto=format&fit=crop&q=80&w=600",
+                abv: "12.0%",
+                size: "6 x 75cl • 80 cs / Pallet",
+                description: "The iconic blend of over 100 different wines reflecting diversity and complementary qualities."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "moet-cases",
+                rangeName: "Brut Impérial Commercial Cases",
+                categoryPath: "Wine & Champagne → Champagne → Brut",
+                tradePositioning: "Prestige High-Rotation",
+                commonTradeUse: ["Luxury hotel & club supply", "Bonded duty-free trade", "High-end corporate gifting"],
+                typicalFormats: ["6 x 75cl Standard Box", "Pallet Allocations (80 cs)"],
+                relevantFor: ["export-portfolio", "volume-strategic"]
+            }
+        ],
+        marketConsiderations: ["Bonded European Dispatch (Rotterdam / Antwerp)", "Strict Temperature Controlled Reefer"],
+        tradeIntents: ["export-portfolio", "volume-strategic"]
+    },
+    {
+        id: "veuve-clicquot",
+        name: "Veuve Clicquot",
+        country: "France",
+        countryCode: "FR",
+        positioning: "A prestigious Champagne maison renowned for its iconic Yellow Label and audacious heritage.",
+        description: "Founded in 1772, Veuve Clicquot stands for excellence, bold spirit, and distinctive pinot noir structure. Recognized globally as an indispensable fixture in upscale nightlife and luxury retail.",
+        tagline: "Live More Clicquot",
+        category: "Wine & Champagne",
+        categoryFit: ["Yellow Label", "Luxury Champagne"],
+        tier1Ids: ["wine"],
+        tier2Ids: ["champagne"],
+        tier3Ids: ["prestige-champagne"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "lvmh",
+            name: "Moët Hennessy • LVMH",
+            logo: "/brands/lvmh.png"
+        },
+        products: [
+            {
+                name: "Veuve Clicquot Yellow Label Brut",
+                image: "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&q=80&w=600",
+                abv: "12.0%",
+                size: "6 x 75cl • 80 cs / Pallet",
+                description: "Signature cuvée with predominance of Pinot Noir offering structure, elegance, and silky vanilla finish."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "vc-yellow",
+                rangeName: "Yellow Label Pallet Lots",
+                categoryPath: "Wine & Champagne → Champagne",
+                tradePositioning: "Luxury Nightlife / Retail",
+                commonTradeUse: ["Nightclub & VIP hospitality", "Fine wine merchants", "Duty-free export"],
+                typicalFormats: ["6 x 75cl", "Pallet Lots (80 cs)"],
+                relevantFor: ["export-portfolio"]
+            }
+        ],
+        marketConsiderations: ["Under-Bond Bonded Dispatch", "Temperature Controlled"],
+        tradeIntents: ["export-portfolio"]
+    },
+    {
+        id: "whispering-angel",
+        name: "Whispering Angel",
+        country: "France",
+        countryCode: "FR",
+        positioning: "The worldwide benchmark for luxury Provence rosé, commanding high-volume summer demand.",
+        description: "Crafted at Château d'Esclans in Provence, Whispering Angel is the global standard for premium dry rosé. Light, refreshing, with red berry and citrus notes.",
+        tagline: "The World's Most Iconic Rosé",
+        category: "Wine & Champagne",
+        categoryFit: ["Côtes de Provence Rosé", "Luxury Still Wine"],
+        tier1Ids: ["wine"],
+        tier2Ids: ["rose"],
+        tier3Ids: ["provence-rose"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "lvmh",
+            name: "Château d'Esclans • LVMH",
+            logo: "/brands/lvmh.png"
+        },
+        products: [
+            {
+                name: "Whispering Angel Côtes de Provence Rosé",
+                image: "https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&q=80&w=600",
+                abv: "13.0%",
+                size: "6 x 75cl • 96 cs / Pallet",
+                description: "A blend of Grenache, Cinsault, and Vermentino with dry, crisp, and fresh floral notes."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "wa-cases",
+                rangeName: "Standard Cases & Magnums",
+                categoryPath: "Wine & Champagne → Rosé",
+                tradePositioning: "Super-Premium Rosé",
+                commonTradeUse: ["Beach clubs & summer venues", "Yacht provisioning", "Fine wine retail"],
+                typicalFormats: ["6 x 75cl", "Pallet Loads (96 cs)"],
+                relevantFor: ["export-portfolio", "volume-strategic"]
+            }
+        ],
+        marketConsiderations: ["Fast Moving Seasonality", "Reefer Shipping Recommended"],
+        tradeIntents: ["export-portfolio", "volume-strategic"]
+    },
+    {
+        id: "corona",
+        name: "Corona Extra",
+        country: "Mexico",
+        countryCode: "MX",
+        positioning: "The quintessential Mexican sun-and-beach lager, driving exceptional year-round consumer rotation.",
+        description: "Golden Mexican lager brewed with fine barley, yeast, and water. Famously served with a lime wedge and recognized across five continents.",
+        tagline: "La Cerveza Más Fina",
+        category: "Beers & Craft",
+        categoryFit: ["Mexican Lager", "Import Beer"],
+        tier1Ids: ["beer"],
+        tier2Ids: ["lager"],
+        tier3Ids: ["international-lager"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "ab-inbev",
+            name: "AB InBev",
+            logo: "/brands/abinbev.png"
+        },
+        products: [
+            {
+                name: "Corona Extra 330ml Glass Bottles",
+                image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+                abv: "4.5%",
+                size: "24 x 330ml • 63 cs / Pallet",
+                description: "Clean, crisp, and refreshingly balanced Mexican pale lager."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "corona-core",
+                rangeName: "24x330ml Bottles Full Truckloads",
+                categoryPath: "Beers & Craft → Lager",
+                tradePositioning: "High-Volume Volume Driver",
+                commonTradeUse: ["On-trade bars & dining", "Supermarket retail", "Export distribution"],
+                typicalFormats: ["24 x 330ml", "Pallet Loads (63 cs)", "FTL Truckloads (26 Pallets)"],
+                relevantFor: ["volume-strategic"]
+            }
+        ],
+        marketConsiderations: ["Under-Bond Bonded Dispatch", "Pallet & Container Loads Only"],
+        tradeIntents: ["volume-strategic"]
+    },
+    {
+        id: "buzzballz",
+        name: "BuzzBallz",
+        country: "United States",
+        countryCode: "US",
+        positioning: "The viral, high-velocity single-serve ready-to-drink (RTD) cocktail revolutionizing impulse retail.",
+        description: "Packed in shatterproof, spherical spherical containers with 100% real juice and premium spirits. Fast turnover in impulse retail, events, and festival venues.",
+        tagline: "Shake Up The Party",
+        category: "Speciality Beverages",
+        categoryFit: ["Ready-To-Drink (RTD)", "Premixed Cocktails", "Impulse Beverage"],
+        tier1Ids: ["cocktails"],
+        tier2Ids: ["rtd"],
+        tier3Ids: ["premixed-cocktails"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "sazerac",
+            name: "Sazerac Company",
+            logo: "/brands/sazerac.png"
+        },
+        products: [
+            {
+                name: "BuzzBallz Cocktails 200ml Round Can (Choc Tease / Tequila Rita)",
+                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+                abv: "13.5%",
+                size: "24 x 200ml • 80 cs / Pallet",
+                description: "Premixed single-serve cocktail made with premium spirits and real fruit flavors."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "buzzballz-lots",
+                rangeName: "24x200ml Impulse Packs",
+                categoryPath: "Speciality Beverages → RTD Cocktails",
+                tradePositioning: "High-Margin Impulse RTD",
+                commonTradeUse: ["Convenience store chains", "Cash & carry wholesalers", "Outdoor venues"],
+                typicalFormats: ["24 x 200ml", "Pallet Loads (80 cs)"],
+                relevantFor: ["volume-strategic", "export-portfolio"]
+            }
+        ],
+        marketConsiderations: ["Pallet & Container Available", "Long Shelf Life"],
+        tradeIntents: ["volume-strategic", "export-portfolio"]
+    },
+    {
+        id: "red-bull",
+        name: "Red Bull",
+        country: "Austria",
+        countryCode: "AT",
+        positioning: "The world's undisputed leading energy drink and essential nightlife / cocktail highball mixer.",
+        description: "Vitalizes body and mind. Appreciated worldwide by top athletes, busy professionals, and as an essential back-bar mixer across every nightclub and bar globally.",
+        tagline: "Gives You Wings",
+        category: "Speciality Beverages",
+        categoryFit: ["Energy Drinks", "Bar Mixers"],
+        tier1Ids: ["cocktails"],
+        tier2Ids: ["mixers"],
+        tier3Ids: ["energy-mixers"],
+        tradeCapabilities: {
+            exportAvailable: true,
+            privateLabel: false,
+            ukDistribution: true,
+            euDistribution: true,
+            onTradeFocused: true,
+            offTradeFocused: true,
+        },
+        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800",
+        owner: {
+            id: "red-bull-gmbh",
+            name: "Red Bull GmbH",
+            logo: "/brands/redbull.png"
+        },
+        products: [
+            {
+                name: "Red Bull Energy Drink 250ml Regular & Sugarfree",
+                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+                abv: "0%",
+                size: "24 x 250ml • 108 cs / Pallet",
+                description: "The global benchmark 250ml slim can with caffeine, taurine, and B-group vitamins."
+            }
+        ],
+        portfolioRanges: [
+            {
+                id: "rb-standard",
+                rangeName: "24x250ml Shrink Trays FTL",
+                categoryPath: "Speciality Beverages → Mixers",
+                tradePositioning: "Mass-Market Velocity Anchor",
+                commonTradeUse: ["Bar & nightlife accounts", "Retail grocery", "Export container FCL"],
+                typicalFormats: ["24 x 250ml", "Pallet Loads (108 cs)", "Full Truckload (FTL 30 Pallets)"],
+                relevantFor: ["volume-strategic"]
+            }
+        ],
+        marketConsiderations: ["High Liquidity SKU", "Under-Bond & Duty-Paid Available"],
+        tradeIntents: ["volume-strategic"]
     }
 ];

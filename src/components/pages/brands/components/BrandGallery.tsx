@@ -17,8 +17,8 @@ interface BrandGalleryProps {
 }
 
 export default function BrandGallery({ brands, isCategoryPage = false }: BrandGalleryProps) {
-    // Current requirement: Keep only three cards
-    const displayedBrands = useMemo(() => brands.slice(0, 3), [brands]);
+    // Full catalog display for categories and trade directory
+    const displayedBrands = useMemo(() => brands, [brands]);
 
     const [queryParams, setQueryParams] = useQueryStates({
         page: parseAsInteger.withDefault(1),

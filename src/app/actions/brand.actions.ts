@@ -251,10 +251,16 @@ export const getBrandsByTier1 = unstable_cache(
                     owner: ownerMap.get(getNormalizedOwnerId(b.brandOwnerId)) || null
                 };
             });
+            if (enhancedBrands.length === 0) {
+                const matchingFallback = fallbackBrands.filter(b => b.tier1Ids?.includes(tier1Id));
+                return { success: true, data: serializeList(matchingFallback.length > 0 ? matchingFallback : fallbackBrands) };
+            }
+
             return { success: true, data: serializeList(enhancedBrands) };
         } catch (error: any) {
-            console.error(`Error in getBrandsByTier1 (${tier1Id}):`, error);
-            return { success: false, error: error.message };
+            console.error(`Error in getBrandsByTier1 (${tier1Id}), using fallback:`, error);
+            const matchingFallback = fallbackBrands.filter(b => b.tier1Ids?.includes(tier1Id));
+            return { success: true, data: serializeList(matchingFallback.length > 0 ? matchingFallback : fallbackBrands) };
         }
     },
     ['brands-by-tier1'],
