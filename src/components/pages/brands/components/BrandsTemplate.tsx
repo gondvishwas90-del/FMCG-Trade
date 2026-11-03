@@ -1,22 +1,18 @@
 "use client";
 
-import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from "motion/react";
-import BrandGallery from "./BrandGallery";
 import FeaturedBrandLogos from "./FeaturedBrandLogos";
 import type { Brand } from "../types/brand.types";
 
 const TradeApplicationSection = dynamic(() => import('./TradeApplicationSection'));
 
-export default function BrandsTemplate({ brands }: { brands: Brand[] }) {
-    const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-
+export default function BrandsTemplate({ brands }: { brands?: Brand[] }) {
     return (
         <main className="bg-background min-h-screen">
 
             {/* Professional Split Hero */}
-            <section className="relative bg-background pt-24 md:pt-32 pb-12 md:pb-16 border-b border-border">
+            <section className="relative bg-background pt-24 md:pt-32 pb-10 md:pb-14 border-b border-border">
                 <div className="max-w-[1800px] mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-end">
 
                     {/* Left Text Block */}
@@ -48,7 +44,7 @@ export default function BrandsTemplate({ brands }: { brands: Brand[] }) {
                             transition={{ delay: 0.2 }}
                             className="text-lg md:text-2xl text-muted-foreground max-w-2xl font-medium leading-relaxed"
                         >
-                            Explore our multi-brand FMCG catalog. Inspect global brand houses and commercial case specifications below.
+                            Select any brand house or producer to access dedicated wholesale SKU specifications and order terms.
                         </motion.p>
                     </div>
 
@@ -56,7 +52,7 @@ export default function BrandsTemplate({ brands }: { brands: Brand[] }) {
                     <div className="lg:col-span-4 flex flex-col justify-end">
                         <div className="grid grid-cols-2 gap-4 md:gap-8 border-t border-border pt-6 md:pt-8">
                             <div>
-                                <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">33+</div>
+                                <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">34+</div>
                                 <div className="text-[10px] md:text-sm font-bold uppercase tracking-widest text-muted-foreground">Major Brand Houses</div>
                             </div>
                             <div>
@@ -69,18 +65,8 @@ export default function BrandsTemplate({ brands }: { brands: Brand[] }) {
                 </div>
             </section>
 
-            {/* Step 1: Featured Brand Logos Directory */}
-            <FeaturedBrandLogos
-                selectedBrand={selectedBrand}
-                onSelectBrand={(brand) => setSelectedBrand(brand ? brand.searchQuery : null)}
-            />
-
-            {/* Step 2: Gallery Section of Products */}
-            <BrandGallery
-                brands={brands}
-                selectedBrand={selectedBrand}
-                onClearSelectedBrand={() => setSelectedBrand(null)}
-            />
+            {/* Brand Logo Directory Hub */}
+            <FeaturedBrandLogos />
 
             {/* Application Section */}
             <TradeApplicationSection />

@@ -1,376 +1,224 @@
 "use client";
 
-import React from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import TradeApplicationSection from "@/components/pages/brands/components/TradeApplicationSection";
-import { ArrowLeft, ArrowRight, Check, AlertCircle, ArrowDown, ChevronRight, ChevronLeft, TrendingUp, Quote, Filter, Package, Box, History, Globe, Shield, Target, Building2 } from "lucide-react";
-import { motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
+import { ArrowLeft, ChevronRight, ShieldCheck, Building2, Globe2 } from "lucide-react";
+import { motion } from "motion/react";
+import BrandFilters from "@/components/pages/brands/components/BrandFilters";
+import ProductTradeCard from "@/components/pages/brands/components/ProductTradeCard";
+import TradeApplicationSection from "@/components/pages/brands/components/TradeApplicationSection";
+import type { FilterType } from "@/components/pages/brands/types/filter.types";
+import {
+    DISCOVERY_COUNTRIES,
+    DISCOVERY_CATEGORIES,
+    DISCOVERY_MARKET_FOCUS,
+    DISCOVERY_OWNERSHIPS
+} from "@/components/pages/brands/constants/discovery-hub.constants";
 
-export default function BrandClient({ brand, categories = [] }: { brand: any, categories?: any[] }) {
-    const router = useRouter();
-    const { scrollY } = useScroll();
+interface BrandClientProps {
+    brand: any;
+    categories?: any[];
+}
 
-    // Parallax effect for hero
-    const y = useTransform(scrollY, [0, 1000], [0, 400]);
-    const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+export default function BrandClient({ brand, categories = [] }: BrandClientProps) {
+    const products = useMemo(() => brand.products || [], [brand.products]);
 
-    const getBestTradeUse = () => {
-        const uses = [];
-        if (brand.tradeCapabilities?.onTradeFocused) uses.push('premium on-trade programs');
-        if (brand.tradeCapabilities?.exportAvailable) uses.push('export portfolio building');
-        if (brand.tradeCapabilities?.ukDistribution) uses.push('uk distribution');
-        if (brand.tradeCapabilities?.offTradeFocused) uses.push('retail distribution');
-        if (brand.tradeCapabilities?.privateLabel) uses.push('private label opportunities');
+    // Filter states
+    const [activeFilters, setActiveFilters] = useState<Record<FilterType, string[]>>({
+        category: [],
+        country: [],
+        use: [],
+        owner: [],
+        access: []
+    });
+    const [searchValue, setSearchValue] = useState("");
 
-        if (uses.length === 0) return 'General trade discussions and market-specific enquiries.';
-
-        return `Most commonly discussed for ${uses.slice(0, 2).join(', ')}${uses.length > 2 ? ', and complementary portfolio building' : ''}.`;
+    const handleFilterChange = (type: FilterType, value: string[]) => {
+        setActiveFilters(prev => ({
+            ...prev,
+            [type]: value
+        }));
     };
 
+    const handleClearAll = () => {
+        setActiveFilters({
+            category: [],
+            country: [],
+            use: [],
+            owner: [],
+            access: []
+        });
+        setSearchValue("");
+    };
+
+    // Filter products
+    const filteredProducts = useMemo(() => {
+        return products.filter((p: any) => {
+            // Search query
+            if (searchValue) {
+                const q = searchValue.toLowerCase().trim();
+                const matchName = p.name?.toLowerCase().includes(q);
+                const matchDesc = p.description?.toLowerCase().includes(q);
+                const matchCat = p.category?.toLowerCase().includes(q);
+                if (!matchName && !matchDesc && !matchCat) return false;
+            }
+
+            // Category filter
+            if (activeFilters.category.length > 0) {
+                const matchesCat = activeFilters.category.some(cat => {
+                    const c = cat.toLowerCase();
+                    return (
+                        p.name?.toLowerCase().includes(c) ||
+                        p.description?.toLowerCase().includes(c) ||
+                        (p.category && p.category.toLowerCase().includes(c)) ||
+                        (brand.category && brand.category.toLowerCase().includes(c)) ||
+                        (brand.categoryFit && brand.categoryFit.some((f: string) => f.toLowerCase().includes(c)))
+                    );
+                });
+                if (!matchesCat) return false;
+            }
+
+            // Market focus filter
+            if (activeFilters.use.length > 0) {
+                const matchesUse = activeFilters.use.some(u => {
+                    const uLower = u.toLowerCase();
+                    if (uLower === 'on-trade' && brand.tradeCapabilities?.onTradeFocused) return true;
+                    if (uLower === 'off-trade' && brand.tradeCapabilities?.offTradeFocused) return true;
+                    if (uLower === 'cocktail' && (p.name.toLowerCase().includes('liqueur') || p.name.toLowerCase().includes('aperitif') || p.name.toLowerCase().includes('gin'))) return true;
+                    return false;
+                });
+                if (!matchesUse) return false;
+            }
+
+            return true;
+        });
+    }, [products, searchValue, activeFilters, brand]);
+
     return (
-        <div className="min-h-screen bg-background selection:bg-emerald-100 dark:selection:bg-emerald-900/30 selection:text-emerald-900 dark:selection:text-emerald-100 pb-32">
+        <div className="min-h-screen bg-background text-foreground pb-24">
 
-            {/* Immersive Hero (70vh mobile, 85vh desktop) */}
-            <header className="relative h-[70vh] md:h-[85vh] w-full overflow-hidden bg-muted">
-                <motion.div style={{ y, opacity }} className="relative w-full h-full">
-                    {/* Desktop Background */}
-                    {(brand.backgroundImage || brand.image) && (
-                        <Image
-                            src={brand.backgroundImage || brand.image}
-                            alt={brand.name}
-                            fill
-                            className="object-cover hidden md:block"
-                            priority
-                            sizes="100vw"
-                        />
-                    )}
-                    {/* Mobile Background */}
-                    {(brand.mobileBackgroundImage || brand.image) && (
-                        <Image
-                            src={brand.mobileBackgroundImage || brand.image}
-                            alt={brand.name}
-                            fill
-                            className="object-cover block md:hidden"
-                            priority
-                            sizes="100vw"
-                        />
-                    )}
-                </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background  via-background/60 to-transparent" />
-
-                {/* Back Button */}
-                <div className="absolute top-24 left-6 md:left-12 z-20">
-                    <button
-                        onClick={() => router.back()}
-                        className="flex items-center gap-2 text-foreground/80 hover:text-foreground bg-background/20 hover:bg-background/40 backdrop-blur-md px-4 md:px-5 py-2 md:py-2.5 rounded-full transition-all text-xs md:text-sm font-medium border border-border/20 shadow-sm"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to Browsing
-                    </button>
-                </div>
-
-                {/* Hero Content */}
-                <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 z-10 pb-16 md:pb-32">
-                    <div className="max-w-7xl mx-auto">
-                        <motion.div
-                            initial={{ y: 30, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
+            {/* Brand Hero Header Section */}
+            <header className="relative bg-zinc-50 dark:bg-zinc-950/40 border-b border-border pt-24 md:pt-32 pb-8 md:pb-12 overflow-hidden">
+                <div className="max-w-[1800px] mx-auto px-4 md:px-8">
+                    
+                    {/* Navigation Bar */}
+                    <div className="flex items-center justify-between gap-4 mb-6">
+                        <Link
+                            href="/brands"
+                            className="inline-flex items-center gap-2 text-xs md:text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group"
                         >
-                            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold text-foreground mb-4 md:mb-6 tracking-tighter leading-[0.95] md:leading-[0.9]">
+                            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                            <span>Back to All Brand Logos</span>
+                        </Link>
+
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
+                            <Link href="/brands" className="hover:text-foreground transition-colors">
+                                Brands Hub
+                            </Link>
+                            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
+                            <span className="text-foreground font-semibold">
+                                {brand.name}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Brand Banner Content */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+                        <div className="lg:col-span-8">
+                            <div className="flex items-center gap-2.5 mb-3">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                                    Official Trade Portfolio
+                                </span>
+                            </div>
+
+                            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-foreground tracking-tight leading-[0.95] mb-4">
                                 {brand.name}
                             </h1>
 
-                            {brand.tagline && (
-                                <p className="text-xl md:text-3xl text-emerald-600 dark:text-emerald-400 font-medium tracking-tight mb-6">
-                                    "{brand.tagline}"
-                                </p>
-                            )}
-
-                            <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl font-light leading-relaxed opacity-95">
-                                "{brand.positioning}"
+                            <p className="text-base md:text-xl text-muted-foreground font-light leading-relaxed max-w-3xl">
+                                {brand.positioning || brand.description || `Explore verified wholesale specifications, pack formats, and export terms for ${brand.name}.`}
                             </p>
+                        </div>
 
-                            {brand.tradeIntents && brand.tradeIntents.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mt-8">
-                                    {brand.tradeIntents.map((intent: string, i: number) => (
-                                        <span key={intent} className="px-3 py-1 bg-white/10 backdrop-blur-sm border border-white/10 text-white/70 text-[10px] font-bold uppercase tracking-widest rounded-md">
-                                            {intent.replace('-', ' ')}
-                                        </span>
-                                    ))}
+                        {/* Quick Stats Badges */}
+                        <div className="lg:col-span-4 flex flex-col justify-end">
+                            <div className="grid grid-cols-2 gap-4 border-t lg:border-t-0 lg:border-l border-border pt-4 lg:pt-0 lg:pl-8">
+                                <div>
+                                    <div className="text-2xl md:text-3xl font-extrabold text-foreground mb-0.5 font-mono">
+                                        {products.length}
+                                    </div>
+                                    <div className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                                        Verified Products
+                                    </div>
                                 </div>
-                            )}
-                        </motion.div>
+                                <div>
+                                    <div className="text-2xl md:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 mb-0.5">
+                                        100%
+                                    </div>
+                                    <div className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                                        Export Ready
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </header>
 
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-24 space-y-20 md:space-y-32">
-
-                {/* 1. Overview Section */}
-                <section id="overview" className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 scroll-mt-32">
-                    <div className="md:col-span-4 relative">
-                        <div className="md:sticky md:top-32">
-                            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4 md:mb-6 flex items-center gap-3">
-                                <span className="w-8 h-[1px] bg-border"></span>
-                                The Story
-                            </h2>
-                            <h3 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground leading-tight mb-4 md:mb-6">
-                                {brand.storyHeadline || "A legacy of Craftsmanship and Distinction."}
-                            </h3>
-                            <div className="w-12 h-1 bg-emerald-500 rounded-full" />
-                        </div>
-                    </div>
-                    <div className="md:col-span-8 space-y-12">
-                        <div className="relative">
-                            <Quote className="absolute -top-4 -left-6 w-12 h-12 text-muted -z-10 transform -scale-x-100 opacity-40" />
-                            <p className="text-lg md:text-xl text-foreground/80 font-light leading-relaxed whitespace-pre-line">
-                                {brand.storyDescription || brand.description}
-                            </p>
-                        </div>
-
-                        <div className="bg-card border border-border p-8 md:p-10 rounded-2xl shadow-xl relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all duration-700" />
-
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-4 text-emerald-500">
-                                    <TrendingUp className="w-5 h-5" />
-                                    <h3 className="text-xs font-bold uppercase tracking-widest">Trade Analyst Verdict</h3>
-                                </div>
-                                <p className="text-lg md:text-xl text-card-foreground leading-relaxed font-light text-balance">
-                                    "{brand.tradeAnalystVerdict || getBestTradeUse()}"
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* 2. Product Showcase */}
-                {brand.products && brand.products.length > 0 && (
-                    <ProductShowcaseSection products={brand.products} brandName={brand.name} />
-                )}
-
-                {/* 4. Unified Trade Application Section (Isolated Component) */}
-                <TradeApplicationSection brandName={brand.name} />
+            {/* Discovery Hub Filters Bar (Sticky) */}
+            <div className="sticky top-0 z-40">
+                <BrandFilters
+                    activeFilters={activeFilters}
+                    onFilterChange={handleFilterChange}
+                    totalCount={filteredProducts.length}
+                    categoryOptions={DISCOVERY_CATEGORIES}
+                    countryOptions={DISCOVERY_COUNTRIES}
+                    ownerOptions={DISCOVERY_OWNERSHIPS}
+                    localSearchValue={searchValue}
+                    setLocalSearchValue={setSearchValue}
+                    onClearAll={handleClearAll}
+                />
             </div>
 
-            {/* 4. Trade Specs Section (Light Mode) */}
-            <section id="specs" className="bg-muted/30 border-t border-border py-16 md:py-24 scroll-mt-32">
-                <div className="max-w-7xl mx-auto px-6 md:px-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        <div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 md:mb-6 tracking-tight">Trade Specifications</h2>
-                            <p className="text-muted-foreground mb-6 md:mb-8 max-w-sm font-light leading-relaxed">
-                                Comprehensive breakdown of distribution, compliance, and access requirements for this brand.
-                            </p>
-
-                            {/* Market Access List from Reference */}
-                            <div className="mb-6 md:mb-8">
-                                <h4 className="text-sm font-bold text-foreground mb-4">Market & Access</h4>
-                                <ul className="space-y-3">
-                                    {brand.marketConsiderations?.map((item: string, i: number) => (
-                                        <li key={i} className="flex gap-3 text-sm text-muted-foreground">
-                                            <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full mt-2 shrink-0" />
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* <button className="w-full md:w-auto bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold hover:bg-primary/90 transition-colors shadow-xl">
-                                Download Sell Sheet
-                            </button> */}
-                        </div>
-
-                        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {/* Reference-style Capabilities Grid */}
-                            <CapabilityCard label="Available for Export" sub="International markets" active={brand.tradeCapabilities.exportAvailable} />
-                            <CapabilityCard label="Private Label" sub="White label programs" active={brand.tradeCapabilities.privateLabel} />
-                            <CapabilityCard label="UK Distribution" sub="Domestic market access" active={brand.tradeCapabilities.ukDistribution} />
-                            <CapabilityCard label="EU Distribution" sub="European market access" active={brand.tradeCapabilities.euDistribution} />
-                            <CapabilityCard label="On-Trade Focused" sub="Bars, restaurants, hotels" active={brand.tradeCapabilities.onTradeFocused} />
-                            <CapabilityCard label="Off-Trade Focused" sub="Retail, supermarkets" active={brand.tradeCapabilities.offTradeFocused} />
-                        </div>
+            {/* Products Grid (Step 2 - Format matching Image 1) */}
+            <main className="max-w-[1800px] mx-auto px-4 md:px-8 py-10">
+                {filteredProducts.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {filteredProducts.map((product: any, idx: number) => (
+                            <ProductTradeCard
+                                key={product.name + idx}
+                                product={product}
+                                brandId={brand.id}
+                                brandName={brand.name}
+                                country={brand.country || "United Kingdom"}
+                                ownerName={brand.owner?.name || brand.name}
+                            />
+                        ))}
                     </div>
-                </div>
-            </section>
-
-
-
-        </div >
-    );
-}
-
-function ProductShowcaseSection({ products, brandName }: { products: any[]; brandName: string }) {
-    const parseSize = (sizeStr?: string) => {
-        if (!sizeStr) return { pack: "Standard Commercial Case Format", pallet: "Pallet Lots Available" };
-        const parts = sizeStr.split("•");
-        if (parts.length >= 2) {
-            return {
-                pack: parts[0].trim(),
-                pallet: parts[1].trim()
-            };
-        }
-        return {
-            pack: sizeStr,
-            pallet: "Standard Wholesale Pallet"
-        };
-    };
-
-    return (
-        <section id="products" className="scroll-mt-32">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-                <div>
-                    <h3 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground leading-[0.95]">
-                        Product Portfolio & Specs
-                    </h3>
-                </div>
-                <p className="text-muted-foreground max-w-md text-base md:text-lg font-light leading-relaxed">
-                    Standardized wholesale case and pallet specifications for commercial procurement.
-                </p>
-            </div>
-
-            {/* List of Products: Each with Image on Left & Premium Table on Right */}
-            <div className="space-y-12">
-                {products.map((product) => {
-                    const parsed = parseSize(product.size);
-                    return (
-                        <div
-                            key={product.name}
-                            className="bg-card border border-border rounded-3xl overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-12"
+                ) : (
+                    <div className="text-center py-20 bg-muted/20 border border-border rounded-3xl p-8">
+                        <p className="text-lg font-bold text-foreground mb-2">
+                            No products match your current filter selection.
+                        </p>
+                        <p className="text-xs text-muted-foreground mb-6">
+                            Try resetting filters or contact our commercial desk for custom allocation.
+                        </p>
+                        <button
+                            onClick={handleClearAll}
+                            className="px-6 py-2.5 rounded-full bg-foreground text-background text-xs font-bold uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity"
                         >
-                            {/* Left: Product Image (Clean studio framing, no top overlay bar) */}
-                            <div className="lg:col-span-5 relative bg-muted/30 min-h-[380px] lg:min-h-[460px] flex items-center justify-center p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-border">
-                                <div className="relative w-full h-72 md:h-96">
-                                    <Image
-                                        src={product.image}
-                                        alt={product.name}
-                                        fill
-                                        className="object-contain p-4 drop-shadow-2xl transition-transform duration-500 hover:scale-105"
-                                        sizes="(max-width: 1024px) 100vw, 40vw"
-                                    />
-                                </div>
-                            </div>
+                            Reset Filters
+                        </button>
+                    </div>
+                )}
+            </main>
 
-                            {/* Right: Premium Specification Table */}
-                            <div className="lg:col-span-7 p-6 md:p-10 flex flex-col justify-between bg-card">
-                                <div>
-                                    <div className="mb-6">
-                                        <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-                                            Official Specification Sheet
-                                        </span>
-                                        <h4 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mt-1 mb-3">
-                                            {product.name}
-                                        </h4>
-                                        <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">
-                                            {product.description}
-                                        </p>
-                                    </div>
+            {/* Trade Application Section */}
+            <TradeApplicationSection brandName={brand.name} />
 
-                                    {/* Simplified B2B Specification Grid */}
-                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                                        {/* 1. Pack Format */}
-                                        <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-emerald-500/30 transition-all flex flex-col justify-between">
-                                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
-                                                <Package className="w-3.5 h-3.5 text-emerald-500" />
-                                                Pack Format
-                                            </span>
-                                            <span className="text-sm md:text-base font-bold text-foreground font-mono">
-                                                {parsed.pack}
-                                            </span>
-                                        </div>
-
-                                        {/* 2. Pallet Capacity */}
-                                        <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-blue-500/30 transition-all flex flex-col justify-between">
-                                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
-                                                <Box className="w-3.5 h-3.5 text-blue-500" />
-                                                Pallet Load
-                                            </span>
-                                            <span className="text-sm md:text-base font-bold text-foreground font-mono">
-                                                {parsed.pallet}
-                                            </span>
-                                        </div>
-
-                                        {/* 3. Strength / Status */}
-                                        {product.abv ? (
-                                            <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-purple-500/30 transition-all flex flex-col justify-between">
-                                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
-                                                    <Shield className="w-3.5 h-3.5 text-purple-500" />
-                                                    Strength (ABV)
-                                                </span>
-                                                <span className="text-sm md:text-base font-bold text-foreground font-mono">
-                                                    {product.abv}
-                                                </span>
-                                            </div>
-                                        ) : (
-                                            <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 hover:border-emerald-500/30 transition-all flex flex-col justify-between">
-                                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 mb-1.5">
-                                                    <Check className="w-3.5 h-3.5 text-emerald-500" />
-                                                    Status
-                                                </span>
-                                                <span className="text-sm md:text-base font-bold text-emerald-600 dark:text-emerald-400">
-                                                    Export Ready
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Simplified Logistics & Order Strip */}
-                                    <div className="p-4 rounded-2xl bg-muted/20 border border-border/50 mb-8 space-y-2.5">
-                                        <div className="flex items-center justify-between text-xs flex-wrap gap-2">
-                                            <span className="font-semibold text-muted-foreground flex items-center gap-1.5">
-                                                <Building2 className="w-3.5 h-3.5 text-amber-500" />
-                                                Bond & Customs
-                                            </span>
-                                            <span className="font-medium text-foreground">
-                                                Under-Bond (T1) / UK Duty-Paid Available
-                                            </span>
-                                        </div>
-                                        <div className="h-px bg-border/40 w-full" />
-                                        <div className="flex items-center justify-between text-xs flex-wrap gap-2">
-                                            <span className="font-semibold text-muted-foreground flex items-center gap-1.5">
-                                                <Target className="w-3.5 h-3.5 text-emerald-500" />
-                                                Order Terms
-                                            </span>
-                                            <span className="font-medium text-foreground">
-                                                Full Pallets (Mixed lots permitted) & FCL Containers
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Bottom CTA Button */}
-                                <div className="pt-4 flex items-center justify-end border-t border-border/60">
-                                    <Link
-                                        href={`/contact?subject=${encodeURIComponent('Commercial Allocation Request: ' + product.name)}`}
-                                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white py-3 px-6 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-emerald-600/20 transition-all group"
-                                    >
-                                        <span>Request Allocation</span>
-                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </section>
-    );
-}
-
-function CapabilityCard({ label, sub, active }: { label: string, sub: string, active: boolean }) {
-    return (
-        <div className={`border p-5 flex items-start gap-4 rounded-xl transition-all ${active ? 'border-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/20' : 'border-border bg-card opacity-60'
-            }`}>
-            <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${active ? 'bg-emerald-500 text-white' : 'bg-muted text-muted-foreground'}`}>
-                {active ? <Check className="w-3 h-3" /> : <div className="w-2 h-0.5 bg-current" />}
-            </div>
-            <div>
-                <p className="text-foreground font-bold text-sm">{label}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>
-            </div>
         </div>
     );
 }

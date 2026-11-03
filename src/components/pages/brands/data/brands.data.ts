@@ -31,21 +31,21 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Black Label 12YO Blended Scotch",
-                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl • 100 cs / Pallet",
                 description: "The benchmark premium 12-year-old blended Scotch whisky with rich, complex smoky depth."
             },
             {
                 name: "Red Label Blended Scotch",
-                image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "12 x 1L & 6 x 70cl Cases (Pallet: 60 / 100 cases)",
                 description: "High-volume rotation blended whisky suitable for international export and retail resale."
             },
             {
                 name: "Blue Label Luxury Blend",
-                image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg",
                 abv: "40%",
                 size: "6 x 75cl Gift Cases (Bonded Port Allocation)",
                 description: "Rare and prestigious blend with hand-selected rare casks for duty-free and luxury on-trade."
@@ -95,14 +95,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Chivas Regal 12 Year Old",
-                image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg",
                 abv: "40%",
                 size: "6 x 70cl • 100 cs / Pallet",
                 description: "Smooth blend of finest malt and grain whiskies matured for at least 12 years."
             },
             {
                 name: "Chivas Regal 18 Year Old Gold Signature",
-                image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl Gift Box (Pallet: 80 cases)",
                 description: "Rich, multi-layered blend with 85 unique flavour notes in every drop."
@@ -152,14 +152,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Jameson Original Triple Distilled",
-                image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl • 105 cs / Pallet",
                 description: "Triple distilled, twice as smooth, perfectly balanced for on-trade and wholesale."
             },
             {
                 name: "Jameson Black Barrel",
-                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl Cases (Pallet: 90 cases)",
                 description: "Double charred bourbon cask finish delivering heightened richness and complexity."
@@ -216,7 +216,7 @@ export const fallbackBrands: Brand[] = [
             },
             {
                 name: "Gentleman Jack Double Mellowed",
-                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl Cases (Pallet: 90 cases)",
                 description: "Undergoes a second charcoal mellowing for exceptional smoothness."
@@ -672,14 +672,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Premium Indian Tonic Water",
-                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Aperol Flavoured Liqueurs.webp",
                 abv: "0%",
                 size: "24 x 200ml Glass Bottles (Pallet: 88 cases / 2,112 bottles)",
                 description: "Signature tonic crafted with natural quinine and Mexican bitter orange oils."
             },
             {
                 name: "Mediterranean Tonic Water",
-                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Aperol Flavoured Liqueurs.webp",
                 abv: "0%",
                 size: "24 x 200ml Glass Bottles (Pallet: 88 cases)",
                 description: "Delicate herbal blend with rosemary and lemon thyme from the Mediterranean shores."
@@ -729,7 +729,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Bushmills Original Triple Distilled",
-                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl • 100 cs / Pallet",
                 description: "Triple distilled grain and malt whiskey known for versatile warmth and light fruit notes."
@@ -779,7 +779,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Jim Beam White Label Bourbon",
-                image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 70cl • 100 cs / Pallet",
                 description: "The classic Kentucky straight bourbon with vanilla, toasted oak, and spicy caramel notes."
@@ -829,7 +829,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Hibiki Japanese Harmony",
-                image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
                 abv: "43%",
                 size: "6 x 70cl • 80 cs / Pallet",
                 description: "Delicate honey, orange peel, and white chocolate notes with Mizunara oak finish."
@@ -1136,7 +1136,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "BuzzBallz Cocktails 200ml Round Can (Choc Tease / Tequila Rita)",
-                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Aperol Flavoured Liqueurs.webp",
                 abv: "13.5%",
                 size: "24 x 200ml • 80 cs / Pallet",
                 description: "Premixed single-serve cocktail made with premium spirits and real fruit flavors."
@@ -1186,7 +1186,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Red Bull Energy Drink 250ml Regular & Sugarfree",
-                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Aperol Flavoured Liqueurs.webp",
                 abv: "0%",
                 size: "24 x 250ml • 108 cs / Pallet",
                 description: "The global benchmark 250ml slim can with caffeine, taurine, and B-group vitamins."

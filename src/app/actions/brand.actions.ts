@@ -17,6 +17,310 @@ function getNormalizedOwnerId(ownerId?: string): string | undefined {
 }
 
 import { fallbackBrands } from "@/components/pages/brands/data/brands.data";
+import { FEATURED_BRAND_LOGOS } from "@/components/pages/brands/data/brand-directory.data";
+
+const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
+    "coca-cola": [
+        {
+            name: "Coca-Cola Original Taste 330ml Can",
+            image: "/products/coca-cola-can-330ml.jpg",
+            abv: "0%",
+            size: "24 x 330ml • 99 cs / Pallet",
+            description: "The world's favourite soft drink. Crisp, refreshing cola flavor in wholesale shrink trays."
+        },
+        {
+            name: "Coca-Cola Zero Sugar 330ml Can",
+            image: "/products/coca-cola-can-330ml.jpg",
+            abv: "0%",
+            size: "24 x 330ml • 99 cs / Pallet",
+            description: "Zero sugar, zero calories with the legendary Coca-Cola taste profile."
+        },
+        {
+            name: "Sprite Regular 330ml Can",
+            image: "/products/coca-cola-can-330ml.jpg",
+            abv: "0%",
+            size: "24 x 330ml • 99 cs / Pallet",
+            description: "Crisp lemon-lime refreshment in standard export cans."
+        }
+    ],
+    "pepsico": [
+        {
+            name: "PEPSI Regular Flavour Carbonated Drink 1L",
+            image: "/products/pepsi-regular-1l.png",
+            abv: "0%",
+            size: "6 x 1L • 125 cs / Pallet",
+            description: "PEPSI regular flavour is a refreshing carbonated drink in the cola category, made with plant extracts, sugar and sweeteners."
+        },
+        {
+            name: "Pepsi Max 330ml Can",
+            image: "/products/pepsi-regular-1l.png",
+            abv: "0%",
+            size: "24 x 330ml • 99 cs / Pallet",
+            description: "Maximum cola taste with no sugar. High-rotation export pack."
+        }
+    ],
+    "bacardi": [
+        {
+            name: "Bacardi Carta Blanca Superior White Rum",
+            image: "/products/Captain Morgan Spiced Rum.jpg",
+            abv: "37.5%",
+            size: "6 x 70cl • 100 cs / Pallet",
+            description: "The world's most awarded rum with light vanilla and fresh apricot notes."
+        },
+        {
+            name: "Bacardi Spiced Premium Spirit Drink",
+            image: "/products/Captain Morgan Spiced Rum.jpg",
+            abv: "35%",
+            size: "6 x 70cl • 100 cs / Pallet",
+            description: "Aged in charred American oak with honey and spice undertones."
+        }
+    ],
+    "campari": [
+        {
+            name: "Campari Bitter Aperitivo 70cl",
+            image: "/products/Aperol Flavoured Liqueurs.webp",
+            abv: "25%",
+            size: "6 x 70cl • 100 cs / Pallet",
+            description: "Iconic red Italian aperitif infused with bitter herbs, aromatic plants, and fruit."
+        },
+        {
+            name: "Aperol Aperitivo Liqueur 70cl",
+            image: "/products/Aperol Flavoured Liqueurs.webp",
+            abv: "11%",
+            size: "6 x 70cl • 100 cs / Pallet",
+            description: "The quintessential Spritz ingredient with bitter-sweet orange and gentian profile."
+        }
+    ],
+    "kraft-heinz": [
+        {
+            name: "Heinz Tomato Ketchup Top-Down 400ml",
+            image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=600",
+            abv: "0%",
+            size: "10 x 400ml • 96 cs / Pallet",
+            description: "The unmistakable taste of sun-ripened tomatoes in convenient top-down bottles."
+        },
+        {
+            name: "Heinz Baked Beans in Rich Tomato Sauce 415g",
+            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600",
+            abv: "0%",
+            size: "24 x 415g • 72 cs / Pallet",
+            description: "High-protein haricot beans stewed in thick tomato gravy for retail and catering."
+        }
+    ],
+    "unilever": [
+        {
+            name: "Hellmann's Real Mayonnaise Squeezy 430ml",
+            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600",
+            abv: "0%",
+            size: "8 x 430ml • 120 cs / Pallet",
+            description: "Made with 100% free-range eggs and quality oils for creaminess and rich flavor."
+        },
+        {
+            name: "Knorr Aromat All-Purpose Seasoning 90g",
+            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600",
+            abv: "0%",
+            size: "6 x 90g • 180 cs / Pallet",
+            description: "Finely balanced blend of herbs and spices for commercial pantry enhancement."
+        }
+    ],
+    "asahi": [
+        {
+            name: "Asahi Super Dry 330ml Glass Bottle",
+            image: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&q=80&w=600",
+            abv: "5.0%",
+            size: "24 x 330ml • 63 cs / Pallet",
+            description: "Japan's #1 beer, renowned for its crisp, clean Karakuchi dry finish."
+        },
+        {
+            name: "Peroni Nastro Azzurro 330ml Bottle",
+            image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+            abv: "5.0%",
+            size: "24 x 330ml • 63 cs / Pallet",
+            description: "Premium Italian lager brewed with Nostrano dell'Isola maize."
+        }
+    ],
+    "carlsberg": [
+        {
+            name: "Carlsberg Danish Pilsner 330ml Bottle",
+            image: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&q=80&w=600",
+            abv: "3.8%",
+            size: "24 x 330ml • 63 cs / Pallet",
+            description: "Crisp and refreshing with a full malty body and pleasant hop bitterness."
+        },
+        {
+            name: "Kronenbourg 1664 Blanc 330ml Bottle",
+            image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+            abv: "5.0%",
+            size: "24 x 330ml • 63 cs / Pallet",
+            description: "Modern French wheat beer with subtle citrus and coriander notes."
+        }
+    ],
+    "kelloggs": [
+        {
+            name: "Kellogg's Corn Flakes 450g",
+            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600",
+            abv: "0%",
+            size: "14 x 450g • 48 cs / Pallet",
+            description: "The original toasted golden corn cereal for commercial grocery distribution."
+        },
+        {
+            name: "Pringles Original & Sour Cream 165g",
+            image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&q=80&w=600",
+            abv: "0%",
+            size: "19 x 165g • 56 cs / Pallet",
+            description: "Iconic hyperbolic paraboloid potato snacks in resealable protective tubes."
+        }
+    ],
+    "william-grant": [
+        {
+            name: "Glenfiddich 12 Year Old Single Malt Scotch",
+            image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+            abv: "40%",
+            size: "6 x 70cl • 80 cs / Pallet",
+            description: "The pioneer single malt matured in fine American and European oak casks."
+        },
+        {
+            name: "Hendrick's Distilled Scottish Gin",
+            image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600",
+            abv: "41.4%",
+            size: "6 x 70cl • 100 cs / Pallet",
+            description: "Distilled with cucumber and Bulgarian rose for quintessential freshness."
+        }
+    ],
+    "remy-cointreau": [
+        {
+            name: "Rémy Martin VSOP Fine Champagne Cognac",
+            image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600",
+            abv: "40%",
+            size: "6 x 70cl • 80 cs / Pallet",
+            description: "Epitome of elegance blending grapes from Grande and Petite Champagne."
+        },
+        {
+            name: "Cointreau Triple Sec Orange Liqueur",
+            image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+            abv: "40%",
+            size: "6 x 70cl • 90 cs / Pallet",
+            description: "Clear orange liqueur crafted with sweet and bitter orange peels."
+        }
+    ],
+    "edrington": [
+        {
+            name: "The Macallan Double Cask 12YO Single Malt",
+            image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+            abv: "40%",
+            size: "6 x 70cl • 60 cs / Pallet",
+            description: "Prestige Speyside single malt aged in sherry seasoned American and European oak."
+        },
+        {
+            name: "Highland Park 12YO Viking Honour",
+            image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+            abv: "40%",
+            size: "6 x 70cl • 80 cs / Pallet",
+            description: "Orkney single malt with heather honey sweetness and aromatic peat smoke."
+        }
+    ]
+};
+
+function resolveBrandOrHouse(id: string) {
+    // 1. Direct match in fallbackBrands
+    const directBrand = fallbackBrands.find(b => b.id === id);
+    if (directBrand) return directBrand;
+
+    // 2. Check if id matches any directory brand house (e.g. 'nestle', 'diageo', 'coca-cola', 'pernod-ricard')
+    const dirItem = FEATURED_BRAND_LOGOS.find(item => item.id === id || item.searchQuery.toLowerCase() === id.toLowerCase());
+    
+    // Find all brands in fallbackBrands belonging to this house
+    const matchingBrands = fallbackBrands.filter(b => {
+        const query = dirItem ? dirItem.searchQuery.toLowerCase() : id.toLowerCase();
+        const ownerName = b.owner?.name?.toLowerCase() || '';
+        const ownerId = b.owner?.id?.toLowerCase() || '';
+        const brandName = b.name?.toLowerCase() || '';
+        return ownerName.includes(query) || ownerId.includes(query) || brandName.includes(query);
+    });
+
+    const extraProducts = BRAND_HOUSE_EXTRA_PRODUCTS[id] || [];
+
+    if (matchingBrands.length > 0 || extraProducts.length > 0) {
+        const houseName = dirItem?.name || matchingBrands[0]?.owner?.name || id;
+        const allProducts = [
+            ...matchingBrands.flatMap(b => b.products || []),
+            ...extraProducts
+        ];
+
+        return {
+            id: id,
+            name: houseName,
+            country: dirItem?.country || matchingBrands[0]?.country || 'Global',
+            countryCode: matchingBrands[0]?.countryCode || 'GB',
+            positioning: `Commercial FMCG wholesale portfolio for ${houseName}. Direct factory allocations and verified case formats.`,
+            description: `Inspect official wholesale specifications, pallet capacities, and export terms for ${houseName} products.`,
+            tagline: `Official Wholesale Portfolio`,
+            category: dirItem?.category || matchingBrands[0]?.category || 'General',
+            categoryFit: Array.from(new Set(matchingBrands.flatMap(b => b.categoryFit || []))),
+            image: dirItem?.logo || matchingBrands[0]?.image || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
+            backgroundImage: matchingBrands[0]?.backgroundImage || matchingBrands[0]?.image || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1600',
+            owner: {
+                id: id,
+                name: houseName,
+                logo: dirItem?.logo || matchingBrands[0]?.owner?.logo
+            },
+            products: allProducts,
+            portfolioRanges: matchingBrands.flatMap(b => b.portfolioRanges || []),
+            tradeCapabilities: matchingBrands[0]?.tradeCapabilities || {
+                exportAvailable: true,
+                privateLabel: false,
+                ukDistribution: true,
+                euDistribution: true,
+                onTradeFocused: true,
+                offTradeFocused: true,
+            },
+            marketConsiderations: ["Under-Bond Bonded Dispatch", "Full Pallets (Mixed lots permitted) & FCL Containers", "Direct Commercial Dispatch"],
+            tradeIntents: ["volume-strategic", "export-portfolio"]
+        };
+    }
+
+    if (dirItem) {
+        return {
+            id: id,
+            name: dirItem.name,
+            country: dirItem.country || 'Global',
+            countryCode: 'GB',
+            positioning: `Commercial wholesale supply for ${dirItem.name}.`,
+            description: `Inspect official specifications and trade availability for ${dirItem.name}.`,
+            tagline: `Official Wholesale Portfolio`,
+            category: dirItem.category,
+            categoryFit: [dirItem.category],
+            image: dirItem.logo,
+            backgroundImage: dirItem.logo,
+            owner: {
+                id: id,
+                name: dirItem.name,
+                logo: dirItem.logo
+            },
+            products: [
+                {
+                    name: `${dirItem.name} Standard Commercial Wholesale Lot`,
+                    image: dirItem.logo,
+                    abv: dirItem.category === 'Spirits' ? '40%' : dirItem.category === 'Beer & Cider' ? '5.0%' : '0%',
+                    size: "Standard Master Case • Wholesale Pallet",
+                    description: `Standardized commercial cases of ${dirItem.name} for international B2B procurement.`
+                }
+            ],
+            tradeCapabilities: {
+                exportAvailable: true,
+                privateLabel: false,
+                ukDistribution: true,
+                euDistribution: true,
+                onTradeFocused: true,
+                offTradeFocused: true,
+            },
+            marketConsiderations: ["Commercial Export Supply", "Full Pallets & Containers FCL"],
+            tradeIntents: ["volume-strategic", "export-portfolio"]
+        };
+    }
+
+    return null;
+}
 
 export async function getBrands() {
     try {
@@ -166,7 +470,7 @@ export async function getBrandById(id: string) {
         await dbConnect();
         const brand = await Brand.findOne({ id, status: 'active' }).lean();
         if (!brand) {
-            const fallback = fallbackBrands.find(b => b.id === id);
+            const fallback = resolveBrandOrHouse(id);
             if (fallback) {
                 return { success: true, data: serializeDocument(fallback) };
             }
@@ -203,7 +507,7 @@ export async function getBrandById(id: string) {
         return { success: true, data: serializeDocument(enhancedBrand) };
     } catch (error: any) {
         console.error(`Error in getBrandById (${id}):`, error);
-        const fallback = fallbackBrands.find(b => b.id === id);
+        const fallback = resolveBrandOrHouse(id);
         if (fallback) {
             return { success: true, data: serializeDocument(fallback) };
         }

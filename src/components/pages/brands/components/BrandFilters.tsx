@@ -4,6 +4,12 @@ import { useState } from "react";
 import { X, SlidersHorizontal, RotateCcw, ChevronRight, Filter, Search } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import type { FilterType } from "../types/filter.types";
+import {
+    DISCOVERY_COUNTRIES,
+    DISCOVERY_CATEGORIES,
+    DISCOVERY_MARKET_FOCUS,
+    DISCOVERY_OWNERSHIPS
+} from "../constants/discovery-hub.constants";
 
 interface BrandFiltersProps {
     onFilterChange: (type: FilterType, value: string[]) => void;
@@ -21,9 +27,9 @@ export default function BrandFilters({
     onFilterChange,
     activeFilters,
     totalCount,
-    categoryOptions = [],
-    countryOptions = [],
-    ownerOptions = [],
+    categoryOptions,
+    countryOptions,
+    ownerOptions,
     localSearchValue,
     setLocalSearchValue,
     onClearAll
@@ -44,10 +50,30 @@ export default function BrandFilters({
     };
 
     const filterTabs = [
-        { label: 'Country', type: 'country' as FilterType, options: countryOptions },
-        { label: 'Category', type: 'category' as FilterType, options: categoryOptions },
-        { label: 'Market Focus', type: 'use' as FilterType, options: ['On-Trade', 'Off-Trade', 'Cocktail'] },
-        { label: 'Ownership', type: 'owner' as FilterType, options: ownerOptions },
+        { 
+            label: 'Country', 
+            type: 'country' as FilterType, 
+            options: countryOptions && countryOptions.length > 0 ? countryOptions : DISCOVERY_COUNTRIES,
+            allLabel: 'ALL COUNTRYS' 
+        },
+        { 
+            label: 'Category', 
+            type: 'category' as FilterType, 
+            options: categoryOptions && categoryOptions.length > 0 ? categoryOptions : DISCOVERY_CATEGORIES,
+            allLabel: 'ALL CATEGORYS' 
+        },
+        { 
+            label: 'Market Focus', 
+            type: 'use' as FilterType, 
+            options: DISCOVERY_MARKET_FOCUS,
+            allLabel: 'ALL MARKET FOCUSS' 
+        },
+        { 
+            label: 'Ownership', 
+            type: 'owner' as FilterType, 
+            options: ownerOptions && ownerOptions.length > 0 ? ownerOptions : DISCOVERY_OWNERSHIPS,
+            allLabel: 'ALL OWNERSHIPS' 
+        },
     ];
 
     return (
@@ -168,7 +194,7 @@ export default function BrandFilters({
                                                         : 'bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground'}
                                             `}
                                             >
-                                                All {filterTabs.find(t => t.type === activeTab)?.label}s
+                                                {filterTabs.find(t => t.type === activeTab)?.allLabel || `All ${filterTabs.find(t => t.type === activeTab)?.label}s`}
                                             </button>
 
                                             {filterTabs.find(t => t.type === activeTab)?.options.map(opt => {
@@ -184,7 +210,7 @@ export default function BrandFilters({
                                                                 : 'bg-white/5 border-white/5 text-muted-foreground hover:bg-white/10 hover:border-white/20 hover:text-foreground'}
                                                     `}
                                                     >
-                                                        {opt}
+                                                        {opt.toUpperCase()}
                                                     </button>
                                                 );
                                             })}

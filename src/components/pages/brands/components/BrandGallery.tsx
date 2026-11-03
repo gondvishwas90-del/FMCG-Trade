@@ -10,6 +10,11 @@ import BrandFilters from "./BrandFilters";
 import { PaginationControls } from "@/components/pages/trade-opportunities/components/PaginationControls";
 import type { FilterType } from "../types/filter.types";
 import type { Brand } from "../types/brand.types";
+import {
+    DISCOVERY_COUNTRIES,
+    DISCOVERY_CATEGORIES,
+    DISCOVERY_OWNERSHIPS
+} from "../constants/discovery-hub.constants";
 
 interface BrandGalleryProps {
     brands: Brand[];
@@ -87,26 +92,14 @@ export default function BrandGallery({
         setLocalSearchValue('');
     };
 
-    // Extract all unique categories, countries, and owners for the filter
+    // Fixed Discovery Hub options strictly matching official catalog
     const { categoryOptions, countryOptions, ownerOptions } = useMemo(() => {
-        const categories = new Set<string>();
-        const countries = new Set<string>();
-        const owners = new Set<string>();
-        displayedBrands.forEach(b => {
-            if (b.category) categories.add(b.category);
-            if (b.country) countries.add(b.country);
-            if (b.owner?.name) owners.add(b.owner.name);
-            b.categoryFit?.forEach(fit => categories.add(fit));
-            b.portfolioRanges?.forEach(r => {
-                r.categoryPath?.split('→').forEach(p => categories.add(p.trim()));
-            });
-        });
         return {
-            categoryOptions: Array.from(categories).sort(),
-            countryOptions: Array.from(countries).sort(),
-            ownerOptions: Array.from(owners).sort()
+            categoryOptions: DISCOVERY_CATEGORIES,
+            countryOptions: DISCOVERY_COUNTRIES,
+            ownerOptions: DISCOVERY_OWNERSHIPS
         };
-    }, [displayedBrands]);
+    }, []);
 
     const filteredBrands = useMemo(() => {
         return displayedBrands.filter(brand => {
@@ -139,31 +132,49 @@ export default function BrandGallery({
             }
 
             // Country
-            if (filters.country.length > 0 && !filters.country.includes(brand.country || '')) return false;
+            if (filters.country.length > 0) {
+                const matchesCountry = filters.country.some(c => 
+                    brand.country?.toLowerCase().includes(c.toLowerCase()) || 
+                    c.toLowerCase().includes(brand.country?.toLowerCase() || '')
+                );
+                if (!matchesCountry) return false;
+            }
 
             // Use
             if (filters.use.length > 0) {
                 const matchesUse = filters.use.some(u => {
-                    if (u === 'On-Trade' && brand.tradeCapabilities.onTradeFocused) return true;
-                    if (u === 'Off-Trade' && brand.tradeCapabilities.offTradeFocused) return true;
-                    if (u === 'Cocktail' && brand.categoryFit?.includes('Ready Made Cocktails')) return true;
+                    const uLower = u.toLowerCase();
+                    if (uLower === 'on-trade' && brand.tradeCapabilities?.onTradeFocused) return true;
+                    if (uLower === 'off-trade' && brand.tradeCapabilities?.offTradeFocused) return true;
+                    if (uLower === 'cocktail' && (
+                        brand.categoryFit?.some(fit => fit.toLowerCase().includes('cocktail')) || 
+                        brand.tier1Ids?.includes('cocktails')
+                    )) return true;
                     return false;
                 });
                 if (!matchesUse) return false;
             }
 
             // Owner
-            if (filters.owner.length > 0 && !filters.owner.includes(brand.owner?.name || '')) return false;
+            if (filters.owner.length > 0) {
+                const matchesOwner = filters.owner.some(o => {
+                    const oClean = o.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const brandOwnerClean = (brand.owner?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    return brandOwnerClean.includes(oClean) || oClean.includes(brandOwnerClean);
+                });
+                if (!matchesOwner) return false;
+            }
 
             // Category Filter
             if (filters.category.length > 0) {
                 const matchesCategory = filters.category.some(cat => {
                     const searchCat = cat.toLowerCase();
-                    const matchCat = brand.category?.toLowerCase() === searchCat;
-                    const matchFit = brand.categoryFit?.some(f => f.toLowerCase() === searchCat);
+                    const matchCat = brand.category?.toLowerCase().includes(searchCat) || searchCat.includes(brand.category?.toLowerCase() || '');
+                    const matchFit = brand.categoryFit?.some(f => f.toLowerCase().includes(searchCat) || searchCat.includes(f.toLowerCase()));
                     const matchRange = brand.portfolioRanges?.some(r => r.categoryPath.toLowerCase().includes(searchCat)) || false;
-                    const matchProduct = brand.products?.some(p => p.name.toLowerCase().includes(searchCat)) || false;
-                    return matchCat || matchFit || matchRange || matchProduct;
+                    const matchProduct = brand.products?.some(p => p.name.toLowerCase().includes(searchCat) || p.description?.toLowerCase().includes(searchCat)) || false;
+                    const matchTiers = brand.tier1Ids?.some(t => searchCat.includes(t)) || brand.tier2Ids?.some(t => searchCat.includes(t)) || false;
+                    return matchCat || matchFit || matchRange || matchProduct || matchTiers;
                 });
                 if (!matchesCategory) return false;
             }
