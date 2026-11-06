@@ -62,14 +62,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "bacardi": [
         {
             name: "Bacardi Carta Blanca Superior White Rum",
-            image: "/products/Captain Morgan Spiced Rum.jpg",
+            image: "/products/bacardi-carta-blanca.jpg",
             abv: "37.5%",
             size: "6 x 70cl • 100 cs / Pallet",
             description: "The world's most awarded rum with light vanilla and fresh apricot notes."
         },
         {
             name: "Bacardi Spiced Premium Spirit Drink",
-            image: "/products/Captain Morgan Spiced Rum.jpg",
+            image: "/products/bacardi-carta-blanca.jpg",
             abv: "35%",
             size: "6 x 70cl • 100 cs / Pallet",
             description: "Aged in charred American oak with honey and spice undertones."
@@ -78,7 +78,7 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "campari": [
         {
             name: "Campari Bitter Aperitivo 70cl",
-            image: "/products/Aperol Flavoured Liqueurs.webp",
+            image: "/products/campari-bitter.jpg",
             abv: "25%",
             size: "6 x 70cl • 100 cs / Pallet",
             description: "Iconic red Italian aperitif infused with bitter herbs, aromatic plants, and fruit."
@@ -126,14 +126,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "asahi": [
         {
             name: "Asahi Super Dry 330ml Glass Bottle",
-            image: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&q=80&w=600",
+            image: "/products/heineken-bottle.jpg",
             abv: "5.0%",
             size: "24 x 330ml • 63 cs / Pallet",
             description: "Japan's #1 beer, renowned for its crisp, clean Karakuchi dry finish."
         },
         {
             name: "Peroni Nastro Azzurro 330ml Bottle",
-            image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+            image: "/products/heineken-bottle.jpg",
             abv: "5.0%",
             size: "24 x 330ml • 63 cs / Pallet",
             description: "Premium Italian lager brewed with Nostrano dell'Isola maize."
@@ -142,14 +142,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "carlsberg": [
         {
             name: "Carlsberg Danish Pilsner 330ml Bottle",
-            image: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&q=80&w=600",
+            image: "/products/heineken-bottle.jpg",
             abv: "3.8%",
             size: "24 x 330ml • 63 cs / Pallet",
             description: "Crisp and refreshing with a full malty body and pleasant hop bitterness."
         },
         {
             name: "Kronenbourg 1664 Blanc 330ml Bottle",
-            image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+            image: "/products/heineken-bottle.jpg",
             abv: "5.0%",
             size: "24 x 330ml • 63 cs / Pallet",
             description: "Modern French wheat beer with subtle citrus and coriander notes."
@@ -158,14 +158,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "kelloggs": [
         {
             name: "Kellogg's Corn Flakes 450g",
-            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600",
+            image: "/products/mcvities-digestives.jpg",
             abv: "0%",
             size: "14 x 450g • 48 cs / Pallet",
             description: "The original toasted golden corn cereal for commercial grocery distribution."
         },
         {
             name: "Pringles Original & Sour Cream 165g",
-            image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&q=80&w=600",
+            image: "/products/mcvities-digestives.jpg",
             abv: "0%",
             size: "19 x 165g • 56 cs / Pallet",
             description: "Iconic hyperbolic paraboloid potato snacks in resealable protective tubes."
@@ -174,14 +174,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "william-grant": [
         {
             name: "Glenfiddich 12 Year Old Single Malt Scotch",
-            image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+            image: "/products/Singleton 12 Year Old Single Malt Scotch Whisky.webp",
             abv: "40%",
             size: "6 x 70cl • 80 cs / Pallet",
             description: "The pioneer single malt matured in fine American and European oak casks."
         },
         {
             name: "Hendrick's Distilled Scottish Gin",
-            image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600",
+            image: "/products/Hendricks London Dry Gin.webp",
             abv: "41.4%",
             size: "6 x 70cl • 100 cs / Pallet",
             description: "Distilled with cucumber and Bulgarian rose for quintessential freshness."
@@ -190,14 +190,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "remy-cointreau": [
         {
             name: "Rémy Martin VSOP Fine Champagne Cognac",
-            image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600",
+            image: "/products/hennessy-vs-cognac.jpg",
             abv: "40%",
             size: "6 x 70cl • 80 cs / Pallet",
             description: "Epitome of elegance blending grapes from Grande and Petite Champagne."
         },
         {
             name: "Cointreau Triple Sec Orange Liqueur",
-            image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600",
+            image: "/products/Jägermeister Orange Liqueur.jpg",
             abv: "40%",
             size: "6 x 70cl • 90 cs / Pallet",
             description: "Clear orange liqueur crafted with sweet and bitter orange peels."
@@ -206,14 +206,14 @@ const BRAND_HOUSE_EXTRA_PRODUCTS: Record<string, any[]> = {
     "edrington": [
         {
             name: "The Macallan Double Cask 12YO Single Malt",
-            image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=600",
+            image: "/products/macallan-12.png",
             abv: "40%",
             size: "6 x 70cl • 60 cs / Pallet",
             description: "Prestige Speyside single malt aged in sherry seasoned American and European oak."
         },
         {
             name: "Highland Park 12YO Viking Honour",
-            image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=600",
+            image: "/products/macallan-12.png",
             abv: "40%",
             size: "6 x 70cl • 80 cs / Pallet",
             description: "Orkney single malt with heather honey sweetness and aromatic peat smoke."

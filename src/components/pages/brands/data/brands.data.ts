@@ -22,7 +22,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=800",
+        image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
         owner: {
             id: "diageo",
             name: "Diageo",
@@ -45,7 +45,7 @@ export const fallbackBrands: Brand[] = [
             },
             {
                 name: "Blue Label Luxury Blend",
-                image: "/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg",
+                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
                 abv: "40%",
                 size: "6 x 75cl Gift Cases (Bonded Port Allocation)",
                 description: "Rare and prestigious blend with hand-selected rare casks for duty-free and luxury on-trade."
@@ -85,8 +85,8 @@ export const fallbackBrands: Brand[] = [
             euDistribution: true,
             onTradeFocused: true,
             offTradeFocused: true,
-        },
-        image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800",
+            },
+        image: "/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg",
         owner: {
             id: "pernod-ricard",
             name: "Pernod Ricard",
@@ -102,7 +102,7 @@ export const fallbackBrands: Brand[] = [
             },
             {
                 name: "Chivas Regal 18 Year Old Gold Signature",
-                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
+                image: "/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg",
                 abv: "40%",
                 size: "6 x 70cl Gift Box (Pallet: 80 cases)",
                 description: "Rich, multi-layered blend with 85 unique flavour notes in every drop."
@@ -143,7 +143,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=800",
+        image: "/products/Jameson Irish Whiskey.webp",
         owner: {
             id: "pernod-ricard",
             name: "Pernod Ricard",
@@ -152,14 +152,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Jameson Original Triple Distilled",
-                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
+                image: "/products/Jameson Irish Whiskey.webp",
                 abv: "40%",
                 size: "6 x 70cl • 105 cs / Pallet",
                 description: "Triple distilled, twice as smooth, perfectly balanced for on-trade and wholesale."
             },
             {
                 name: "Jameson Black Barrel",
-                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
+                image: "/products/Jameson Irish Whiskey.webp",
                 abv: "40%",
                 size: "6 x 70cl Cases (Pallet: 90 cases)",
                 description: "Double charred bourbon cask finish delivering heightened richness and complexity."
@@ -200,7 +200,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800",
+        image: "/products/Jack Daniels Tennessee  American Whiskey.webp",
         owner: {
             id: "brown-forman",
             name: "Brown-Forman",
@@ -209,14 +209,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Old No. 7 Tennessee Whiskey",
-                image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Jack Daniels Tennessee  American Whiskey.webp",
                 abv: "40%",
                 size: "6 x 70cl & 12 x 1L Cases (Pallet: 100 / 60 cases)",
                 description: "The world's leading Tennessee whiskey, essential for on-trade and wholesale distributors."
             },
             {
                 name: "Gentleman Jack Double Mellowed",
-                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
+                image: "/products/Jack Daniels Honey Tennessee American Whiskey.webp",
                 abv: "40%",
                 size: "6 x 70cl Cases (Pallet: 90 cases)",
                 description: "Undergoes a second charcoal mellowing for exceptional smoothness."
@@ -257,7 +257,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=800",
+        image: "/products/infant-formula.jpg",
         owner: {
             id: "danone",
             name: "Danone",
@@ -266,21 +266,21 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Aptamil 1 First Infant Milk (Stage 1)",
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                image: "/products/infant-formula.jpg",
                 abv: "0%",
                 size: "6 x 800g Tins per Case (Pallet: 80 cases / 480 tins)",
                 description: "Nutritionally complete breastmilk substitute from birth onwards in hermetically sealed 800g tins."
             },
             {
                 name: "Aptamil 2 Follow On Milk (Stage 2)",
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                image: "/products/infant-formula.jpg",
                 abv: "0%",
                 size: "6 x 800g Tins per Case (Pallet: 80 cases / 480 tins)",
                 description: "Formulated for babies from 6 to 12 months with vitamins C & D and tailored iron levels."
             },
             {
                 name: "Aptamil 3 Toddler Milk (Stage 3)",
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                image: "/products/infant-formula.jpg",
                 abv: "0%",
                 size: "6 x 800g Tins per Case (Pallet: 80 cases / 480 tins)",
                 description: "Enriched growing up milk for toddlers aged 1 to 2 years with prebiotics and omega-3."
@@ -321,7 +321,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=800",
+        image: "/products/infant-formula.jpg",
         owner: {
             id: "danone",
             name: "Danone",
@@ -330,14 +330,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "First Infant Milk Stage 1",
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                image: "/products/infant-formula.jpg",
                 abv: "0%",
                 size: "6 x 800g Tins (Pallet: 80 cases)",
                 description: "Complete infant nutrition from birth, suitable as sole source of nutrition."
             },
             {
                 name: "Follow-On Milk Stage 2",
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+                image: "/products/infant-formula.jpg",
                 abv: "0%",
                 size: "6 x 800g Tins (Pallet: 80 cases)",
                 description: "Nutritional support for weaning babies from 6-12 months."
@@ -378,7 +378,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800",
+        image: "/products/kitkat-bar.jpg",
         owner: {
             id: "nestle",
             name: "Nestlé",
@@ -387,14 +387,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "KitKat 4-Finger Milk Chocolate",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=600",
+                image: "/products/kitkat-bar.jpg",
                 abv: "0%",
                 size: "24 x 41.5g Display Outer (Pallet: 192 cases / 4,608 bars)",
                 description: "Original 4-finger crisp wafer in milk chocolate. Standard wholesale outer display."
             },
             {
                 name: "KitKat Chunky Milk Chocolate",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=600",
+                image: "/products/kitkat-bar.jpg",
                 abv: "0%",
                 size: "24 x 40g Display Outer (Pallet: 192 cases)",
                 description: "Single chunky wafer finger for grab-and-go convenience and vending distribution."
@@ -435,7 +435,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800",
+        image: "/products/snickers-bar.jpg",
         owner: {
             id: "mars-wrigley",
             name: "Mars Wrigley",
@@ -444,14 +444,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Snickers Standard Single Bar",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=600",
+                image: "/products/snickers-bar.jpg",
                 abv: "0%",
                 size: "24 x 48g Display Box (Pallet: 180 cases / 4,320 bars)",
                 description: "Standard counter display outer for wholesale distributors and supermarket chains."
             },
             {
                 name: "Snickers Duo Double Bar",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=600",
+                image: "/products/snickers-bar.jpg",
                 abv: "0%",
                 size: "24 x 80g Display Box (Pallet: 140 cases)",
                 description: "Two-piece bar designed for sharing and maximum impulse turnover."
@@ -492,7 +492,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800",
+        image: "/products/cadbury-dairy-milk.jpg",
         owner: {
             id: "mondelez",
             name: "Mondelez",
@@ -501,14 +501,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Cadbury Dairy Milk Standard Tablet",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=600",
+                image: "/products/cadbury-dairy-milk.jpg",
                 abv: "0%",
                 size: "18 x 110g Outer Case (Pallet: 144 cases)",
                 description: "Standard tablet bar in iconic purple foil packaging."
             },
             {
                 name: "Cadbury Dairy Milk Giant Sharing Bar",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=600",
+                image: "/products/cadbury-dairy-milk.jpg",
                 abv: "0%",
                 size: "16 x 200g Outer Case (Pallet: 120 cases)",
                 description: "Generous 200g block for sharing occasions and retail promotional ends."
@@ -549,7 +549,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=800",
+        image: "/products/mcvities-digestives.jpg",
         owner: {
             id: "pladis",
             name: "Pladis",
@@ -558,14 +558,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "McVitie's Digestives Original Roll Pack",
-                image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=600",
+                image: "/products/mcvities-digestives.jpg",
                 abv: "0%",
                 size: "12 x 400g Cases (Pallet: 96 cases / 1,152 rolls)",
                 description: "The classic wheat biscuit with wholesome crumb and distinctive flavor."
             },
             {
                 name: "McVitie's Milk Chocolate Digestives",
-                image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=600",
+                image: "/products/mcvities-digestives.jpg",
                 abv: "0%",
                 size: "12 x 266g Cases (Pallet: 108 cases)",
                 description: "Topped with a generous layer of silky milk chocolate."
@@ -606,7 +606,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=800",
+        image: "/products/heineken-bottle.jpg",
         owner: {
             id: "heineken-global",
             name: "Heineken",
@@ -615,14 +615,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Heineken Premium Lager Bottle",
-                image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+                image: "/products/heineken-bottle.jpg",
                 abv: "5.0%",
                 size: "24 x 330ml Case (Pallet: 63 cases / 1,512 bottles)",
                 description: "The global icon. Pure malt lager brewed with horizontal fermentation."
             },
             {
                 name: "Heineken Premium Lager Can",
-                image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+                image: "/products/heineken-bottle.jpg",
                 abv: "5.0%",
                 size: "24 x 500ml Shrink Tray (Pallet: 72 trays / 1,728 cans)",
                 description: "High-rotation 500ml cans for retail and outdoor venue distribution."
@@ -663,7 +663,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800",
+        image: "/products/fever-tree-tonic.jpg",
         owner: {
             id: "fevertree-drinks",
             name: "Fever-Tree",
@@ -672,14 +672,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Premium Indian Tonic Water",
-                image: "/products/Aperol Flavoured Liqueurs.webp",
+                image: "/products/fever-tree-tonic.jpg",
                 abv: "0%",
                 size: "24 x 200ml Glass Bottles (Pallet: 88 cases / 2,112 bottles)",
                 description: "Signature tonic crafted with natural quinine and Mexican bitter orange oils."
             },
             {
                 name: "Mediterranean Tonic Water",
-                image: "/products/Aperol Flavoured Liqueurs.webp",
+                image: "/products/fever-tree-tonic.jpg",
                 abv: "0%",
                 size: "24 x 200ml Glass Bottles (Pallet: 88 cases)",
                 description: "Delicate herbal blend with rosemary and lemon thyme from the Mediterranean shores."
@@ -720,7 +720,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=800",
+        image: "/products/Bushmills Single Malt Irish Whiskey.jpg",
         owner: {
             id: "proximo-spirits",
             name: "Proximo Spirits",
@@ -729,7 +729,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Bushmills Original Triple Distilled",
-                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
+                image: "/products/Bushmills Single Malt Irish Whiskey.jpg",
                 abv: "40%",
                 size: "6 x 70cl • 100 cs / Pallet",
                 description: "Triple distilled grain and malt whiskey known for versatile warmth and light fruit notes."
@@ -770,7 +770,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&q=80&w=800",
+        image: "/products/Jim beam amwrican whicsky.jpg",
         owner: {
             id: "suntory-global-spirits",
             name: "Suntory Global Spirits",
@@ -779,7 +779,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Jim Beam White Label Bourbon",
-                image: "/products/Johnnie Walker Red Label Scotch Whisky.webp",
+                image: "/products/Jim beam amwrican whicsky.jpg",
                 abv: "40%",
                 size: "6 x 70cl • 100 cs / Pallet",
                 description: "The classic Kentucky straight bourbon with vanilla, toasted oak, and spicy caramel notes."
@@ -820,7 +820,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&q=80&w=800",
+        image: "/products/hibiki-harmony.jpg",
         owner: {
             id: "suntory-global-spirits",
             name: "Suntory Global Spirits",
@@ -829,7 +829,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Hibiki Japanese Harmony",
-                image: "/products/Johnnie Walker Black  Label Scotch Whisky.webp",
+                image: "/products/hibiki-harmony.jpg",
                 abv: "43%",
                 size: "6 x 70cl • 80 cs / Pallet",
                 description: "Delicate honey, orange peel, and white chocolate notes with Mizunara oak finish."
@@ -870,7 +870,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: false,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800",
+        image: "/products/red-wine-bottle.jpg",
         owner: {
             id: "casella-family-brands",
             name: "Casella Family Brands",
@@ -879,14 +879,14 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Yellow Tail Shiraz / Cabernet Sauvignon",
-                image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=600",
+                image: "/products/red-wine-bottle.jpg",
                 abv: "13.5%",
                 size: "6 x 750ml • 105 cs / Pallet",
                 description: "Rich Australian Shiraz with ripe red berry flavors, subtle spice, and soft oak finish."
             },
             {
                 name: "Yellow Tail Pinot Grigio / Chardonnay",
-                image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=600",
+                image: "/products/red-wine-bottle.jpg",
                 abv: "12.0%",
                 size: "6 x 750ml • 105 cs / Pallet",
                 description: "Crisp, lively white wine bursting with passionfruit, citrus, and green apple."
@@ -927,7 +927,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?auto=format&fit=crop&q=80&w=800",
+        image: "/products/moet-chandon.jpg",
         owner: {
             id: "lvmh",
             name: "Moët Hennessy • LVMH",
@@ -936,7 +936,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Moët & Chandon Brut Impérial NV",
-                image: "https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?auto=format&fit=crop&q=80&w=600",
+                image: "/products/moet-chandon.jpg",
                 abv: "12.0%",
                 size: "6 x 75cl • 80 cs / Pallet",
                 description: "The iconic blend of over 100 different wines reflecting diversity and complementary qualities."
@@ -977,7 +977,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&q=80&w=800",
+        image: "/products/Veuve Clicquot GB Champagne.webp",
         owner: {
             id: "lvmh",
             name: "Moët Hennessy • LVMH",
@@ -986,7 +986,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Veuve Clicquot Yellow Label Brut",
-                image: "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&q=80&w=600",
+                image: "/products/Veuve Clicquot GB Champagne.webp",
                 abv: "12.0%",
                 size: "6 x 75cl • 80 cs / Pallet",
                 description: "Signature cuvée with predominance of Pinot Noir offering structure, elegance, and silky vanilla finish."
@@ -1027,7 +1027,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&q=80&w=800",
+        image: "/products/rose-wine-bottle.jpg",
         owner: {
             id: "lvmh",
             name: "Château d'Esclans • LVMH",
@@ -1036,7 +1036,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Whispering Angel Côtes de Provence Rosé",
-                image: "https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&q=80&w=600",
+                image: "/products/rose-wine-bottle.jpg",
                 abv: "13.0%",
                 size: "6 x 75cl • 96 cs / Pallet",
                 description: "A blend of Grenache, Cinsault, and Vermentino with dry, crisp, and fresh floral notes."
@@ -1077,7 +1077,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=800",
+        image: "/products/corona-extra.png",
         owner: {
             id: "ab-inbev",
             name: "AB InBev",
@@ -1086,7 +1086,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Corona Extra 330ml Glass Bottles",
-                image: "https://images.unsplash.com/photo-1608270119299-4458b09b30c5?auto=format&fit=crop&q=80&w=600",
+                image: "/products/corona-extra.png",
                 abv: "4.5%",
                 size: "24 x 330ml • 63 cs / Pallet",
                 description: "Clean, crisp, and refreshingly balanced Mexican pale lager."
@@ -1127,7 +1127,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800",
+        image: "/products/buzzballz-cocktail.jpg",
         owner: {
             id: "sazerac",
             name: "Sazerac Company",
@@ -1136,7 +1136,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "BuzzBallz Cocktails 200ml Round Can (Choc Tease / Tequila Rita)",
-                image: "/products/Aperol Flavoured Liqueurs.webp",
+                image: "/products/buzzballz-cocktail.jpg",
                 abv: "13.5%",
                 size: "24 x 200ml • 80 cs / Pallet",
                 description: "Premixed single-serve cocktail made with premium spirits and real fruit flavors."
@@ -1177,7 +1177,7 @@ export const fallbackBrands: Brand[] = [
             onTradeFocused: true,
             offTradeFocused: true,
         },
-        image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800",
+        image: "/products/red-bull-can.png",
         owner: {
             id: "red-bull-gmbh",
             name: "Red Bull GmbH",
@@ -1186,7 +1186,7 @@ export const fallbackBrands: Brand[] = [
         products: [
             {
                 name: "Red Bull Energy Drink 250ml Regular & Sugarfree",
-                image: "/products/Aperol Flavoured Liqueurs.webp",
+                image: "/products/red-bull-can.png",
                 abv: "0%",
                 size: "24 x 250ml • 108 cs / Pallet",
                 description: "The global benchmark 250ml slim can with caffeine, taurine, and B-group vitamins."

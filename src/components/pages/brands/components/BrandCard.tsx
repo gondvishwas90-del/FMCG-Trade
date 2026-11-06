@@ -53,16 +53,18 @@ export default function BrandCard({ brand }: BrandCardProps) {
                     onMouseEnter={() => setIsImageHovered(true)}
                     onMouseLeave={() => setIsImageHovered(false)}
                     onMouseMove={handleMouseMove}
-                    className="relative aspect-[16/10] overflow-hidden bg-muted border-b border-border"
+                    className="relative aspect-[16/10] overflow-hidden bg-muted/20 border-b border-border flex items-center justify-center p-3"
                 >
                     {brand.image ? (
-                        <Image
-                            src={brand.image}
-                            alt={brand.name}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
+                        <div className="relative w-full h-full flex items-center justify-center">
+                            <Image
+                                src={brand.image}
+                                alt={brand.name}
+                                fill
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                className="object-contain p-2 transition-transform duration-700 ease-out group-hover:scale-105 drop-shadow-md"
+                            />
+                        </div>
                     ) : (
                         <div className="w-full h-full flex items-center justify-center text-muted-foreground font-bold text-2xl">
                             {brand.name[0]}
@@ -70,7 +72,7 @@ export default function BrandCard({ brand }: BrandCardProps) {
                     )}
 
                     {/* Subtle Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
                     {/* Mobile: View Specs Button */}
                     <div className="absolute top-3 right-3 md:hidden z-20">
