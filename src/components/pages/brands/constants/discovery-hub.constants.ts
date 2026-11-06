@@ -1,8 +1,7 @@
 export const DISCOVERY_COUNTRIES = [
-    'Australia', 'Austria', 'Barbados', 'Belgium', 'Cuba', 'Denmark', 'France', 
-    'Germany', 'Guatemala', 'India', 'Ireland', 'Italy', 'Jamaica', 'Japan', 
-    'Mexico', 'Netherlands', 'New Zealand', 'Northern Ireland', 'Poland', 
-    'Scotland', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom', 'United States'
+    'Barbados', 'Cuba', 'France', 'Germany', 'Guatemala', 'India', 'Ireland', 
+    'Italy', 'Jamaica', 'Japan', 'Mexico', 'Northern Ireland', 'Poland', 
+    'Scotland', 'Spain', 'Sweden', 'United Kingdom', 'United States'
 ];
 
 export const DISCOVERY_CATEGORIES = [
