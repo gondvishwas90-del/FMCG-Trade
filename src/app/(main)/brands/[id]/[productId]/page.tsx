@@ -1,5 +1,5 @@
 import { getBrandById } from "@/app/actions/brand.actions";
-import NotFound from "@/app/not-found";
+import { notFound } from "next/navigation";
 import SingleProductDetailView from "@/components/pages/brands/components/SingleProductDetailView";
 import type { Metadata } from "next";
 
@@ -25,7 +25,7 @@ export default async function SingleProductPage({
     const brand = brandRes.success ? brandRes.data : null;
 
     if (!brand || !brand.products || brand.products.length === 0) {
-        return NotFound();
+        notFound();
     }
 
     // Find product matching productId by slug or normalized name
