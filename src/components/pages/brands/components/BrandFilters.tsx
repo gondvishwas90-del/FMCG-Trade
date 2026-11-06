@@ -136,7 +136,7 @@ export default function BrandFilters({
             onMouseLeave={handleMouseLeave}
         >
             <div className="max-w-[1800px] mx-auto relative px-4 md:px-8">
-                <div className="bg-background/95 backdrop-blur-3xl border border-border/50 dark:border-white/10 rounded-2xl md:rounded-3xl relative shadow-md">
+                <div className="bg-white/95 dark:bg-zinc-950/95 backdrop-blur-3xl border border-zinc-200/80 dark:border-white/10 rounded-2xl md:rounded-3xl relative shadow-md">
                     
                     {/* Main Header & Tab Navigation */}
                     <div className="px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-4 md:gap-8">
@@ -168,8 +168,8 @@ export default function BrandFilters({
                                             className={`
                                             relative px-4 md:px-5 py-2.5 rounded-full text-[10px] md:text-[11px] font-bold uppercase tracking-widest transition-all duration-200 flex items-center gap-2 group cursor-pointer
                                             ${isTabActive
-                                                    ? 'text-foreground bg-muted/80 dark:bg-white/15 shadow-xs'
-                                                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/40 dark:hover:bg-white/5'}
+                                                    ? 'text-foreground bg-zinc-100 dark:bg-white/15 shadow-xs'
+                                                    : 'text-muted-foreground hover:text-foreground hover:bg-zinc-50 dark:hover:bg-white/5'}
                                         `}
                                         >
                                             <span>{tab.label}</span>

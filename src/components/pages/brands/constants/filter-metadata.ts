@@ -91,3 +91,118 @@ export const OWNERSHIP_META: Record<string, string> = {
     'PREMIER FOODS': "Bisto, Ambrosia, Mr Kipling, Sharwood's"
 };
 
+export const FILTER_OPTION_IMAGES: Record<string, string> = {
+    // Ownerships
+    'DIAGEO': '/products/Johnnie Walker Black  Label Scotch Whisky.webp',
+    'PERNOD RICARD': '/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg',
+    'BACARDI LTD.': '/brand-logos/BACARDI.png',
+    'BROWN FORMAN': '/products/Jack Daniels Tennessee  American Whiskey.webp',
+    'BEAM SUNTORY': '/products/Jim beam amwrican whicsky.jpg',
+    'CAMPARI GROUP': '/products/Aperol Flavoured Liqueurs.webp',
+    'COCA-COLA': '/products/coca-cola-can-330ml.jpg',
+    'PEPSICO': '/products/pepsi-regular-1l.png',
+    'HEINEKEN UK': '/brand-logos/Heineken UK.png',
+    "CARLSBERG MARSTON'S BREWING COMPANY": '/categories/Product Categories/BEER and Cider.jpg',
+    'ASAHI UK': '/brand-logos/Asahi UK.png',
+    'FEVER-TREE': '/brand-logos/Fever Tree.png',
+    'LVMH (MOET HENNESSY)': '/products/Veuve Clicquot GB Champagne.webp',
+    'EDRINGTON': '/products/Singleton 12 Year Old Single Malt Scotch Whisky.webp',
+    'WILLIAM GRANT & SONS': '/products/Hendricks London Dry Gin.webp',
+    'PROXIMO SPIRITS': '/products/Bushmills Single Malt Irish Whiskey.jpg',
+    'CONSTELLATION BRANDS': '/brand-logos/Constellation Brands.png',
+    'REMY COINTREAU': '/brand-logos/Remy Cointreau.png',
+    'RED BULL GMBH': '/brand-logos/Red Bull.png',
+    'NESTLE': '/brand-logos/Nestle.png',
+    'MONDELEZ': '/brand-logos/Mondelez.png',
+    'KRAFT HEINZ': '/brand-logos/Kraft Heinz.png',
+    'UNILEVER': '/brand-logos/Unilever.png',
+    'MARS WRIGLEY': '/brand-logos/Mars Wrigley.png',
+    'DANONE': '/brand-logos/Danone.png',
+    "KELLOGG'S": '/brand-logos/Kellogg\'s.png',
+    "PLADIS (MCVITIE'S)": '/brand-logos/Pladis (McVitie’s).png',
+    'PREMIER FOODS': '/brand-logos/Premier Foods.png',
+    'MOLSON COORS UK': '/brand-logos/Molson Coors UK.png',
+
+    // Categories
+    'WHISKY': '/categories/Spirits/Whisky/Scotch Whisky.png',
+    'VODKA': '/products/Singleton 12 Year Old Single Malt Scotch Whisky.webp',
+    'BEER': '/categories/Product Categories/BEER and Cider.jpg',
+    'CHAMPAGNE & SPARKLING': '/products/Veuve Clicquot GB Champagne.webp',
+    'CIDER': '/categories/Beer & Cider/Cider/Cider.jpg',
+    'COGNAC & BRANDY': '/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg',
+    'CONFECTIONERY & CHOCOLATES': '/categories/Product Categories/FOOD AND GROCERY.png',
+    'GENERAL': '/categories/Product Categories/Spirits.jpg',
+    'GIN': '/products/Hendricks London Dry Gin.webp',
+    'GROCERY': '/categories/Product Categories/FOOD AND GROCERY.png',
+    'LIQUEURS': '/products/Baileys Irish Cream Liqueur.jpg',
+    'MIXERS & TONICS': '/categories/Product Categories/Soft drink -Cocktail mixer tonic.jpg',
+    'READY TO DRINK': '/products/coca-cola-can-330ml.jpg',
+    'RED WINE': '/categories/Product Categories/Wine and Champagne.jpg',
+    'ROSÉ WINE': '/categories/Product Categories/Wine and Champagne.jpg',
+    'RUM': '/products/Captain Morgan Spiced Rum.jpg',
+    'SOFT DRINKS & WATER': '/products/pepsi-regular-1l.png',
+    'SPIRITS': '/categories/Product Categories/Spirits.jpg',
+    'TEQUILA & MEZCAL': '/products/Bushmills Single Malt Irish Whiskey.jpg',
+    'BABY FOOD & INFANT NUTRITION': '/categories/Product Categories/FOOD AND GROCERY.png',
+
+    // Countries
+    'UNITED KINGDOM': '/products/Johnnie Walker Black  Label Scotch Whisky.webp',
+    'UNITED STATES': '/products/Jack Daniels Tennessee  American Whiskey.webp',
+    'FRANCE': '/products/Veuve Clicquot GB Champagne.webp',
+    'IRELAND': '/products/Jameson Irish Whiskey.webp',
+    'MEXICO': '/products/Bushmills Single Malt Irish Whiskey.jpg',
+    'GERMANY': '/products/Jägermeister Liqueur.jpg',
+    'ITALY': '/products/Aperol Flavoured Liqueurs.webp',
+    'SCOTLAND': '/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg',
+    'SPAIN': '/categories/Product Categories/Wine and Champagne.jpg',
+    'NETHERLANDS': '/brand-logos/Heineken UK.png',
+    'BELGIUM': '/categories/Product Categories/BEER and Cider.jpg',
+    'JAPAN': '/products/Jim beam amwrican whicsky.jpg',
+    'POLAND': '/categories/Product Categories/Spirits.jpg',
+    'SWEDEN': '/products/Singleton 12 Year Old Single Malt Scotch Whisky.webp',
+    'SWITZERLAND': '/brand-logos/Nestle.png',
+    'CUBA': '/products/Captain Morgan Spiced Rum.jpg',
+    'JAMAICA': '/products/Captain Morgan Spiced Rum.jpg',
+    'BARBADOS': '/products/Captain Morgan Spiced Rum.jpg',
+    'GUATEMALA': '/products/Captain Morgan Spiced Rum.jpg',
+    'AUSTRIA': '/brand-logos/Red Bull.png',
+    'AUSTRALIA': '/categories/Product Categories/Wine and Champagne.jpg',
+    'NEW ZEALAND': '/categories/Product Categories/Wine and Champagne.jpg',
+    'INDIA': '/products/Johnnie Walker Red Label Scotch Whisky.webp',
+    'DENMARK': '/categories/Product Categories/BEER and Cider.jpg',
+    'NORTHERN IRELAND': '/products/Bushmills Single Malt Irish Whiskey.jpg',
+
+    // Market Focus
+    'ON-TRADE': '/products/Johnnie Walker Black  Label Scotch Whisky.webp',
+    'OFF-TRADE': '/products/coca-cola-can-330ml.jpg',
+    'COCKTAIL': '/products/Aperol Flavoured Liqueurs.webp',
+};
+
+export const DEFAULT_TAB_HEROES: Record<string, { image: string; title: string; desc: string }> = {
+    category: {
+        image: '/categories/Product Categories/Spirits.jpg',
+        title: 'Built for global FMCG',
+        desc: 'Explore verified wholesale portfolios across international spirits, beers, wines, mixers, and groceries.'
+    },
+    country: {
+        image: '/products/Johnnie Walker Black  Label Scotch Whisky.webp',
+        title: 'Worldwide trade origin',
+        desc: 'Filter verified commercial allocations by bonded warehouse hub and official country of manufacture.'
+    },
+    use: {
+        image: '/products/Aperol Flavoured Liqueurs.webp',
+        title: 'Tailored distribution',
+        desc: 'Select procurement streams optimized for on-trade hospitality, off-trade retail, or high-volume cocktail mixing.'
+    },
+    owner: {
+        image: '/products/Chivas Regal 12 Year Old Blended Scotch Whisky.jpg',
+        title: 'Direct producer houses',
+        desc: 'Inspect certified brand houses and multinational conglomerate supply lines with guaranteed provenance.'
+    },
+    access: {
+        image: '/products/Johnnie Walker Black  Label Scotch Whisky.webp',
+        title: 'Trade Access',
+        desc: 'Refine by compliance and duty status.'
+    }
+};
+
