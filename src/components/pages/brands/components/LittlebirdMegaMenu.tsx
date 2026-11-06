@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Check, Sparkles, Globe, Layers, Building2, Target, ArrowRight, X } from "lucide-react";
 import type { FilterType } from "../types/filter.types";
@@ -32,6 +32,23 @@ export default function LittlebirdMegaMenu({
 }: LittlebirdMegaMenuProps) {
 
     const [hoveredOption, setHoveredOption] = useState<string | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    // Native mouse-wheel scroll handler that bypasses Lenis smooth-scroll interference
+    useEffect(() => {
+        const el = scrollContainerRef.current;
+        if (!el) return;
+
+        const handleWheel = (e: WheelEvent) => {
+            if (e.deltaY !== 0) {
+                el.scrollTop += e.deltaY;
+                e.stopPropagation();
+            }
+        };
+
+        el.addEventListener("wheel", handleWheel, { passive: false });
+        return () => el.removeEventListener("wheel", handleWheel);
+    }, [activeTab]);
 
     interface TabConfigItem {
         title: string;
@@ -115,6 +132,7 @@ export default function LittlebirdMegaMenu({
 
     return (
         <motion.div
+            data-lenis-prevent="true"
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -218,7 +236,10 @@ export default function LittlebirdMegaMenu({
                 </button>
 
                 <div 
-                    className="overflow-y-auto max-h-[440px] pr-2 custom-scrollbar mt-1"
+                    ref={scrollContainerRef}
+                    data-lenis-prevent="true"
+                    style={{ overscrollBehavior: 'contain', scrollbarWidth: 'thin' }}
+                    className="overflow-y-auto max-h-[440px] pr-2.5 custom-scrollbar mt-1 overscroll-contain touch-pan-y"
                     onMouseLeave={() => setHoveredOption(null)}
                 >
                     <div className={`grid ${tabConfig.gridCols} gap-2.5`}>

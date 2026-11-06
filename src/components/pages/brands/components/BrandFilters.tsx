@@ -234,6 +234,7 @@ export default function BrandFilters({
                 <AnimatePresence>
                     {activeTab && (
                         <div 
+                            data-lenis-prevent="true"
                             className="hidden md:block absolute top-full pt-3 left-4 right-4 z-[110] pointer-events-auto before:absolute before:-top-4 before:left-0 before:right-0 before:h-5 before:bg-transparent"
                             onMouseEnter={handleDropdownMouseEnter}
                             onMouseLeave={handleMouseLeave}
