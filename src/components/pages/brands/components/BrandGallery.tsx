@@ -193,19 +193,17 @@ export default function BrandGallery({
         <div className={`${isCategoryPage ? 'bg-transparent' : 'bg-background min-h-screen'} relative flex flex-col-reverse md:block`}>
 
             {/* Sticky Filters: Bottom on Mobile, Top on Desktop */}
-            {!isCategoryPage && (
-                <BrandFilters
-                    activeFilters={filters}
-                    onFilterChange={handleFilterChange}
-                    totalCount={filteredBrands.length}
-                    categoryOptions={categoryOptions}
-                    countryOptions={countryOptions}
-                    ownerOptions={ownerOptions}
-                    localSearchValue={localSearchValue}
-                    setLocalSearchValue={setLocalSearchValue}
-                    onClearAll={handleClearAll}
-                />
-            )}
+            <BrandFilters
+                activeFilters={filters}
+                onFilterChange={handleFilterChange}
+                totalCount={filteredBrands.length}
+                categoryOptions={categoryOptions}
+                countryOptions={countryOptions}
+                ownerOptions={ownerOptions}
+                localSearchValue={localSearchValue}
+                setLocalSearchValue={setLocalSearchValue}
+                onClearAll={handleClearAll}
+            />
 
             <div id="brand-products-section" className="max-w-[1800px] mx-auto px-4 md:px-6 py-8 md:py-16">
                 {/* Active Brand Filter Banner */}

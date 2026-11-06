@@ -168,8 +168,8 @@ export default function BrandClient({ brand, categories = [] }: BrandClientProps
                 </div>
             </header>
 
-            {/* Discovery Hub Filters Bar (Sticky) */}
-            <div className="sticky top-0 z-40">
+            {/* Discovery Hub Filters Bar (Littlebird Mega-Menu Style) */}
+            <div className="relative z-[100]">
                 <BrandFilters
                     activeFilters={activeFilters}
                     onFilterChange={handleFilterChange}
